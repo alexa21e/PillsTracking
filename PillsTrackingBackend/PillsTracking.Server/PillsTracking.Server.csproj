@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PillsTracking.Abstractions\PillsTracking.DataAccess.Abstractions.csproj" />
+    <ProjectReference Include="..\PillsTracking.ApplicationServices.Abstractions\PillsTracking.ApplicationServices.Abstractions.csproj" />
+    <ProjectReference Include="..\PillsTracking.ApplicationServices\PillsTracking.ApplicationServices.csproj" />
+    <ProjectReference Include="..\PillsTracking.DataAccess\PillsTracking.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>
