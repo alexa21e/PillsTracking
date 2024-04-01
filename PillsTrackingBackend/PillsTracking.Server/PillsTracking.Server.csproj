@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PillsTracking.Abstractions\PillsTracking.DataAccess.Abstractions.csproj" />
     <ProjectReference Include="..\PillsTracking.ApplicationServices.Abstractions\PillsTracking.ApplicationServices.Abstractions.csproj" />
     <ProjectReference Include="..\PillsTracking.ApplicationServices\PillsTracking.ApplicationServices.csproj" />
