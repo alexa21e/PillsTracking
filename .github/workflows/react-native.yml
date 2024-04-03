@@ -21,6 +21,9 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      - name: Authenticate with Expo
+        run: expo login -t ${{ secrets.EXPO_TOKEN }}
+
       - name: Install dependencies
         run: yarn install
         working-directory: PillsTrackingFrontend/PillsTrackingMobile
