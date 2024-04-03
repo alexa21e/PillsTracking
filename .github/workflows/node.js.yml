@@ -3,11 +3,9 @@ name: Angular CI
 on:
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'PillsTrackingFrontend/PillsTrackingWeb/**'
 
 jobs:
-  build:
+  build-web:
     runs-on: ubuntu-latest
 
     strategy:
