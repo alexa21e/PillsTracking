@@ -3,8 +3,6 @@ name: .NET
 on:
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'PillsTrackingBackend/**'
 
 jobs:
   build-backend:
