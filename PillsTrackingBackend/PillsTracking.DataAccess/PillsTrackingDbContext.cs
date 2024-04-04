@@ -15,5 +15,6 @@ namespace PillsTracking.DataAccess
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
         public DbSet<Medication> Medications { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 	}
 }

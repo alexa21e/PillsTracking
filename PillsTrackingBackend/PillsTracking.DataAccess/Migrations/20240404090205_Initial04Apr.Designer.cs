@@ -12,7 +12,7 @@ using PillsTracking.DataAccess;
 namespace PillsTracking.DataAccess.Migrations
 {
     [DbContext(typeof(PillsTrackingDbContext))]
-    [Migration("20240404084200_Initial04Apr")]
+    [Migration("20240404090205_Initial04Apr")]
     partial class Initial04Apr
     {
         /// <inheritdoc />
@@ -53,6 +53,28 @@ namespace PillsTracking.DataAccess.Migrations
                     b.HasIndex("PrescriptionsId");
 
                     b.ToTable("MedicationPrescription");
+                });
+
+            modelBuilder.Entity("PillsTracking.Domain.Admin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ExternalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("PillsTracking.Domain.Doctor", b =>
