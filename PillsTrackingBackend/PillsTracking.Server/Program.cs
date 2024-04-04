@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using PillsTracking.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<PillsTrackingDbContext>(options =>
+	options.UseSqlServer(connectionString));
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -11,6 +16,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

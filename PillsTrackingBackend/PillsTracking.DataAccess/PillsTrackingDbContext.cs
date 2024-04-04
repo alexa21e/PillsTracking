@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PillsTracking.Domain;
 
-namespace PillsTracking.Server.Models
+namespace PillsTracking.DataAccess
 {
     public class PillsTrackingDbContext : DbContext
     {
@@ -9,5 +10,10 @@ namespace PillsTracking.Server.Models
         {
 
         }
-    }
+
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<Medication> Medications { get; set; }
+	}
 }
