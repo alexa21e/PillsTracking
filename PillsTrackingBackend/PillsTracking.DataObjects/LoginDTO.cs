@@ -1,4 +1,4 @@
-﻿namespace PillsTracking.Server.Data.DataObjects
+﻿namespace PillsTracking.DataObjects
 {
 	public class LoginDTO
 	{
