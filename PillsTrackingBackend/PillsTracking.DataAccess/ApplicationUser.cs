@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace PillsTracking.Server.Data
+namespace PillsTracking.DataAccess
 {
 	public class ApplicationUser: IdentityUser
 	{

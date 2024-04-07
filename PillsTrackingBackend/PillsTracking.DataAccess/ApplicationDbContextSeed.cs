@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace PillsTracking.Server.Data
+namespace PillsTracking.DataAccess
 {
 	public class ApplicationDbContextSeed
 	{
-		public static async Task SeedUsersAsync(UserManager<IdentityUser> userManager)
+		public static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager)
 		{
 			if (!userManager.Users.Any())
 			{
-				var user = new IdentityUser
+				var user = new ApplicationUser
 				{
 					UserName = "Admin",
 					Email = "admin@localhost.com"

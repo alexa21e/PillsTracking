@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace PillsTracking.Server.Data
+namespace PillsTracking.DataAccess
 {
-	public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
 			base(options)
