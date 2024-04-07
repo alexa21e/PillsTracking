@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PillsTracking.Server.Migrations
+namespace PillsTracking.DataAccess.Migrations.ApplicationDb
 {
     /// <inheritdoc />
-    public partial class Initial07Apr : Migration
+    public partial class InitialIdentity07Apr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
