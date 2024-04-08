@@ -68,6 +68,10 @@ namespace PillsTracking.Server.Controllers
 		[HttpPost("register")]
 		public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
 		{
+			if (CheckUserExistAsync(registerDTO.Email).Result.Value)
+			{
+				return BadRequest("User associated with this email is already created");
+			}
 			var user = new ApplicationUser
 			{
 				UserName = registerDTO.Username,
