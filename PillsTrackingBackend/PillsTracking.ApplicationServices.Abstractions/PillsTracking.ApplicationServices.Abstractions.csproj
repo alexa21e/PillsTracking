@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PillsTracking.DataAccess\PillsTracking.DataAccess.csproj" />
+    <ProjectReference Include="..\PillsTracking.DataObjects\PillsTracking.DataObjects.csproj" />
     <ProjectReference Include="..\PillsTracking.Domain\PillsTracking.Domain.csproj" />
   </ItemGroup>
 
