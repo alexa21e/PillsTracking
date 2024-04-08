@@ -12,8 +12,8 @@ using PillsTracking.DataAccess;
 namespace PillsTracking.DataAccess.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240407195736_InitialIdentity07Apr")]
-    partial class InitialIdentity07Apr
+    [Migration("20240408211804_DDDimplementation")]
+    partial class DDDimplementation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
