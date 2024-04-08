@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataAccess;
@@ -20,6 +22,22 @@ namespace PillsTracking.Server.Controllers
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_tokenService = tokenService;
+		}
+
+		[Authorize]
+		[HttpGet]
+		public async Task<ActionResult<UserDTO>> GetCurrentUser()
+		{
+			var email = User.FindFirstValue(ClaimTypes.Email);
+			
+			var user = await _userManager.FindByEmailAsync(email);
+
+			return new UserDTO
+			{
+				Email = user.Email,
+				Token = _tokenService.CreateToken(user),
+				Username = user.UserName
+			};
 		}
 
 		[HttpPost("login")]
@@ -70,6 +88,12 @@ namespace PillsTracking.Server.Controllers
 				Token = _tokenService.CreateToken(user),
 				Username = user.UserName
 			};
+		}
+
+		[HttpGet("userfound")]
+		public async Task<ActionResult<bool>> CheckUserExistAsync([FromQuery] string email)
+		{
+			return await _userManager.FindByEmailAsync(email) != null;
 		}
 	}
 }
