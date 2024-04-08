@@ -16,12 +16,20 @@ namespace PillsTracking.Server.Controllers
 		}
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<ActionResult<ICollection<Patient>>> GetPatients()
         {
-            return Ok("Get all patients");
+	        try
+	        {
+		        var patients = await _patientService.GetPatients();
+		        return Ok(patients);
+	        }
+	        catch (Exception ex)
+	        {
+		        return BadRequest();
+	        }
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
         {
 			try

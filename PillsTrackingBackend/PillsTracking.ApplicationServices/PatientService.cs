@@ -18,10 +18,17 @@ namespace PillsTracking.ApplicationServices
 			_mapper = mapper;
 		}
 
+		public async Task<ICollection<Patient>> GetPatients()
+		{
+			var patients = await _patientRepository.GetPatients();
+			return patients;
+		}
+
 		public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
 		{
 			var patient = _mapper.Map<Patient>(patientToCreate);
 			await _patientRepository.AddPatient(patient);
+			await _patientRepository.SaveAsync();
 			return patient;
 		}
 	}
