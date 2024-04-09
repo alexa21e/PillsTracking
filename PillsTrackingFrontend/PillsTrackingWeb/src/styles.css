@@ -1,1 +1,96 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+
+body,p{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body,app-root{
+    width:100%;
+}
+
+app-root,app-nav-bar{
+    display: flex;
+}
+
+.row {
+    display:flex;
+    flex-direction: row;
+}
+
+.column{
+    display:flex;
+    flex-direction: column;
+}
+
+.mt-15{
+    margin-top: 15px;
+}
+
+.mt-25{
+    margin-top: 25px;
+}
+
+.mb-15{
+    margin-bottom: 15px;
+}
+
+.mb-25{
+    margin-bottom: 25px;
+}
+
+.wrap{
+    flex-wrap: wrap;
+}
+
+.gap-1{
+    gap: 1rem;
+}
+.space-between{
+    justify-content: space-between;
+}
+.align-center{
+    align-items: center;
+}
+  /* Style the profile button */
+  .profile-button{
+    background-color: #3A7CA5;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+.patients-button {
+    background-color: #3A7CA5;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+  } 
+  .patients-button:hover {
+    background-color: #45a049;
+  }
+  .profile-button:hover {
+    background-color: #45a049;
+  }
+  
+  
+
+.logout-btn {
+    background-color: #3A7CA5;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.logout-btn:hover{
+    background-color: #45a049;
+}
