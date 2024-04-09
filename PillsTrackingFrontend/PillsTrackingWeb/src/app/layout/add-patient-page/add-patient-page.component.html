@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Patients</title>
+    <link rel="stylesheet"  href="add-patient-page.component.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <div>
+            <img src=" " alt="DoctorPFP">
+            <span>John Doe</span>
+        </div>
+        <button class="logout-btn">Log Out</button>
+    </header>
+    <div class="main-section">
+
+      <div>
+            <h1>Patients List</h1>
+       
+            <button  class="add-patient-btn" onclick="openForm()">Add New Patient</button>
+          
+
+    </div>    
+  </div>
+    <div>
+        <ul>
+            <li>Patient 1</li>
+            <li>Patient 2</li>
+            <li>Patient 3</li>
+            <!-- Add more patient items as needed -->
+        </ul>
+      </div>
+
+
+    <div id="patientForm" class="form-container">
+      <button class="btn btn-danger close-button" onclick="closeForm()">X</button>
+      <div class="form-title">New Patient</div>
+      <div class="form-field">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" required>
+      </div>
+      <div class="form-field">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" required>
+      </div>
+      <div class="form-field">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required>
+      </div>
+      <div class="form-field">
+        <label for="prescription">Prescription:</label>
+        <textarea id="prescription" rows="4"></textarea>
+      </div>
+      <div class="form-buttons text-center">
+        <button onclick="addPatient()">Add</button>
+      </div>
+    </div>
+
+
+
+    
+  
+
+    
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color:#D9DCD6;
+}
+
+header {
+    background-color: #16425B;
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.logout-btn {
+    background-color: #3A7CA5;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+
+.container {
+    width: 100%; /* Span the entire width of the screen */
+}
+
+.main-section {
+    padding: 20px;
+}
+
+.main-section h2 {
+    margin-top: 0;
+}
+
+.add-patient-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    float:right;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-top: 25px;
+    margin-right: 6px;;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 50px;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+
+h1 {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+
+
+
+
+  .form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ebebeb;
+    padding: 60px 140px;
+    border-radius: 8px;
+    z-index: 2;
+  }
+  .form-title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .form-field {
+    margin-bottom: 10px;
+  }
+  .form-field label {
+    display: block;
+    font-weight: bold;
+    font-size: larger;
+  }
+  .form-field input {
+    width: 100%;
+    padding: 8px;
+    border: 13px solid rgb(0, 0, 0)c;
+    border-radius: 4px;
+  }
+  .form-buttons {
+    margin-top: 50px;
+  }
+  .form-buttons button {
+    padding: 16px 32px;
+    background-color: #3A7CA5;;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
