@@ -11,7 +11,7 @@ namespace PillsTracking.Server.Extensions
 		public static IServiceCollection RegisterApplication(this IServiceCollection services)
 		{
 			services.AddScoped<ITokenService, TokenService>();
-			services.AddScoped<IPatientService, PatientService>();
+			services.AddScoped<IDoctorService, DoctorService>();
 			services.AddScoped<IPatientRepository, PatientRepository>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			return services;
