@@ -14,7 +14,14 @@ namespace PillsTracking.DataAccess
 					Email = "admin@localhost.com"
 				};
 
-				await userManager.CreateAsync(user, "Pa$$w0rd");
+				var result = await userManager.CreateAsync(user, "Pa$$w0rd");
+
+				if (!result.Succeeded)
+				{
+					throw new Exception("Can't create user");
+				}
+
+				await userManager.AddToRoleAsync(user, "admin");
 			}
 		}
 	}

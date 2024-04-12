@@ -13,16 +13,18 @@
                 <li><a class="nav-link px-2" routerLink="">Patients</a></li>
             </ul> -->
         </div>
-        <div class="dropdown login">
-            <!-- <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
+        <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+            <a class="nav-link px-2" routerLink="/login">Login</a>
+        </ng-container>
+        <ng-container *ngIf="accountService.currentUser$ | async as user">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                $USERNAME$
+                Welcome {{user.username}}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Sign Out</a></li>
-            </ul> -->
-            <a class="nav-link px-2" routerLink="/login">Login</a>
-        </div>
+                <li><a class="dropdown-item" (click)="accountService.logout()">Logout</a></li>
+            </ul>
+        </ng-container>
     </div>
 </nav>
