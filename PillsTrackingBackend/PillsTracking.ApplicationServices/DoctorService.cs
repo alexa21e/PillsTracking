@@ -6,16 +6,14 @@ using PillsTracking.Domain;
 
 namespace PillsTracking.ApplicationServices
 {
-	public class PatientService: IPatientService
+	public class DoctorService: IDoctorService
 	{
 		private readonly IPatientRepository _patientRepository;
-		private readonly IMapper _mapper;
 
-		public PatientService(IPatientRepository patientRepository,
+		public DoctorService(IPatientRepository patientRepository,
 			IMapper mapper)
 		{
 			_patientRepository = patientRepository;
-			_mapper = mapper;
 		}
 
 		public async Task<ICollection<Patient>> GetPatients()
@@ -26,7 +24,8 @@ namespace PillsTracking.ApplicationServices
 
 		public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
 		{
-			var patient = _mapper.Map<Patient>(patientToCreate);
+			var patient = Patient.Create(Guid.NewGuid(), patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
+				patientToCreate.Gender, patientToCreate.DateOfBirth);
 			await _patientRepository.AddPatient(patient);
 			await _patientRepository.SaveAsync();
 			return patient;

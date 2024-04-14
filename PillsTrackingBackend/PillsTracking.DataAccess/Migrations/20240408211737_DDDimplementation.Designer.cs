@@ -12,8 +12,8 @@ using PillsTracking.DataAccess;
 namespace PillsTracking.DataAccess.Migrations
 {
     [DbContext(typeof(PillsTrackingDbContext))]
-    [Migration("20240404090205_Initial04Apr")]
-    partial class Initial04Apr
+    [Migration("20240408211737_DDDimplementation")]
+    partial class DDDimplementation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,29 +30,29 @@ namespace PillsTracking.DataAccess.Migrations
                     b.Property<Guid>("DoctorsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PatientsId")
+                    b.Property<Guid>("PatientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("DoctorsId", "PatientsId");
+                    b.HasKey("DoctorsId", "PatientId");
 
-                    b.HasIndex("PatientsId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("DoctorPatient");
                 });
 
-            modelBuilder.Entity("MedicationPrescription", b =>
+            modelBuilder.Entity("DrugPrescription", b =>
                 {
-                    b.Property<Guid>("MedicationsId")
+                    b.Property<Guid>("DrugsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("PrescriptionsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("MedicationsId", "PrescriptionsId");
+                    b.HasKey("DrugsId", "PrescriptionsId");
 
                     b.HasIndex("PrescriptionsId");
 
-                    b.ToTable("MedicationPrescription");
+                    b.ToTable("DrugPrescription");
                 });
 
             modelBuilder.Entity("PillsTracking.Domain.Admin", b =>
@@ -103,7 +103,7 @@ namespace PillsTracking.DataAccess.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("PillsTracking.Domain.Medication", b =>
+            modelBuilder.Entity("PillsTracking.Domain.Drug", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,16 +188,16 @@ namespace PillsTracking.DataAccess.Migrations
 
                     b.HasOne("PillsTracking.Domain.Patient", null)
                         .WithMany()
-                        .HasForeignKey("PatientsId")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MedicationPrescription", b =>
+            modelBuilder.Entity("DrugPrescription", b =>
                 {
-                    b.HasOne("PillsTracking.Domain.Medication", null)
+                    b.HasOne("PillsTracking.Domain.Drug", null)
                         .WithMany()
-                        .HasForeignKey("MedicationsId")
+                        .HasForeignKey("DrugsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

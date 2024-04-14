@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PillsTracking.DataAccess.Migrations.ApplicationDb
 {
     /// <inheritdoc />
-    public partial class InitialIdentity07Apr : Migration
+    public partial class DDDimplementation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

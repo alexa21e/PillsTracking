@@ -7,12 +7,12 @@ namespace PillsTracking.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class PatientsController : ControllerBase
+    public class DoctorsController : ControllerBase
     {
-        private readonly IPatientService _patientService;
-        public PatientsController(IPatientService patientService)
+        private readonly IDoctorService _doctorService;
+        public DoctorsController(IDoctorService doctorService)
         {
-			_patientService = patientService;
+			_doctorService = doctorService;
 		}
 
         [HttpGet]
@@ -20,7 +20,7 @@ namespace PillsTracking.Server.Controllers
         {
 	        try
 	        {
-		        var patients = await _patientService.GetPatients();
+		        var patients = await _doctorService.GetPatients();
 		        return Ok(patients);
 	        }
 	        catch (Exception ex)
@@ -34,7 +34,7 @@ namespace PillsTracking.Server.Controllers
         {
 			try
 			{
-				var patient = await _patientService.AddPatient(patientToCreate);
+				var patient = await _doctorService.AddPatient(patientToCreate);
 				return Ok(patient);
 			}
 			catch (Exception ex)

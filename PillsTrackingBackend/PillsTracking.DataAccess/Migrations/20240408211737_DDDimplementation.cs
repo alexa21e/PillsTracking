@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PillsTracking.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial04Apr : Migration
+    public partial class DDDimplementation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,11 +77,11 @@ namespace PillsTracking.DataAccess.Migrations
                 columns: table => new
                 {
                     DoctorsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PatientsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DoctorPatient", x => new { x.DoctorsId, x.PatientsId });
+                    table.PrimaryKey("PK_DoctorPatient", x => new { x.DoctorsId, x.PatientId });
                     table.ForeignKey(
                         name: "FK_DoctorPatient_Doctors_DoctorsId",
                         column: x => x.DoctorsId,
@@ -89,8 +89,8 @@ namespace PillsTracking.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DoctorPatient_Patients_PatientsId",
-                        column: x => x.PatientsId,
+                        name: "FK_DoctorPatient_Patients_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -116,23 +116,23 @@ namespace PillsTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MedicationPrescription",
+                name: "DrugPrescription",
                 columns: table => new
                 {
-                    MedicationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DrugsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PrescriptionsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicationPrescription", x => new { x.MedicationsId, x.PrescriptionsId });
+                    table.PrimaryKey("PK_DrugPrescription", x => new { x.DrugsId, x.PrescriptionsId });
                     table.ForeignKey(
-                        name: "FK_MedicationPrescription_Medications_MedicationsId",
-                        column: x => x.MedicationsId,
+                        name: "FK_DrugPrescription_Medications_DrugsId",
+                        column: x => x.DrugsId,
                         principalTable: "Medications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicationPrescription_Prescriptions_PrescriptionsId",
+                        name: "FK_DrugPrescription_Prescriptions_PrescriptionsId",
                         column: x => x.PrescriptionsId,
                         principalTable: "Prescriptions",
                         principalColumn: "Id",
@@ -140,13 +140,13 @@ namespace PillsTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DoctorPatient_PatientsId",
+                name: "IX_DoctorPatient_PatientId",
                 table: "DoctorPatient",
-                column: "PatientsId");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicationPrescription_PrescriptionsId",
-                table: "MedicationPrescription",
+                name: "IX_DrugPrescription_PrescriptionsId",
+                table: "DrugPrescription",
                 column: "PrescriptionsId");
 
             migrationBuilder.CreateIndex(
@@ -165,7 +165,7 @@ namespace PillsTracking.DataAccess.Migrations
                 name: "DoctorPatient");
 
             migrationBuilder.DropTable(
-                name: "MedicationPrescription");
+                name: "DrugPrescription");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
