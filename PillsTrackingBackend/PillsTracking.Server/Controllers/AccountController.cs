@@ -139,5 +139,14 @@ namespace PillsTracking.Server.Controllers
 		{
 			return await _userManager.FindByEmailAsync(email) != null;
 		}
+
+		[HttpGet("role")]
+		public async Task<ActionResult<string>> GetUserRole()
+		{
+			var email = User.FindFirstValue(ClaimTypes.Email);
+			var user = await _userManager.FindByEmailAsync(email);
+			var roles = await _userManager.GetRolesAsync(user);
+			return roles.FirstOrDefault();
+		}
 	}
 }
