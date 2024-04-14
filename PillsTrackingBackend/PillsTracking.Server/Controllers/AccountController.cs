@@ -24,7 +24,8 @@ namespace PillsTracking.Server.Controllers
 			_tokenService = tokenService;
 		}
 
-		[Authorize]
+		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Doctor")]
 		[HttpGet]
 		public async Task<ActionResult<UserDTO>> GetCurrentUser()
 		{
@@ -65,8 +66,8 @@ namespace PillsTracking.Server.Controllers
 			};
 		}
 
-		[HttpPost("register")]
-		public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
+		[HttpPost("register/admin")]
+		public async Task<ActionResult<UserDTO>> RegisterAdmin(RegisterDTO registerDTO)
 		{
 			if (CheckUserExistAsync(registerDTO.Email).Result.Value)
 			{
@@ -84,6 +85,49 @@ namespace PillsTracking.Server.Controllers
 			if (!result.Succeeded)
 			{
 				return BadRequest(result.Errors);
+			}
+
+			var roleAdd = await _userManager.AddToRoleAsync(user, "Admin");
+
+			if (!roleAdd.Succeeded)
+			{
+				return BadRequest("Can't add admin role");
+			}
+
+			return new UserDTO
+			{
+				Email = user.Email,
+				Token = _tokenService.CreateToken(user),
+				Username = user.UserName
+			};
+		}
+
+		[HttpPost("register/doctor")]
+		public async Task<ActionResult<UserDTO>> RegisterDoctor(RegisterDTO registerDTO)
+		{
+			if (CheckUserExistAsync(registerDTO.Email).Result.Value)
+			{
+				return BadRequest("User associated with this email is already created");
+			}
+			var user = new ApplicationUser
+			{
+				UserName = registerDTO.Username,
+				Email = registerDTO.Email,
+
+			};
+
+			var result = await _userManager.CreateAsync(user, registerDTO.Password);
+
+			if (!result.Succeeded)
+			{
+				return BadRequest(result.Errors);
+			}
+
+			var roleAdd = await _userManager.AddToRoleAsync(user, "Doctor");
+
+			if (!roleAdd.Succeeded)
+			{
+				return BadRequest("Can't add doctor role");
 			}
 
 			return new UserDTO

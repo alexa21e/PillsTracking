@@ -23,13 +23,14 @@ builder.Services.AddDbContext<PillsTrackingDbContext>(options =>
 
 builder.Services.RegisterApplication();
 
-builder.Services.AddIdentityCore<ApplicationUser>()
-	.AddEntityFrameworkStores<ApplicationDbContext>()
-	.AddSignInManager<SignInManager<ApplicationUser>>();
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 	.AddEntityFrameworkStores<ApplicationDbContext>()
+	.AddSignInManager<SignInManager<ApplicationUser>>()
 	.AddDefaultTokenProviders();
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options =>
@@ -56,41 +57,36 @@ builder.Services.AddCors(options =>
 		});
 });
 
-
-builder.Services.AddAuthorization();
-
 builder.Services.AddSwaggerGen(c =>
 {
 	c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	var securitySchema = new OpenApiSecurityScheme
 	{
-		Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+		Description = "JWT Auth Bearer Scheme",
 		Name = "Authorization",
 		In = ParameterLocation.Header,
 		Type = SecuritySchemeType.Http,
-		Scheme = "bearer"
-	});
+		Scheme = "Bearer",
+		Reference = new OpenApiReference
+		{
+			Type = ReferenceType.SecurityScheme,
+			Id = "Bearer"
+		}
+	};
 
-	c.AddSecurityRequirement(new OpenApiSecurityRequirement
+	c.AddSecurityDefinition("Bearer", securitySchema);
+
+	var securityRequirement = new OpenApiSecurityRequirement
 	{
 		{
-			new OpenApiSecurityScheme
-			{
-				Reference = new OpenApiReference
-				{
-					Type = ReferenceType.SecurityScheme,
-					Id = "Bearer"
-				}
-			},
-			new string[] {}
+			securitySchema, new[] {"Bearer"}
 		}
-	});
-});
+	};
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+	c.AddSecurityRequirement(securityRequirement);
+
+});
 
 var app = builder.Build();
 

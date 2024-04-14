@@ -21,7 +21,12 @@ namespace PillsTracking.DataAccess
 					throw new Exception("Can't create user");
 				}
 
-				await userManager.AddToRoleAsync(user, "admin");
+				var roleAdd = await userManager.AddToRoleAsync(user, "Admin");
+
+				if (!roleAdd.Succeeded)
+				{
+					throw new Exception("Can't add user to role");
+				}
 			}
 		}
 	}
