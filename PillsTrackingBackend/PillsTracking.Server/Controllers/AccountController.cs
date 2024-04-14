@@ -31,11 +31,14 @@ namespace PillsTracking.Server.Controllers
 			
 			var user = await _userManager.FindByEmailAsync(email);
 
+			var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
 			return new UserDTO
 			{
 				Email = user.Email,
 				Token = _tokenService.CreateToken(user),
-				Username = user.UserName
+				Username = user.UserName,
+				Role = role
 			};
 		}
 
@@ -57,11 +60,14 @@ namespace PillsTracking.Server.Controllers
 				return Unauthorized();
 			}
 
+			var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
 			return new UserDTO
 			{
 				Email = user.Email,
 				Token = _tokenService.CreateToken(user),
-				Username = user.UserName
+				Username = user.UserName,
+				Role = role
 			};
 		}
 
@@ -95,7 +101,8 @@ namespace PillsTracking.Server.Controllers
 			return new UserDTO
 			{
 				Email = user.Email,
-				Username = user.UserName
+				Username = user.UserName,
+				Role = "Admin"
 			};
 		}
 
@@ -130,7 +137,8 @@ namespace PillsTracking.Server.Controllers
 			return new UserDTO
 			{
 				Email = user.Email,
-				Username = user.UserName
+				Username = user.UserName,
+				Role = "Doctor"
 			};
 		}
 
@@ -138,15 +146,6 @@ namespace PillsTracking.Server.Controllers
 		public async Task<ActionResult<bool>> CheckUserExistAsync([FromQuery] string email)
 		{
 			return await _userManager.FindByEmailAsync(email) != null;
-		}
-
-		[HttpGet("role")]
-		public async Task<ActionResult<string>> GetUserRole()
-		{
-			var email = User.FindFirstValue(ClaimTypes.Email);
-			var user = await _userManager.FindByEmailAsync(email);
-			var roles = await _userManager.GetRolesAsync(user);
-			return roles.FirstOrDefault();
 		}
 	}
 }
