@@ -24,8 +24,6 @@ namespace PillsTracking.Server.Controllers
 			_tokenService = tokenService;
 		}
 
-		[Authorize(Roles = "Admin")]
-		[Authorize(Roles = "Doctor")]
 		[HttpGet]
 		public async Task<ActionResult<UserDTO>> GetCurrentUser()
 		{
@@ -41,6 +39,7 @@ namespace PillsTracking.Server.Controllers
 			};
 		}
 
+		[AllowAnonymous]
 		[HttpPost("login")]
 		public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
 		{
@@ -77,7 +76,6 @@ namespace PillsTracking.Server.Controllers
 			{
 				UserName = registerDTO.Username,
 				Email = registerDTO.Email,
-
 			};
 
 			var result = await _userManager.CreateAsync(user, registerDTO.Password);
@@ -97,7 +95,6 @@ namespace PillsTracking.Server.Controllers
 			return new UserDTO
 			{
 				Email = user.Email,
-				Token = _tokenService.CreateToken(user),
 				Username = user.UserName
 			};
 		}
@@ -133,7 +130,6 @@ namespace PillsTracking.Server.Controllers
 			return new UserDTO
 			{
 				Email = user.Email,
-				Token = _tokenService.CreateToken(user),
 				Username = user.UserName
 			};
 		}

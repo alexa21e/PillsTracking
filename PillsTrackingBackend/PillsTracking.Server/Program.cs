@@ -1,6 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -28,7 +30,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 	.AddSignInManager<SignInManager<ApplicationUser>>()
 	.AddDefaultTokenProviders();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(opt =>
+{
+	var policy = new AuthorizationPolicyBuilder("Bearer").RequireAuthenticatedUser().Build();
+	opt.Filters.Add(new AuthorizeFilter(policy));
+});
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -79,9 +85,7 @@ builder.Services.AddSwaggerGen(c =>
 
 	var securityRequirement = new OpenApiSecurityRequirement
 	{
-		{
-			securitySchema, new[] {"Bearer"}
-		}
+		{ securitySchema, new[] { "Bearer" } }
 	};
 
 	c.AddSecurityRequirement(securityRequirement);
