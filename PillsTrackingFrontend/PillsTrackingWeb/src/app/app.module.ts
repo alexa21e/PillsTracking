@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { FeaturesModule } from './features/features.module';
 import { SharedModule } from './shared/shared.module';
 import { AccountModule } from './features/account/account.module';
+import { MessageService} from "primeng/api";
 
 @NgModule({
   declarations: [
@@ -22,9 +23,11 @@ import { AccountModule } from './features/account/account.module';
     CoreModule,
     FeaturesModule,
     SharedModule,
-    AccountModule
+    AccountModule,
   ],
-  providers: [],
+  providers: [
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 

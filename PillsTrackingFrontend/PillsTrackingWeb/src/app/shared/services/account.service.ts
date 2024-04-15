@@ -51,6 +51,26 @@ export class AccountService {
     );
   }
 
+  registerAdmin(values: any){
+    return this.http.post<User>(this.baseUrl + 'register/admin', values).pipe(
+      map(user => {
+        localStorage.setItem('token', user.token);
+        this.currentUserSource.next(user);
+        return user;
+      })
+    )
+  }
+
+  registerDoctor(values: any){
+    return this.http.post<User>(this.baseUrl + 'register/doctor', values).pipe(
+      map(user => {
+        localStorage.setItem('token', user.token);
+        this.currentUserSource.next(user);
+        return user;
+      })
+    )
+  }
+
   logout(){
     localStorage.removeItem('token');
     this.currentUserSource.next(null);

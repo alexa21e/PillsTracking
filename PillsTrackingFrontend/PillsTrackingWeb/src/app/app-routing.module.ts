@@ -2,11 +2,16 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "./core/guards/auth.guard";
 import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
-import { LoginComponent } from "./features/account/login/login.component";
+import { LandingPageComponent } from "./shared/components/landing-page/landing-page.component";
 
 const routes: Routes = [
     {
-        path: '', component: LoginComponent, 
+        path: '', component: LandingPageComponent, 
+    },
+    {
+        path: 'account',
+        loadChildren: () => import('./features/account/account.module')
+        .then(m => m.AccountModule),
     },
     {
         path: 'admin',

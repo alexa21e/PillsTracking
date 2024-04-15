@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 
 
 @NgModule({
   declarations: [
     TextInputComponent, 
-    NotFoundComponent],
+    NotFoundComponent, LandingPageComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule

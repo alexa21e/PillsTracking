@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../../shared/services/account.service';
-import { User } from '../../../shared/models/user';
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-login',
@@ -14,9 +14,12 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required)
   })
+
   returnUrl: string;
 
-  constructor(private accountService: AccountService,
+  constructor(
+    private messageService: MessageService,
+    private accountService: AccountService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
     this.returnUrl = this.activatedRoute.snapshot.
@@ -28,11 +31,8 @@ export class LoginComponent {
       next: (user) => {
         this.router.navigate([`/${user.role.toLowerCase()}`]);
       },
-      complete: () => {
-
-      },
       error: (error) => {
-        console.log(error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error });
       }
     });
   }

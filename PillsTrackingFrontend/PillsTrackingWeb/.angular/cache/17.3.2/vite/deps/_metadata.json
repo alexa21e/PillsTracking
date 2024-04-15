@@ -1,55 +1,67 @@
 {
-  "hash": "68caf7eb",
-  "configHash": "327db80b",
+  "hash": "370cc080",
+  "configHash": "ffd7581e",
   "lockfileHash": "e1960bbd",
-  "browserHash": "6ad109bf",
+  "browserHash": "d5f66fbf",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "7e3076ee",
+      "fileHash": "c17ba41b",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "adef6a43",
+      "fileHash": "3be0b4d3",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "ea812842",
+      "fileHash": "09569e1a",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "a54f1976",
+      "fileHash": "ab490896",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "49529127",
+      "fileHash": "db559bd9",
       "needsInterop": false
     },
     "@angular/platform-browser/animations": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/animations.mjs",
       "file": "@angular_platform-browser_animations.js",
-      "fileHash": "c75c680d",
+      "fileHash": "dbb769fb",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "48acbb5c",
+      "fileHash": "d9f13b87",
+      "needsInterop": false
+    },
+    "primeng/api": {
+      "src": "../../../../../node_modules/primeng/fesm2022/primeng-api.mjs",
+      "file": "primeng_api.js",
+      "fileHash": "da3b7f80",
+      "needsInterop": false
+    },
+    "primeng/toast": {
+      "src": "../../../../../node_modules/primeng/fesm2022/primeng-toast.mjs",
+      "file": "primeng_toast.js",
+      "fileHash": "853b91c0",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "c19a6d53",
+      "fileHash": "e5b827a0",
       "needsInterop": false
     }
   },
@@ -59,6 +71,12 @@
     },
     "chunk-2YJMKIQI": {
       "file": "chunk-2YJMKIQI.js"
+    },
+    "chunk-VR6FYCRL": {
+      "file": "chunk-VR6FYCRL.js"
+    },
+    "chunk-4FYZLHZK": {
+      "file": "chunk-4FYZLHZK.js"
     },
     "chunk-UICHERYB": {
       "file": "chunk-UICHERYB.js"

@@ -60,7 +60,7 @@ namespace PillsTracking.Server.Controllers
 
 			if (!result.Succeeded)
 			{
-				return Unauthorized();
+				return Unauthorized("Email or password are incorrect");
 			}
 
 			var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
@@ -169,7 +169,8 @@ namespace PillsTracking.Server.Controllers
 				};
 			}
 		}
-
+		
+		[AllowAnonymous]
 		[HttpGet("userfound")]
 		public async Task<ActionResult<bool>> CheckUserExistAsync([FromQuery] string email)
 		{

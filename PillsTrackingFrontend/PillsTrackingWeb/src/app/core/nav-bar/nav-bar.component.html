@@ -4,17 +4,16 @@
             <i class="pi pi-calendar-plus"></i>
             <a class="navbar-brand" href="#">PillsTracking</a>
         </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="d-flex flex-wrap align-items-center justify-content-center">
             <!-- <ul class="nav col-12 col-lg-auto me-lg-auto mb-5 mb-md-0">
                 <li><a class="nav-link px-2" routerLink="">Patients</a></li>
             </ul> -->
         </div>
         <ng-container *ngIf="(accountService.currentUser$ | async) === null">
-            <a class="nav-link px-2" routerLink="">Login</a>
+            <div class="d-flex">
+                <a class="btn btn-outline-secondary m-2" routerLink="/account/login">Login</a>
+                <a class="btn btn-outline-secondary m-2" routerLink="/account/register">Sign up</a>
+            </div>
         </ng-container>
         <ng-container *ngIf="accountService.currentUser$ | async as user">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
