@@ -14,5 +14,9 @@
 				Email = email
 			};
 		}
+		public void SetExternalId(Guid? externalId)
+		{
+			ExternalId = externalId;
+		}
 	}
 }
