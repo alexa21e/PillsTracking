@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <div class="navbar-brand">
+        <div class="navbar-brand m-2">
             <i class="pi pi-calendar-plus"></i>
             <a class="navbar-brand" href="#">PillsTracking</a>
         </div>
@@ -14,7 +14,7 @@
             </ul> -->
         </div>
         <ng-container *ngIf="(accountService.currentUser$ | async) === null">
-            <a class="nav-link px-2" routerLink="/login">Login</a>
+            <a class="nav-link px-2" routerLink="">Login</a>
         </ng-container>
         <ng-container *ngIf="accountService.currentUser$ | async as user">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"

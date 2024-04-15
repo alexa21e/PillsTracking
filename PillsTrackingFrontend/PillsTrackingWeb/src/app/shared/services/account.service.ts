@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, map, of } from 'rxjs';
-import { User } from '../../shared/models/user';
+import { User } from '../models/user';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = 'https://localhost:7137/api/'
+  baseUrl = 'https://localhost:7137/api/account/'
 
   private currentUserSource = new ReplaySubject<User | null>(1);
   currentUser$ = this.currentUserSource.asObservable();
@@ -25,10 +25,9 @@ export class AccountService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<User>(this.baseUrl + 'account', { headers }).pipe(
+    return this.http.get<User>(this.baseUrl, { headers }).pipe(
       map((user) => {
         if(user){
-          localStorage.setItem('token', user.token);
           this.currentUserSource.next(user);
           return user;
         }
@@ -38,11 +37,16 @@ export class AccountService {
       }));
   }
 
+  getCurrentUser() {
+    return this.http.get<User>(this.baseUrl);
+  }
+
   login(values: any) {
-    return this.http.post<User>(this.baseUrl + 'account/login', values).pipe(
+    return this.http.post<User>(this.baseUrl + 'login', values).pipe(
       map((user) => {
         localStorage.setItem('token', user.token);
         this.currentUserSource.next(user);
+        return user;
       })
     );
   }

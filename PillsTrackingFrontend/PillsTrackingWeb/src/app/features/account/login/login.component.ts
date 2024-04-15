@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AccountService } from '../account.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from '../../../shared/services/account.service';
+import { User } from '../../../shared/models/user';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +16,24 @@ export class LoginComponent {
   })
   returnUrl: string;
 
-  constructor(private accountService: AccountService, 
-              private router: Router, 
-              private activatedRoute: ActivatedRoute) {
-      this.returnUrl = this.activatedRoute.snapshot.
-                      queryParams['returnUrl'] || '/admin/home'
+  constructor(private accountService: AccountService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+    this.returnUrl = this.activatedRoute.snapshot.
+      queryParams['returnUrl'];
   }
 
   onSubmit() {
     this.accountService.login(this.loginForm.value).subscribe({
-      next: () => this.router.navigateByUrl(this.returnUrl)
-    })
+      next: (user) => {
+        this.router.navigate([`/${user.role.toLowerCase()}`]);
+      },
+      complete: () => {
+
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 }
