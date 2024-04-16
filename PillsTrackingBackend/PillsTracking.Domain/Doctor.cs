@@ -19,6 +19,11 @@
 				Email = email,
 				Specialization = specialization
 			};
-		} 
+		}
+
+		public void SetExternalId(Guid? externalId)
+		{
+			ExternalId = externalId;
+		}
 	}
 }
