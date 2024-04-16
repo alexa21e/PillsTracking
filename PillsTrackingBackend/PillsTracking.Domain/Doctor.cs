@@ -2,7 +2,28 @@
 {
 	public class Doctor: WebUser
 	{
-		public string Specialization { get; set; } = string.Empty;
-		public ICollection<Patient> Patients { get; set; }
+		public string Specialization { get; private set; } = string.Empty;
+
+		private List<Patient> _patients = new List<Patient>();
+		public IReadOnlyCollection<Patient> Patient => _patients;
+
+		private Doctor() {}
+
+		public static Doctor Create(Guid externalId, string name, string email, string specialization)
+		{
+			return new Doctor()
+			{
+				Id = Guid.NewGuid(),
+				ExternalId = externalId,
+				Name = name,
+				Email = email,
+				Specialization = specialization
+			};
+		}
+
+		public void SetExternalId(Guid? externalId)
+		{
+			ExternalId = externalId;
+		}
 	}
 }
