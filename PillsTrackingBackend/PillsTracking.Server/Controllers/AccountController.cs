@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataAccess;
 using PillsTracking.DataObjects;
@@ -176,5 +177,19 @@ namespace PillsTracking.Server.Controllers
 		{
 			return await _userManager.FindByEmailAsync(email) != null;
 		}
+
+        [AllowAnonymous]
+        [HttpPost("login/patient")]
+        public async Task<ActionResult<bool>> LoginPatient(string phoneNumber)
+        {
+            var patient = await _accountService.GetPatientByPhone(phoneNumber);
+
+            if (patient == null)
+            {
+                return NotFound("Phone number not found");
+            }
+
+            return Ok(true);
+        }	
 	}
 }

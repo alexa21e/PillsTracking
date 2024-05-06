@@ -8,11 +8,14 @@ namespace PillsTracking.ApplicationServices
 	{
 		private readonly IDoctorRepository _doctorRepository;
 		private readonly IAdminRepository _adminRepository;
+		private readonly IPatientRepository _patientRepository;
 		public AccountService(IDoctorRepository doctorRepository,
-			IAdminRepository adminRepository)
+			IAdminRepository adminRepository,
+			IPatientRepository patientRepository)
 		{
 			_doctorRepository = doctorRepository;
 			_adminRepository = adminRepository;
+			_patientRepository = patientRepository;
 		}
 
 		public async Task<Doctor> GetDoctorByEmail(string email)
@@ -24,5 +27,10 @@ namespace PillsTracking.ApplicationServices
 		{
 			return await _adminRepository.GetAdminByEmail(email);
 		}
+
+        public async Task<Patient> GetPatientByPhone(string phoneNumber)
+        {
+            return await _patientRepository.GetPatientByPhone(phoneNumber);
+        }
 	}
 }

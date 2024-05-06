@@ -22,6 +22,14 @@ namespace PillsTracking.DataAccess.Repositories
 		        .ToListAsync();
         }
 
+        public async Task<Patient> GetPatientByPhone(string phoneNumber)
+        {
+            return await _dbContext.Patients
+                .Include(p => p.Prescriptions)
+                .Include(p => p.Doctors)
+                .FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber);
+        }
+
 		public async Task AddPatient(Patient patient)
         {
             await _dbContext.Patients.AddAsync(patient);

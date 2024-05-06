@@ -6,5 +6,7 @@ namespace PillsTracking.ApplicationServices.Abstractions
 	{
 		Task<Doctor> GetDoctorByEmail(string email);
 		Task<Admin> GetAdminByEmail(string email);
-	}
+        Task<Patient> GetPatientByPhone(string phoneNumber);
+
+    }
 }
