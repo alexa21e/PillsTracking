@@ -1,7 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 
 export default function App() {
+    const navigation = useNavigation();
     const login = async () => {
         navigation.navigate('login');
     };
