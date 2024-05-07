@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PillsTracking.Domain", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PillsTracking.DataAccess", "..\PillsTracking.DataAccess\PillsTracking.DataAccess.csproj", "{E05F5EAE-3724-468E-B9EB-788783BB6A83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PillsTracking.DataObjects", "..\PillsTracking.DataObjects\PillsTracking.DataObjects.csproj", "{07490E6C-E148-4C05-BDA6-1B2D9925E393}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PillsTracking.DataObjects", "..\PillsTracking.DataObjects\PillsTracking.DataObjects.csproj", "{07490E6C-E148-4C05-BDA6-1B2D9925E393}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

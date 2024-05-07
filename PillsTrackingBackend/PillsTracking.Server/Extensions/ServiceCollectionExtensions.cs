@@ -13,6 +13,7 @@ namespace PillsTracking.Server.Extensions
 			services.AddScoped<ITokenService, TokenService>();
 			services.AddScoped<IDoctorService, DoctorService>();
 			services.AddScoped<IAccountService, AccountService>();
+			services.AddScoped<IAdminService, AdminService>();
 			services.AddScoped<IAdminRepository, AdminRepository>();
 			services.AddScoped<IDoctorRepository, DoctorRepository>();
 			services.AddScoped<IPatientRepository, PatientRepository>();
