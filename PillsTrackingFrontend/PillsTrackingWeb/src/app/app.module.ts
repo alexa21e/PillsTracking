@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +10,8 @@ import { FeaturesModule } from './features/features.module';
 import { SharedModule } from './shared/shared.module';
 import { AccountModule } from './features/account/account.module';
 import { MessageService} from "primeng/api";
+import { JwtInterceptor } from './core/interceptors/jwtinterceptor';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -24,8 +26,10 @@ import { MessageService} from "primeng/api";
     FeaturesModule,
     SharedModule,
     AccountModule,
+    ToastModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     MessageService
   ],
   bootstrap: [AppComponent]

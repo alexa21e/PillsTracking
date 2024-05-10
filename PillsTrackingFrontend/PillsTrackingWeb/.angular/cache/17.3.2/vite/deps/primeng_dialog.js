@@ -1,10 +1,10 @@
 import {
+  TimesIcon
+} from "./chunk-LH7QWKJC.js";
+import {
   ButtonDirective,
   ButtonModule
 } from "./chunk-SID2UPSY.js";
-import {
-  TimesIcon
-} from "./chunk-LH7QWKJC.js";
 import {
   BaseIcon,
   DomHandler,

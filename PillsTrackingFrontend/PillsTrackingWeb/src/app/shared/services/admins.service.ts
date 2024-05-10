@@ -1,13 +1,14 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Doctor } from "../models/doctor";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class AdminsService {
-    baseUrl = 'https://localhost:7137/api/Admins/'
+    baseUrl = environment.baseUrl + 'api/Admins/'
     
     constructor(private http: HttpClient) {
     }
