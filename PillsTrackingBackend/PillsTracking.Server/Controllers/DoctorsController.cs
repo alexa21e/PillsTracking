@@ -15,7 +15,7 @@ namespace PillsTracking.Server.Controllers
 			_doctorService = doctorService;
 		}
 
-        [HttpGet]
+        [HttpGet("getPatients")]
         public async Task<ActionResult<ICollection<Patient>>> GetPatients()
         {
 	        try
@@ -29,7 +29,7 @@ namespace PillsTracking.Server.Controllers
 	        }
         }
 
-        [HttpPost("add")]
+        [HttpPost("addPatient")]
         public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
         {
 			try
