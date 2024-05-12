@@ -3,7 +3,7 @@ import {
   DomHandler,
   Ripple,
   RippleModule
-} from "./chunk-K5CNOZZD.js";
+} from "./chunk-P4SXOGCQ.js";
 import {
   ObjectUtils,
   PrimeTemplate,
@@ -1090,8 +1090,9 @@ var ButtonModule = class _ButtonModule {
 })();
 
 export {
+  SpinnerIcon,
   ButtonDirective,
   Button,
   ButtonModule
 };
-//# sourceMappingURL=chunk-SID2UPSY.js.map
+//# sourceMappingURL=chunk-RC6RYN66.js.map

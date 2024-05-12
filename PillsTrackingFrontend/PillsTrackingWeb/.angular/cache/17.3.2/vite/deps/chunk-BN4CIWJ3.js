@@ -1,6 +1,6 @@
 import {
   BaseIcon
-} from "./chunk-K5CNOZZD.js";
+} from "./chunk-P4SXOGCQ.js";
 import {
   Component,
   setClassMetadata,
@@ -69,4 +69,4 @@ var TimesIcon = class _TimesIcon extends BaseIcon {
 export {
   TimesIcon
 };
-//# sourceMappingURL=chunk-LH7QWKJC.js.map
+//# sourceMappingURL=chunk-BN4CIWJ3.js.map

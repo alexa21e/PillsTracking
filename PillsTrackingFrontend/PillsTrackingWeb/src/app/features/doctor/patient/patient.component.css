@@ -1,0 +1,11 @@
+.page{
+    margin: 20px;
+}
+
+::ng-deep .p-button {
+    border-radius: 5px;
+}
+
+.add-pp{
+    margin-bottom: 1%;
+}

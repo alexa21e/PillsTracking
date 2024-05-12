@@ -637,6 +637,35 @@ var DomHandler = class _DomHandler {
     this.removeClass(document.body, className);
   }
 };
+var ConnectedOverlayScrollHandler = class {
+  element;
+  listener;
+  scrollableParents;
+  constructor(element, listener = () => {
+  }) {
+    this.element = element;
+    this.listener = listener;
+  }
+  bindScrollListener() {
+    this.scrollableParents = DomHandler.getScrollableParents(this.element);
+    for (let i = 0; i < this.scrollableParents.length; i++) {
+      this.scrollableParents[i].addEventListener("scroll", this.listener);
+    }
+  }
+  unbindScrollListener() {
+    if (this.scrollableParents) {
+      for (let i = 0; i < this.scrollableParents.length; i++) {
+        this.scrollableParents[i].removeEventListener("scroll", this.listener);
+      }
+    }
+  }
+  destroy() {
+    this.unbindScrollListener();
+    this.element = null;
+    this.listener = null;
+    this.scrollableParents = null;
+  }
+};
 
 // node_modules/primeng/fesm2022/primeng-ripple.mjs
 var Ripple = class _Ripple {
@@ -883,8 +912,9 @@ var BaseIcon = class _BaseIcon {
 
 export {
   DomHandler,
+  ConnectedOverlayScrollHandler,
   BaseIcon,
   Ripple,
   RippleModule
 };
-//# sourceMappingURL=chunk-K5CNOZZD.js.map
+//# sourceMappingURL=chunk-P4SXOGCQ.js.map

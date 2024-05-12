@@ -1,0 +1,63 @@
+<p-dialog header="Prescription's details" [modal]="true" [(visible)]="isPrescriptionDialogVisible"
+    [style]="{ width: '25rem' }">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Username</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="email" class="font-semibold w-6rem">Email</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="isPrescriptionDialogVisible = false" />
+        <p-button label="Save" (click)="isPrescriptionDialogVisible = false" />
+    </div>
+</p-dialog>
+<p-dialog header="Add prescription" [modal]="true" [(visible)]="isAddPrescriptionDialogVisible"
+    [style]="{ width: '25rem' }">
+    
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="isAddPrescriptionDialogVisible = false" />
+        <p-button label="Save" (click)="isAddPrescriptionDialogVisible = false" />
+    </div>
+</p-dialog>
+<div class="page">
+    <div class="flex justify-content-end flex-wrap">
+        <p-button label="Add new prescription" class="add-pp" (click)="onAddPrescriptionClick()" />
+    </div>
+    <div class="card" *ngIf="patient">
+        <p-card>
+            <h1>{{patient.name}}</h1>
+            <p-divider></p-divider>
+            <div class="flex justify-content-between">
+                <div>
+                    <p>Phone number: {{patient.phoneNumber}}</p>
+                    <p>Address: {{patient.address}}</p>
+                    <p>Gender: {{getGenderDisplay(patient.gender)}}</p>
+                    <p>Birth date: {{patient.dateOfBirth | date:'dd/MM/yyyy'}}</p>
+                </div>
+            </div>
+            <div id="table">
+                <p-table #dt [value]="patient.prescriptions">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Prescription's id</th>
+                            <th>Actions</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4" *ngIf="patient.prescriptions.length === 0">This patient has currently no
+                                prescriptions</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-prescription>
+                        <tr class="clickable-row" (click)="onPrescriptionClick()">
+                            <td> {{ prescription.id }} </td>
+                            <td class="clickable-row">
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-card>
+    </div>
+</div>
