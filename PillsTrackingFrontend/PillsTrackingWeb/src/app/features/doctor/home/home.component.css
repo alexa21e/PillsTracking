@@ -1,0 +1,7 @@
+::ng-deep .p-button {
+    border-radius: 5px;
+}
+
+.form-group{
+    margin: 0.3rem;
+}
