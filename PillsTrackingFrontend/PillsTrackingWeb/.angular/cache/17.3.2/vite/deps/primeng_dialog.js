@@ -2,6 +2,14 @@ import {
   TimesIcon
 } from "./chunk-LH7QWKJC.js";
 import {
+  animate,
+  animation,
+  style,
+  transition,
+  trigger,
+  useAnimation
+} from "./chunk-WLDY6QNO.js";
+import {
   ButtonDirective,
   ButtonModule
 } from "./chunk-SID2UPSY.js";
@@ -11,14 +19,6 @@ import {
   Ripple,
   RippleModule
 } from "./chunk-K5CNOZZD.js";
-import {
-  animate,
-  animation,
-  style,
-  transition,
-  trigger,
-  useAnimation
-} from "./chunk-WLDY6QNO.js";
 import {
   Footer,
   Header,
