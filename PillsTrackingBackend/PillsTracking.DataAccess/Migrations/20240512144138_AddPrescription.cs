@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PillsTracking.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class DDDimplementation : Migration
+    public partial class AddPrescription : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +41,7 @@ namespace PillsTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medications",
+                name: "Drugs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -52,7 +52,7 @@ namespace PillsTracking.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Medications", x => x.Id);
+                    table.PrimaryKey("PK_Drugs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,9 +126,9 @@ namespace PillsTracking.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_DrugPrescription", x => new { x.DrugsId, x.PrescriptionsId });
                     table.ForeignKey(
-                        name: "FK_DrugPrescription_Medications_DrugsId",
+                        name: "FK_DrugPrescription_Drugs_DrugsId",
                         column: x => x.DrugsId,
-                        principalTable: "Medications",
+                        principalTable: "Drugs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -171,7 +171,7 @@ namespace PillsTracking.DataAccess.Migrations
                 name: "Doctors");
 
             migrationBuilder.DropTable(
-                name: "Medications");
+                name: "Drugs");
 
             migrationBuilder.DropTable(
                 name: "Prescriptions");

@@ -42,6 +42,20 @@ namespace PillsTracking.Server.Controllers
 				return BadRequest();
 			}
 		}
+
+        [HttpPost("addPrescription")]
+        public async Task<ActionResult<Prescription>> AddPrescription([FromBody] PrescriptionToCreateDTO prescriptionToCreate)
+        {
+            try
+            {
+                var prescription = await _doctorService.AddPrescription(prescriptionToCreate);
+                return Ok(prescription);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
 
