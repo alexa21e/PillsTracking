@@ -28,6 +28,12 @@ namespace PillsTracking.ApplicationServices
 			return patients;
 		}
 
+        public async Task<Patient> GetPatientById(Guid id)
+        {
+            var patient = await _patientRepository.GetPatientById(id);
+            return patient;
+        }
+
 		public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
 		{
 			var patient = Patient.Create(Guid.NewGuid(), patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,

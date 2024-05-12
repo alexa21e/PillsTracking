@@ -29,6 +29,20 @@ namespace PillsTracking.Server.Controllers
 	        }
         }
 
+        [HttpGet("getPatientById")]
+        public async Task<ActionResult<Patient>> GetPatientById(Guid id)
+        {
+            try
+            {
+                var patient = await _doctorService.GetPatientById(id);
+                return Ok(patient);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("addPatient")]
         public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
         {
