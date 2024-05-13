@@ -68,5 +68,13 @@ namespace PillsTracking.ApplicationServices
 			await _patientRepository.SaveAsync();
 			return prescription;
         }
-	}
+
+        public async Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs)
+        {
+
+            var updatedPrescription = await _prescriptionRepository.UpdatePrescription(prescriptionId, newDuration, newDrugs);
+
+            return updatedPrescription;
+        }
+    }
 }

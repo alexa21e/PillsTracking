@@ -30,14 +30,6 @@ namespace PillsTracking.DataAccess.Repositories
                 .FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber);
         }
 
-        public async Task<Patient> GetPatientById(Guid id)
-        {
-            return await _dbContext.Patients
-                .Include(p => p.Prescriptions)
-                .Include(p => p.Doctors)
-                .FirstOrDefaultAsync(p => p.Id == id);
-        }
-
 		public async Task AddPatient(Patient patient)
         {
             await _dbContext.Patients.AddAsync(patient);

@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PillsTracking.DataAccess.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:PillsTrackingBackend/PillsTracking.DataAccess/Migrations/20240513152121_updatingprescription.cs
-    public partial class updatingprescription : Migration
-========
     public partial class AddPrescription : Migration
->>>>>>>> main:PillsTrackingBackend/PillsTracking.DataAccess/Migrations/20240512144138_AddPrescription.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -185,3 +181,4 @@ namespace PillsTracking.DataAccess.Migrations
         }
     }
 }
+
