@@ -45,8 +45,14 @@ namespace PillsTracking.ApplicationServices
 
         public async Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate)
         {
+            if (prescriptionToCreate == null)
+            {
+                throw new ArgumentNullException(nameof(prescriptionToCreate));
+            }
+
             var prescription = Prescription.Create(prescriptionToCreate.Duration);
 			prescription.SetPatient(prescriptionToCreate.PatientId);
+
             foreach (var drugDTO in prescriptionToCreate.Drugs)
             {
                 var drug = await _drugRepository.GetDrugByNameConcentrationDosageFrequency(drugDTO.Name,
@@ -64,8 +70,10 @@ namespace PillsTracking.ApplicationServices
 					prescription.AddDrug(createdDrug);
                 }
             }
+
             await _prescriptionRepository.AddPrescription(prescription);
 			await _patientRepository.SaveAsync();
+
 			return prescription;
         }
 
