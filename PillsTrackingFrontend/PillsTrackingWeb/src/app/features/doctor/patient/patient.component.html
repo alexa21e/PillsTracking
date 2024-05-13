@@ -14,12 +14,225 @@
     </div>
 </p-dialog>
 <p-dialog header="Add prescription" [modal]="true" [(visible)]="isAddPrescriptionDialogVisible"
-    [style]="{ width: '25rem' }">
-    
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (click)="isAddPrescriptionDialogVisible = false" />
-        <p-button label="Save" (click)="isAddPrescriptionDialogVisible = false" />
-    </div>
+    [style]="{ width: '75rem' }">
+    <span>For a drug to be saved into the prescriptions, all values must be completed.</span>
+    <form [formGroup]="prescriptionForm" class="form">
+        <div class="form-group m">
+            <label>Duration</label>
+            <input pInputNumber [formControl]="prescriptionForm.controls['duration']" class="form-control">
+        </div>
+        <div class="form-group m">
+            <p>Drug no.1</p>
+            <div formGroupName="drug1">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.2</p>
+            <div formGroupName="drug2">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.3</p>
+            <div formGroupName="drug3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.4</p>
+            <div formGroupName="drug4">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.5</p>
+            <div formGroupName="drug5">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.6</p>
+            <div formGroupName="drug6">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.7</p>
+            <div formGroupName="drug7">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.8</p>
+            <div formGroupName="drug8">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m">
+            <p>Drug no.9</p>
+            <div formGroupName="drug9">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Name</label>
+                        <input pInputText formControlName="name" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Concentration</label>
+                        <input pInputNumber formControlName="concentration" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Dosage</label>
+                        <input pInputNumber formControlName="dosage" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <label>Frequency</label>
+                        <input pInputNumber formControlName="frequency" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-dialog-footer mt-2">
+            <button pButton type="button" label="Submit" class="p-button-success"
+                (click)="onSubmitButtonClick()"></button>
+        </div>
+    </form>
 </p-dialog>
 <div class="page">
     <div class="flex justify-content-end flex-wrap">

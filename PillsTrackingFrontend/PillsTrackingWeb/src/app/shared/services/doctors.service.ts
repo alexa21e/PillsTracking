@@ -23,4 +23,8 @@ export class DoctorsService {
     addPatient(values: any){
         return this.http.post<PatientToCreate>(this.baseUrl + 'addPatient', values);
     }
+
+    addPrescription(values: any){
+        return this.http.post(this.baseUrl + 'addPrescription', values);
+    }
 }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DoctorsService } from '../../../shared/services/doctors.service';
 import { ActivatedRoute } from '@angular/router';
 import { Patient } from '../../../shared/models/patient';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-patient',
@@ -12,13 +13,27 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 export class PatientComponent implements OnInit {
 
   patient!: Patient;
+  patientId?: string | null;
 
   isPrescriptionDialogVisible: boolean = false;
   isAddPrescriptionDialogVisible: boolean = false;
 
+  prescriptionForm = new FormGroup({
+    "duration": new FormControl(),
+    "drug1": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug2": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug3": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug4": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug5": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug6": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug7": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug8": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+    "drug9": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
+  });
+
   constructor(private doctorsService: DoctorsService,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private messageService: MessageService, 
   ) { }
 
   ngOnInit(): void {
@@ -31,9 +46,9 @@ export class PatientComponent implements OnInit {
 
   getPatient() {
     this.activatedRoute.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.doctorsService.getPatientById(id).subscribe({
+      this.patientId = params.get('id');
+      if (this.patientId) {
+        this.doctorsService.getPatientById(this.patientId).subscribe({
           next: (patient) => {
             this.patient = patient;
           },
@@ -53,6 +68,45 @@ export class PatientComponent implements OnInit {
     this.showAddPrescriptionDialog();
   }
 
+  onSubmitButtonClick() {
+    let prescriptionData: { [key: string]: any } = {
+      patientId: this.patientId,
+      duration: this.prescriptionForm.value.duration,
+      drugs: []
+    };
+
+    for (const key in this.prescriptionForm.value) {
+      if (key.startsWith('drug')) {
+        let drug = (this.prescriptionForm.value as { [key: string]: any })[key];
+        if (drug.name && drug.concentration && drug.dosage && drug.frequency) {
+          prescriptionData['drugs'].push(drug);
+        }
+      }
+    }
+
+    if (this.prescriptionForm.valid) {
+      this.doctorsService.addPrescription(prescriptionData).subscribe({
+        complete: () => {
+          this.hideAddPrescriptionDialog();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Prescription added successfully',
+          });
+        },
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Could not add prescription'
+          });
+        }
+      });
+    }
+
+    this.prescriptionForm.reset();
+  }
+
   private showPrescriptionDetails() {
     this.isPrescriptionDialogVisible = true;
   }
@@ -67,5 +121,6 @@ export class PatientComponent implements OnInit {
 
   private hideAddPrescriptionDialog() {
     this.isAddPrescriptionDialogVisible = false;
+    this.getPatient();
   }
 }

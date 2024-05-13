@@ -46,7 +46,6 @@ export class HomeComponent {
             summary: 'Success',
             detail: 'Patient added successfully',
           });
-          console.log('done');
         },
         error: () => {
           this.messageService.add({
