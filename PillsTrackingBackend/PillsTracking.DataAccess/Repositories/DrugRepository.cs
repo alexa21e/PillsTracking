@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PillsTracking.DataAccess.Abstractions;
 using PillsTracking.Domain;
 
@@ -28,7 +28,6 @@ namespace PillsTracking.DataAccess.Repositories
                 d.Dosage == dosage && d.Frequency == frequency);
             return drug;
         }
-
         public async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();   

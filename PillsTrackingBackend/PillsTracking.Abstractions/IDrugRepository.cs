@@ -1,4 +1,4 @@
-﻿using PillsTracking.Domain;
+using PillsTracking.Domain;
 
 namespace PillsTracking.DataAccess.Abstractions
 {
@@ -8,5 +8,6 @@ namespace PillsTracking.DataAccess.Abstractions
         Task<Drug> GetDrugByNameConcentrationDosageFrequency(
             string name, int concentration, int dosage, int frequency);
         Task SaveAsync();
+
     }
 }

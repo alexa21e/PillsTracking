@@ -19,7 +19,6 @@
 				Duration = duration
 			};
 		}
-
         public void SetPatient(Guid patientId)
         {
             PatientId = patientId;
@@ -29,5 +28,17 @@
         {
             _drugs.Add(drug);
         }
+		public void SetDuration(int duration) 
+		{
+			Duration = duration;
+		}
+        public void SetDrugs(List<Drug> newDrugs)
+        {
+            _drugs.Clear();
+            foreach (var drug in newDrugs)
+            {
+                AddDrug(drug);
+            }
+        }
     }
-}
+	}

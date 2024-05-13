@@ -2,7 +2,7 @@
 {
 	public class Drug: BaseEntity
 	{
-		//Paracetamol 2(mg) 1(pill) 12(hours)
+		
 		public string Name { get; private set; } = string.Empty;
 		public int Concentration { get; private set; } 
 		public int Dosage { get; private set; }

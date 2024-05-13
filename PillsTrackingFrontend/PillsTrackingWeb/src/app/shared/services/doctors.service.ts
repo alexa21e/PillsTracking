@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { PatientToCreate } from "../models/patientToCreate";
 import { environment } from "../../../environments/environment";
 import { Patient } from "../models/patient";
+import { Drug } from "../models/drug";
+import { Prescription } from "../models/prescription";
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +28,9 @@ export class DoctorsService {
 
     addPrescription(values: any){
         return this.http.post(this.baseUrl + 'addPrescription', values);
+    }
+
+    updatePrescription(values: any){
+        return this.http.post<Prescription>(this.baseUrl + 'updatePrescription', values);
     }
 }

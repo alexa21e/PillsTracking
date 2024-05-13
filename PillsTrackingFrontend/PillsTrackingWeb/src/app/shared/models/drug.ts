@@ -1,6 +1,8 @@
+import { Prescription } from "./prescription"
+
 export interface Drug{
-    name: string
-    concentration: number
-    dose: number
-    frequency: number
+    name: string;
+    concentration: number;
+    dosage: number;
+    frequency: number;
 }

@@ -30,6 +30,10 @@ namespace PillsTracking.DataAccess.Repositories
                 .FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber);
         }
 
+		public async Task AddPatient(Patient patient)
+        {
+            await _dbContext.Patients.AddAsync(patient);
+        }
         public async Task<Patient> GetPatientById(Guid id)
         {
             return await _dbContext.Patients
@@ -38,14 +42,11 @@ namespace PillsTracking.DataAccess.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-		public async Task AddPatient(Patient patient)
-        {
-            await _dbContext.Patients.AddAsync(patient);
-        }
-
-		public async Task SaveAsync()
+        public async Task SaveAsync()
 		{
             await _dbContext.SaveChangesAsync();
 		}
+
+
     }
 }

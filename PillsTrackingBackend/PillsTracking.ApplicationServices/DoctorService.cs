@@ -7,26 +7,26 @@ using PillsTracking.Domain;
 
 namespace PillsTracking.ApplicationServices
 {
-	public class DoctorService: IDoctorService
-	{
-		private readonly IPatientRepository _patientRepository;
+    public class DoctorService : IDoctorService
+    {
+        private readonly IPatientRepository _patientRepository;
         private readonly IPrescriptionRepository _prescriptionRepository;
         private readonly IDrugRepository _drugRepository;
 
-		public DoctorService(IPatientRepository patientRepository,
+        public DoctorService(IPatientRepository patientRepository,
             IPrescriptionRepository prescriptionRepository,
             IDrugRepository drugRepository)
-		{
-			_patientRepository = patientRepository;
-			_prescriptionRepository = prescriptionRepository;
-			_drugRepository = drugRepository;
-		}
+        {
+            _patientRepository = patientRepository;
+            _prescriptionRepository = prescriptionRepository;
+            _drugRepository = drugRepository;
+        }
 
-		public async Task<ICollection<Patient>> GetPatients()
-		{
-			var patients = await _patientRepository.GetPatients();
-			return patients;
-		}
+        public async Task<ICollection<Patient>> GetPatients()
+        {
+            var patients = await _patientRepository.GetPatients();
+            return patients;
+        }
 
         public async Task<Patient> GetPatientById(Guid id)
         {
@@ -68,5 +68,13 @@ namespace PillsTracking.ApplicationServices
 			await _patientRepository.SaveAsync();
 			return prescription;
         }
-	}
+
+        public async Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs)
+        {
+
+            var updatedPrescription = await _prescriptionRepository.UpdatePrescription(prescriptionId, newDuration, newDrugs);
+
+            return updatedPrescription;
+        }
+    }
 }
