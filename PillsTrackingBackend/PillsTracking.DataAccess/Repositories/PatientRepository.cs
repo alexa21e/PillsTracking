@@ -34,10 +34,19 @@ namespace PillsTracking.DataAccess.Repositories
         {
             await _dbContext.Patients.AddAsync(patient);
         }
+        public async Task<Patient> GetPatientById(Guid id)
+        {
+            return await _dbContext.Patients
+                .Include(p => p.Prescriptions)
+                .Include(p => p.Doctors)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
 
-		public async Task SaveAsync()
+        public async Task SaveAsync()
 		{
             await _dbContext.SaveChangesAsync();
 		}
+
+
     }
 }

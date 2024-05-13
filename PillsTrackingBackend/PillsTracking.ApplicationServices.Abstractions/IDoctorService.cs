@@ -7,5 +7,8 @@ namespace PillsTracking.ApplicationServices.Abstractions
 	{
 		Task<ICollection<Patient>> GetPatients();
 		Task<Patient> AddPatient(PatientToCreateDTO patient);
-	}
+		Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate);
+		Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs);
+
+    }
 }

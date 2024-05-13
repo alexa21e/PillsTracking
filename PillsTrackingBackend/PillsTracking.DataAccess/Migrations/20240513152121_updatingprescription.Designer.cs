@@ -12,8 +12,8 @@ using PillsTracking.DataAccess;
 namespace PillsTracking.DataAccess.Migrations
 {
     [DbContext(typeof(PillsTrackingDbContext))]
-    [Migration("20240408211737_DDDimplementation")]
-    partial class DDDimplementation
+    [Migration("20240513152121_updatingprescription")]
+    partial class updatingprescription
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,7 +124,7 @@ namespace PillsTracking.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Medications");
+                    b.ToTable("Drugs");
                 });
 
             modelBuilder.Entity("PillsTracking.Domain.Patient", b =>

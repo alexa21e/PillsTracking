@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿﻿using Microsoft.EntityFrameworkCore;
 using PillsTracking.Domain;
 
 namespace PillsTracking.DataAccess
@@ -14,7 +14,7 @@ namespace PillsTracking.DataAccess
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
-        public DbSet<Drug> Medications { get; set; }
+        public DbSet<Drug> Drugs { get; set; }
         public DbSet<Admin> Admins { get; set; }
 	}
 }
