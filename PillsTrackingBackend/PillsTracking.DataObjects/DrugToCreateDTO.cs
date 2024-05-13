@@ -1,4 +1,4 @@
-namespace PillsTracking.DataObjects
+﻿namespace PillsTracking.DataObjects
 {
     public class DrugToCreateDTO
     {

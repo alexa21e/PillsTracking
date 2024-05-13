@@ -19,7 +19,7 @@
 				Duration = duration
 			};
 		}
-		 public void SetPatient(Guid patientId)
+        public void SetPatient(Guid patientId)
         {
             PatientId = patientId;
         }

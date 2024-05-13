@@ -1,5 +1,6 @@
 <div class="flex justify-content-end flex-wrap">
     <div class="flex align-items-center justify-content-center border-round m-5">
+        <p-button *ngIf="id" label="Pp ca e hover" (click)="onPatientClick(id)"></p-button>
         <p-button label="Add patient" (click)="openAddDialog()"></p-button>
         <p-dialog header="Add patient" [modal]="true" [(visible)]="isAddDialogVisible" [style]="{ width: '70rem' }">
             <form [formGroup]="patientForm">

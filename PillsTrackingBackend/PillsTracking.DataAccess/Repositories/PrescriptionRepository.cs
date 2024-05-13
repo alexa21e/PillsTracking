@@ -4,7 +4,7 @@ using PillsTracking.Domain;
 
 namespace PillsTracking.DataAccess.Repositories
 {
-    public class PrescriptionRepository : IPrescriptionRepository
+    public class PrescriptionRepository: IPrescriptionRepository
     {
         private readonly PillsTrackingDbContext _dbContext;
 
@@ -44,6 +44,7 @@ namespace PillsTracking.DataAccess.Repositories
                 .Include(p => p.Patient)
                 .FirstOrDefaultAsync(p => p.Id == prescriptionId);
         }
+
         public async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();

@@ -34,19 +34,19 @@ namespace PillsTracking.ApplicationServices
             return patient;
         }
 
-        public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
-        {
-            var patient = Patient.Create(Guid.NewGuid(), patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
-                patientToCreate.Gender, patientToCreate.DateOfBirth);
-            await _patientRepository.AddPatient(patient);
-            await _patientRepository.SaveAsync();
-            return patient;
-        }
+		public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
+		{
+			var patient = Patient.Create(Guid.NewGuid(), patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
+				patientToCreate.Gender, patientToCreate.DateOfBirth);
+			await _patientRepository.AddPatient(patient);
+			await _patientRepository.SaveAsync();
+			return patient;
+		}
 
         public async Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate)
         {
             var prescription = Prescription.Create(prescriptionToCreate.Duration);
-            prescription.SetPatient(prescriptionToCreate.PatientId);
+			prescription.SetPatient(prescriptionToCreate.PatientId);
             foreach (var drugDTO in prescriptionToCreate.Drugs)
             {
                 var drug = await _drugRepository.GetDrugByNameConcentrationDosageFrequency(drugDTO.Name,
@@ -60,21 +60,13 @@ namespace PillsTracking.ApplicationServices
                     var createdDrug = Drug.Create(drugDTO.Name, drugDTO.Concentration, drugDTO.Dosage,
                         drugDTO.Frequency);
                     await _drugRepository.AddDrug(createdDrug);
-                    await _drugRepository.SaveAsync();
-                    prescription.AddDrug(createdDrug);
+					await _drugRepository.SaveAsync();
+					prescription.AddDrug(createdDrug);
                 }
             }
             await _prescriptionRepository.AddPrescription(prescription);
-            await _patientRepository.SaveAsync();
-            return prescription;
+			await _patientRepository.SaveAsync();
+			return prescription;
         }
-
-        public async Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs)
-        {
-           
-            var updatedPrescription = await _prescriptionRepository.UpdatePrescription(prescriptionId, newDuration, newDrugs);
-
-            return updatedPrescription;
-        }
-    }
+	}
 }

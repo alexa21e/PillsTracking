@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { DoctorRoutingModule } from './doctor-routing.module';
 import { HomeComponent } from './home/home.component';
+import { PatientComponent } from './patient/patient.component';
+
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog'; 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { TableModule } from 'primeng/table';
+
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    PatientComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +25,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ButtonModule,
     DialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CardModule,
+    DividerModule,
+    TableModule
   ]
 })
 export class DoctorModule { }
