@@ -6,6 +6,7 @@ namespace PillsTracking.DataAccess.Abstractions
 	{
 		Task<ICollection<Patient>> GetPatients();
         Task<Patient> GetPatientByPhone(string phoneNumber);
+        Task<Patient> GetPatientById(Guid id);
         Task AddPatient(Patient patient);
 		Task SaveAsync();
 	}

@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Patient } from "../models/patient";
+import { PatientToCreate } from "../models/patientToCreate";
 import { environment } from "../../../environments/environment";
+import { Patient } from "../models/patient";
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,17 @@ export class DoctorsService {
     constructor(private http: HttpClient) {
     }
 
+    getPatientById(id: string){
+        let params = new HttpParams();
+        params = params.append('id', id);
+        return this.http.get<Patient>(this.baseUrl + 'getPatientById', {params});
+    }
+
     addPatient(values: any){
-        return this.http.post<Patient>(this.baseUrl + 'addPatient', values);
+        return this.http.post<PatientToCreate>(this.baseUrl + 'addPatient', values);
+    }
+
+    addPrescription(values: any){
+        return this.http.post(this.baseUrl + 'addPrescription', values);
     }
 }

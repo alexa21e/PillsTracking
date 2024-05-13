@@ -121,7 +121,7 @@ namespace PillsTracking.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Medications");
+                    b.ToTable("Drugs");
                 });
 
             modelBuilder.Entity("PillsTracking.Domain.Patient", b =>

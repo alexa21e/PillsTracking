@@ -19,5 +19,15 @@
 				Duration = duration
 			};
 		}
-	}
+
+        public void SetPatient(Guid patientId)
+        {
+            PatientId = patientId;
+        }
+
+        public void AddDrug(Drug drug)
+        {
+            _drugs.Add(drug);
+        }
+    }
 }
