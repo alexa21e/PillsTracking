@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PillsTracking.DataAccess", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PillsTracking.DataObjects", "..\PillsTracking.DataObjects\PillsTracking.DataObjects.csproj", "{07490E6C-E148-4C05-BDA6-1B2D9925E393}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PillsTracking.Tests", "..\PillsTracking.Tests\PillsTracking.Tests.csproj", "{F1B525F5-7C2D-47D3-8072-6AA96554CC56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{07490E6C-E148-4C05-BDA6-1B2D9925E393}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07490E6C-E148-4C05-BDA6-1B2D9925E393}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07490E6C-E148-4C05-BDA6-1B2D9925E393}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B525F5-7C2D-47D3-8072-6AA96554CC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B525F5-7C2D-47D3-8072-6AA96554CC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B525F5-7C2D-47D3-8072-6AA96554CC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B525F5-7C2D-47D3-8072-6AA96554CC56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
