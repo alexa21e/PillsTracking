@@ -86,5 +86,59 @@ namespace PillsTracking.Tests.Services
             // Assert
             await Assert.ThrowsExceptionAsync<ArgumentNullException>(act);
         }
+        [TestMethod]
+        public async Task UpdatePrescription_ShouldUpdatePrescription_WhenPrescriptionExists()
+        {
+ 
+            var prescriptionId = Guid.NewGuid();
+            var newDuration = 30;
+            var newDrugs = new List<Drug>
+        {
+            new Drug { Id = Guid.NewGuid(), Name = "Drug1", Concentration = 10, Dosage = 20, Frequency = 4 },
+            new Drug { Id = Guid.NewGuid(), Name = "Drug2", Concentration = 15, Dosage = 25, Frequency = 6 }
+        };
+
+            var existingPrescription = new Prescription
+            {
+                Id = prescriptionId,
+                Duration = 15,
+                Drugs = new List<Drug>()
+            };
+
+            _dbContextMock.Setup(db => db.Prescriptions.FindAsync(prescriptionId))
+                          .ReturnsAsync(existingPrescription);
+
+            // Act
+            var result = await _prescriptionService.UpdatePrescription(prescriptionId, newDuration, newDrugs);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(newDuration, result.Duration);
+            Assert.Equal(newDrugs, result.Drugs);
+            _dbContextMock.Verify(db => db.Prescriptions.FindAsync(prescriptionId), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task UpdatePrescription_ShouldReturnNull_WhenPrescriptionDoesNotExist()
+        {
+            // Arrange
+            var prescriptionId = Guid.NewGuid();
+            var newDuration = 30;
+            var newDrugs = new List<Drug>
+        {
+            new Drug { Id = Guid.NewGuid(), Name = "Drug1", Concentration = 10, Dosage = 20, Frequency = 4 },
+            new Drug { Id = Guid.NewGuid(), Name = "Drug2", Concentration = 15, Dosage = 25, Frequency = 6 }
+        };
+
+            _dbContextMock.Setup(db => db.Prescriptions.FindAsync(prescriptionId))
+                          .ReturnsAsync((Prescription)null);
+
+            // Act
+            var result = await _prescriptionService.UpdatePrescription(prescriptionId, newDuration, newDrugs);
+
+            // Assert
+            Assert.Null(result);
+            _dbContextMock.Verify(db => db.Prescriptions.FindAsync(prescriptionId), Times.Once);
+        }
     }
 }
