@@ -15,9 +15,16 @@ namespace PillsTracking.ApplicationServices
 
         public async Task<Doctor> AddDoctor(DoctorToCreateDTO doctorToCreate)
         {
+            if (doctorToCreate == null)
+            {
+                throw new ArgumentNullException(nameof(doctorToCreate));
+            }
+
             var doctor = Doctor.Create(Guid.NewGuid(), doctorToCreate.Name, doctorToCreate.Email, doctorToCreate.Specialization);
+            
             await _doctorRepository.AddDoctor(doctor);
             await _doctorRepository.SaveAsync();
+
             return doctor;
         }
     }
