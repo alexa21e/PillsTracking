@@ -30,6 +30,20 @@ namespace PillsTracking.Server.Controllers
 			}
 		}
 
+        [HttpGet("getPatientById")]
+        public async Task<ActionResult<Patient>> GetPatientById([FromQuery]Guid id)
+        {
+            try
+            {
+                var patient = await _doctorService.GetPatientById(id);
+                return Ok(patient);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
 		[HttpPost("addPatient")]
 		public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
 		{
@@ -43,6 +57,7 @@ namespace PillsTracking.Server.Controllers
 				return BadRequest();
 			}
 		}
+
 		[HttpPost("addPrescription")]
 		public async Task<ActionResult<Prescription>> AddPrescription([FromBody] PrescriptionToCreateDTO prescriptionToCreate)
 		{
@@ -56,7 +71,8 @@ namespace PillsTracking.Server.Controllers
 				return BadRequest();
 			}
 		}
-		[HttpPost("UpdatePrescription")]
+
+		[HttpPost("updatePrescription")]
 		public async Task<ActionResult<Prescription>> UpdatePrescription([FromBody] PrescriptionToUpdateDTO prescriptionToUpdate)
 		{
 			try
