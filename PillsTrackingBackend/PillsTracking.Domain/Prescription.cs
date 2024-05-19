@@ -4,21 +4,26 @@
 	{
 		public Guid PatientId { get; private set; }
 		public Patient Patient { get; private set; }
+		public string Name { get; private set; }
 		public int Duration { get; private set; }
+		public DateTime CreationDate { get; private set; }
 
 		private List<Drug> _drugs = new List<Drug>();
 		public IReadOnlyCollection<Drug> Drugs => _drugs;
 
 		private Prescription() { }
 
-		public static Prescription Create(int duration)
+		public static Prescription Create(string name, int duration, DateTime creationDate)
 		{
 			return new Prescription()
 			{
 				Id = Guid.NewGuid(),
-				Duration = duration
+				Name = name,
+				Duration = duration,
+				CreationDate = creationDate
 			};
 		}
+
         public void SetPatient(Guid patientId)
         {
             PatientId = patientId;
@@ -28,10 +33,12 @@
         {
             _drugs.Add(drug);
         }
+
 		public void SetDuration(int duration) 
 		{
 			Duration = duration;
 		}
+
         public void SetDrugs(List<Drug> newDrugs)
         {
             _drugs.Clear();
@@ -40,5 +47,15 @@
                 AddDrug(drug);
             }
         }
+
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public void SetCreationDate(DateTime creationDate)
+        {
+            CreationDate = creationDate;
+        }
     }
-	}
+}

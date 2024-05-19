@@ -38,7 +38,7 @@ namespace PillsTracking.Tests.Services
                 }
             };
 
-            var prescription = Prescription.Create(prescriptionToCreate.Duration);
+            var prescription = Prescription.Create(prescriptionToCreate.Name, prescriptionToCreate.Duration, prescriptionToCreate.CreationDate);
             prescription.SetPatient(prescriptionToCreate.PatientId);
 
             drugRepoMock.Setup(repo => repo.GetDrugByNameConcentrationDosageFrequency(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))

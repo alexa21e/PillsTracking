@@ -50,7 +50,7 @@ namespace PillsTracking.ApplicationServices
                 throw new ArgumentNullException(nameof(prescriptionToCreate));
             }
 
-            var prescription = Prescription.Create(prescriptionToCreate.Duration);
+            var prescription = Prescription.Create(prescriptionToCreate.Name,prescriptionToCreate.Duration, prescriptionToCreate.CreationDate);
 			prescription.SetPatient(prescriptionToCreate.PatientId);
 
             foreach (var drugDTO in prescriptionToCreate.Drugs)

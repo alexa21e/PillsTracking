@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PillsTracking.DataAccess;
 
@@ -11,9 +12,11 @@ using PillsTracking.DataAccess;
 namespace PillsTracking.DataAccess.Migrations
 {
     [DbContext(typeof(PillsTrackingDbContext))]
-    partial class PillsTrackingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240519090059_AddPrescriptionDetails")]
+    partial class AddPrescriptionDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
