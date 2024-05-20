@@ -31,6 +31,11 @@ namespace PillsTracking.ApplicationServices
             return patients;
         }
 
+        public async Task<IReadOnlyCollection<Patient>> GetPatientsByDoctorIdAsync(Guid doctorId)
+        {
+            return await _patientRepository.GetPatientsByDoctorId(doctorId);
+        }
+
         public async Task<Patient> GetPatientById(Guid id)
         {
             var patient = await _patientRepository.GetPatientById(id);

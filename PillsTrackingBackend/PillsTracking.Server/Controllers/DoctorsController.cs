@@ -16,7 +16,7 @@ namespace PillsTracking.Server.Controllers
 			_doctorService = doctorService;
 		}
 
-		[HttpGet("getPatients")]
+		[HttpGet("getAllPatients")]
 		public async Task<ActionResult<ICollection<Patient>>> GetPatients()
 		{
 			try
@@ -30,7 +30,21 @@ namespace PillsTracking.Server.Controllers
 			}
 		}
 
-        [HttpGet("getPatientById")]
+        [HttpGet("getPatientsOfDoctor")]
+        public async Task<ActionResult<IReadOnlyCollection<Patient>>> GetPatientsByDoctorId([FromQuery] Guid doctorId)
+        {
+            try
+            {
+                var patients = await _doctorService.GetPatientsByDoctorIdAsync(doctorId);
+                return Ok(patients);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+		[HttpGet("getPatientById")]
         public async Task<ActionResult<Patient>> GetPatientById([FromQuery]Guid id)
         {
             try

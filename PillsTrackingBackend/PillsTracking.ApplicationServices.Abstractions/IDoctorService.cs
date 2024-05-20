@@ -6,7 +6,8 @@ namespace PillsTracking.ApplicationServices.Abstractions
 	public interface IDoctorService
 	{
 		Task<ICollection<Patient>> GetPatients();
-		Task<Patient> AddPatient(PatientToCreateDTO patient);
+        Task<IReadOnlyCollection<Patient>> GetPatientsByDoctorIdAsync(Guid doctorId);
+        Task<Patient> AddPatient(PatientToCreateDTO patient);
 		Task AddPatientToDoctorList(Guid doctorId, Guid patientId);
         Task RemovePatientFromDoctorList(Guid doctorId, Guid patientId);
         Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate);
