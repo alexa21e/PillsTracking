@@ -12,8 +12,8 @@ using PillsTracking.DataAccess;
 namespace PillsTracking.DataAccess.Migrations
 {
     [DbContext(typeof(PillsTrackingDbContext))]
-    [Migration("20240519090059_AddPrescriptionDetails")]
-    partial class AddPrescriptionDetails
+    [Migration("20240520064901_DeletePrescriptionListFromDrugEntity")]
+    partial class DeletePrescriptionListFromDrugEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,21 +38,6 @@ namespace PillsTracking.DataAccess.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("DoctorPatient");
-                });
-
-            modelBuilder.Entity("DrugPrescription", b =>
-                {
-                    b.Property<Guid>("DrugsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PrescriptionsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("DrugsId", "PrescriptionsId");
-
-                    b.HasIndex("PrescriptionsId");
-
-                    b.ToTable("DrugPrescription");
                 });
 
             modelBuilder.Entity("PillsTracking.Domain.Admin", b =>
@@ -122,7 +107,12 @@ namespace PillsTracking.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("PrescriptionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PrescriptionId");
 
                     b.ToTable("Drugs");
                 });
@@ -200,19 +190,11 @@ namespace PillsTracking.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DrugPrescription", b =>
+            modelBuilder.Entity("PillsTracking.Domain.Drug", b =>
                 {
-                    b.HasOne("PillsTracking.Domain.Drug", null)
-                        .WithMany()
-                        .HasForeignKey("DrugsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PillsTracking.Domain.Prescription", null)
-                        .WithMany()
-                        .HasForeignKey("PrescriptionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Drugs")
+                        .HasForeignKey("PrescriptionId");
                 });
 
             modelBuilder.Entity("PillsTracking.Domain.Prescription", b =>
@@ -229,6 +211,11 @@ namespace PillsTracking.DataAccess.Migrations
             modelBuilder.Entity("PillsTracking.Domain.Patient", b =>
                 {
                     b.Navigation("Prescriptions");
+                });
+
+            modelBuilder.Entity("PillsTracking.Domain.Prescription", b =>
+                {
+                    b.Navigation("Drugs");
                 });
 #pragma warning restore 612, 618
         }
