@@ -28,9 +28,15 @@ namespace PillsTracking.DataAccess.Repositories
 			return doctor;
 		}
 
-        public async Task AddPatientToDoctorList(Doctor doctor, Patient patient)
+		public async Task AddPatientToDoctorList(Doctor doctor, Patient patient)
+		{
+			doctor.AddPatientToList(patient);
+			await _dbContext.SaveChangesAsync();
+		}
+
+        public async Task RemovePatientFromDoctorList(Doctor doctor, Patient patient)
         {
-            doctor.AddPatientToList(patient);
+            doctor.RemovePatientFromList(patient);
             await _dbContext.SaveChangesAsync();
         }
 

@@ -35,5 +35,15 @@
 
             _patients.Add(patient);
         }
+
+        public void RemovePatientFromList(Patient patient)
+        {
+            if (!_patients.Contains(patient))
+            {
+                throw new InvalidOperationException("Patient doesn't exist in the doctor's list.");
+            }
+
+            _patients.Remove(patient);
+        }
     }
 }

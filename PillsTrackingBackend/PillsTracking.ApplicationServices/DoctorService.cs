@@ -63,6 +63,24 @@ namespace PillsTracking.ApplicationServices
             await _doctorRepository.AddPatientToDoctorList(doctor, patient);
         }
 
+        public async Task RemovePatientFromDoctorList(Guid doctorId, Guid patientId)
+        {
+            var patient = await _patientRepository.GetPatientById(patientId);
+            var doctor = await _doctorRepository.GetDoctorById(doctorId);
+
+            if (patient == null)
+            {
+                throw new ArgumentException("Patient not found");
+            }
+
+            if (doctor == null)
+            {
+                throw new ArgumentException("Doctor not found");
+            }
+
+            await _doctorRepository.RemovePatientFromDoctorList(doctor, patient);
+        }
+
         public async Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate)
         {
             if (prescriptionToCreate == null)
