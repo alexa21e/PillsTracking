@@ -86,5 +86,38 @@ namespace PillsTracking.Tests.Services
             // Assert
             await Assert.ThrowsExceptionAsync<ArgumentNullException>(act);
         }
+   
+
+
+    [TestMethod]
+    public async Task AddPatient_ValidInput_ReturnsPatient()
+    {
+        // Arrange
+        var patientToCreate = new PatientToCreateDTO
+        {
+            Name = "Popescu Alex",
+            PhoneNumber = "0788664325",
+            Address = "Str C12",
+            Gender = Gender.M,
+            DateOfBirth = new DateTime(1993, 10, 1)
+        };
+
+
+        // Act
+        var result = await doctorService.AddPatient(patientToCreate);
+
+            // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(patientToCreate.Name, result.Name);
+        Assert.AreEqual(patientToCreate.PhoneNumber, result.PhoneNumber);
+        Assert.AreEqual(patientToCreate.Address, result.Address);
+        Assert.AreEqual(patientToCreate.Gender, result.Gender);
+        Assert.AreEqual(patientToCreate.DateOfBirth, result.DateOfBirth);
+
+        patientRepoMock.Verify(r => r.AddPatient(It.IsAny<Patient>()), Times.Once);
+        patientRepoMock.Verify(r => r.SaveAsync(), Times.Once);
     }
+        }
 }
+
+
