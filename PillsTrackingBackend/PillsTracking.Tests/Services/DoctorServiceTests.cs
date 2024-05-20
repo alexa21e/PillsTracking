@@ -200,5 +200,88 @@ namespace PillsTracking.Tests.Services
             doctorRepoMock.Verify(x => x.GetDoctorById(doctorId), Times.Once);
             doctorRepoMock.Verify(x => x.AddPatientToDoctorList(It.IsAny<Doctor>(), It.IsAny<Patient>()), Times.Never);
         }
+
+        [TestMethod]
+        public async Task RemovePatientFromDoctorList_ShouldRemovePatientAndSave_WhenCalled()
+        {
+            // Arrange
+            var doctorId = Guid.NewGuid();
+            var patientId = Guid.NewGuid();
+
+            var patient = Patient.Create(patientId, patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
+                patientToCreate.Gender, patientToCreate.DateOfBirth);
+
+            var doctor = Doctor.Create(doctorId, doctorToCreateDTO.Name, doctorToCreateDTO.Email, doctorToCreateDTO.Specialization);
+
+            patientRepoMock.Setup(repo => repo.GetPatientById(patientId))
+                .ReturnsAsync(patient);
+
+            doctorRepoMock.Setup(repo => repo.GetDoctorById(doctorId))
+                .ReturnsAsync(doctor);
+
+            doctorRepoMock.Setup(repo => repo.RemovePatientFromDoctorList(doctor, patient))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            await doctorService.RemovePatientFromDoctorList(doctorId, patientId);
+
+            // Assert
+            patientRepoMock.Verify(x => x.GetPatientById(patientId), Times.Once);
+            doctorRepoMock.Verify(x => x.GetDoctorById(doctorId), Times.Once);
+            doctorRepoMock.Verify(x => x.RemovePatientFromDoctorList(doctor, patient), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task RemovePatientFromDoctorList_ShouldThrowException_WhenPatientNotFound()
+        {
+            // Arrange
+            var doctorId = Guid.NewGuid();
+            var patientId = Guid.NewGuid();
+
+            patientRepoMock.Setup(repo => repo.GetPatientById(patientId))
+                .ReturnsAsync((Patient)null);
+
+            doctorRepoMock.Setup(repo => repo.GetDoctorById(doctorId))
+                .ReturnsAsync(Doctor.Create(doctorId, doctorToCreateDTO.Name, doctorToCreateDTO.Email, doctorToCreateDTO.Specialization));
+
+            // Act & Assert
+            var exception = await Assert.ThrowsExceptionAsync<ArgumentException>(async () =>
+                await doctorService.RemovePatientFromDoctorList(doctorId, patientId));
+
+            Assert.AreEqual("Patient not found", exception.Message);
+
+            // Verify
+            patientRepoMock.Verify(x => x.GetPatientById(patientId), Times.Once);
+            doctorRepoMock.Verify(x => x.GetDoctorById(doctorId), Times.Once);
+            doctorRepoMock.Verify(x => x.RemovePatientFromDoctorList(It.IsAny<Doctor>(), It.IsAny<Patient>()), Times.Never);
+        }
+
+        [TestMethod]
+        public async Task RemovePatientFromDoctorList_ShouldThrowException_WhenDoctorNotFound()
+        {
+            // Arrange
+            var doctorId = Guid.NewGuid();
+            var patientId = Guid.NewGuid();
+
+            var patient = Patient.Create(patientId, patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
+                patientToCreate.Gender, patientToCreate.DateOfBirth);
+
+            patientRepoMock.Setup(repo => repo.GetPatientById(patientId))
+                .ReturnsAsync(patient);
+
+            doctorRepoMock.Setup(repo => repo.GetDoctorById(doctorId))
+                .ReturnsAsync((Doctor)null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsExceptionAsync<ArgumentException>(async () =>
+                await doctorService.RemovePatientFromDoctorList(doctorId, patientId));
+
+            Assert.AreEqual("Doctor not found", exception.Message);
+
+            // Verify
+            patientRepoMock.Verify(x => x.GetPatientById(patientId), Times.Once);
+            doctorRepoMock.Verify(x => x.GetDoctorById(doctorId), Times.Once);
+            doctorRepoMock.Verify(x => x.RemovePatientFromDoctorList(It.IsAny<Doctor>(), It.IsAny<Patient>()), Times.Never);
+        }
     }
 }
