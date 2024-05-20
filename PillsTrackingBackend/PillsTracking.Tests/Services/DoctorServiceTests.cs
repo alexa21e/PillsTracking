@@ -18,13 +18,17 @@ namespace PillsTracking.Tests.Services
         [TestInitialize]
         public void InitializeTest()
         {
+            drugRepoMock = new Mock<IDrugRepository>();
             prescriptionRepoMock = new Mock<IPrescriptionRepository>();
+            patientRepoMock = new Mock<IPatientRepository>(); 
 
             doctorService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object);
 
             prescriptionToCreate = new PrescriptionToCreateDTO
             {
+                Name = "Test Prescription",
                 Duration = 30,
+                CreationDate = DateTime.UtcNow,
                 PatientId = Guid.NewGuid(),
                 Drugs = new List<DrugToCreateDTO>
                 {
@@ -38,14 +42,12 @@ namespace PillsTracking.Tests.Services
                 }
             };
 
-            var prescription = Prescription.Create(prescriptionToCreate.Duration);
+            var prescription = Prescription.Create(prescriptionToCreate.Name, prescriptionToCreate.Duration, prescriptionToCreate.CreationDate);
             prescription.SetPatient(prescriptionToCreate.PatientId);
 
             drugRepoMock.Setup(repo => repo.GetDrugByNameConcentrationDosageFrequency(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(Task.FromResult((Drug)null));
             drugRepoMock.Setup(repo => repo.AddDrug(It.IsAny<Drug>()))
-                .Returns(Task.CompletedTask);
-            drugRepoMock.Setup(repo => repo.SaveAsync())
                 .Returns(Task.CompletedTask);
 
             prescriptionRepoMock.Setup(repo => repo.AddPrescription(It.IsAny<Prescription>()))
@@ -67,9 +69,8 @@ namespace PillsTracking.Tests.Services
             // Assert
             drugRepoMock.Verify(x => x.GetDrugByNameConcentrationDosageFrequency(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             drugRepoMock.Verify(x => x.AddDrug(It.IsAny<Drug>()), Times.Once);
-            drugRepoMock.Verify(x => x.SaveAsync(), Times.Once);
             prescriptionRepoMock.Verify(x => x.AddPrescription(It.IsAny<Prescription>()), Times.Once);
-            patientRepoMock.Verify(x => x.SaveAsync(), Times.Once);
+            Assert.AreEqual(prescriptionToCreate.Name, result.Name);
             Assert.AreEqual(prescriptionToCreate.Duration, result.Duration);
             Assert.AreEqual(prescriptionToCreate.PatientId, result.PatientId);
         }

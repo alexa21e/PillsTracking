@@ -17,9 +17,11 @@ namespace PillsTracking.DataAccess.Repositories
         {
             var patient = await _dbContext.Patients.FindAsync(prescription.PatientId);
             var pp = await _dbContext.Prescriptions.AddAsync(prescription);
-            return await _dbContext.Prescriptions
+            var prescrip = await _dbContext.Prescriptions
                 .Include(p => p.Patient)
                 .FirstOrDefaultAsync(p => p.Id == pp.Entity.Id);
+            await _dbContext.SaveChangesAsync();
+            return prescription;
         }
         public async Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs)
         {
@@ -34,20 +36,19 @@ namespace PillsTracking.DataAccess.Repositories
 
             prescription.SetDrugs(newDrugs);
 
+            await _dbContext.SaveChangesAsync();
+
             return prescription;
         }
 
         public async Task<Prescription> GetPrescriptionById(Guid prescriptionId)
         {
-            return await _dbContext.Prescriptions
+           var prescription =  await _dbContext.Prescriptions
                 .Include(p => p.Drugs)
                 .Include(p => p.Patient)
                 .FirstOrDefaultAsync(p => p.Id == prescriptionId);
-        }
-
-        public async Task SaveAsync()
-        {
             await _dbContext.SaveChangesAsync();
+            return prescription;
         }
     }
 }
