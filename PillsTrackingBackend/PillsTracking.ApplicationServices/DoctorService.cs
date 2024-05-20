@@ -66,14 +66,10 @@ namespace PillsTracking.ApplicationServices
                     var createdDrug = Drug.Create(drugDTO.Name, drugDTO.Concentration, drugDTO.Dosage,
                         drugDTO.Frequency);
                     await _drugRepository.AddDrug(createdDrug);
-					await _drugRepository.SaveAsync();
 					prescription.AddDrug(createdDrug);
                 }
             }
-
             await _prescriptionRepository.AddPrescription(prescription);
-			await _patientRepository.SaveAsync();
-
 			return prescription;
         }
 
@@ -81,7 +77,6 @@ namespace PillsTracking.ApplicationServices
         {
 
             var updatedPrescription = await _prescriptionRepository.UpdatePrescription(prescriptionId, newDuration, newDrugs);
-
             return updatedPrescription;
         }
     }
