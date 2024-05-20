@@ -28,15 +28,8 @@ namespace PillsTracking.DataAccess.Repositories
 			return doctor;
 		}
 
-        public async Task AddPatientToDoctorList(Guid doctorId, Patient patient)
+        public async Task AddPatientToDoctorList(Doctor doctor, Patient patient)
         {
-            var doctor = await GetDoctorById(doctorId);
-
-            if (doctor == null)
-            {
-                throw new ArgumentException("Doctor not found");
-            }
-
             doctor.AddPatientToList(patient);
             await _dbContext.SaveChangesAsync();
         }
