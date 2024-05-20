@@ -6,6 +6,7 @@ namespace PillsTracking.DataAccess.Abstractions
 	{
 		Task<Doctor> GetDoctorByEmail(string email);
         Task<Doctor> AddDoctor(Doctor doctor);
+        Task AddPatientToDoctorList(Guid doctorId, Patient patient);
         Task SaveAsync();
     }
 }

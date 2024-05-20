@@ -72,7 +72,25 @@ namespace PillsTracking.Server.Controllers
 			}
 		}
 
-		[HttpPost("updatePrescription")]
+        [HttpPut("addPatientToADoctorList")]
+        public async Task<ActionResult> AddPatientToDoctorList([FromQuery] Guid doctorId, [FromQuery] Guid patientId)
+        {
+            try
+            {
+                await _doctorService.AddPatientToDoctorList(doctorId, patientId);
+				return Ok("Add patient to doctor list successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost("updatePrescription")]
 		public async Task<ActionResult<Prescription>> UpdatePrescription([FromBody] PrescriptionToUpdateDTO prescriptionToUpdate)
 		{
 			try

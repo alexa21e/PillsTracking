@@ -1,13 +1,13 @@
 ﻿namespace PillsTracking.Domain
 {
-	public class Doctor: WebUser
+	public class Doctor : WebUser
 	{
 		public string Specialization { get; private set; } = string.Empty;
 
 		private List<Patient> _patients = new List<Patient>();
 		public IReadOnlyCollection<Patient> Patient => _patients;
 
-		private Doctor() {}
+		private Doctor() { }
 
 		public static Doctor Create(Guid externalId, string name, string email, string specialization)
 		{
@@ -25,5 +25,15 @@
 		{
 			ExternalId = externalId;
 		}
-	}
+
+        public void AddPatientToList(Patient patient)
+        {
+            if (_patients.Any(p => p.Id == patient.Id))
+            {
+                throw new InvalidOperationException("Patient is already assigned to this doctor.");
+            }
+
+            _patients.Add(patient);
+        }
+    }
 }
