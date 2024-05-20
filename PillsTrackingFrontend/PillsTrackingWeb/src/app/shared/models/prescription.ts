@@ -1,6 +1,8 @@
 import { Drug } from "./drug";
 
 export interface Prescription{
-    duration: number
+    name: string,
+    duration: number,
+    creationDate: Date,
     drugs: Drug[]
 }

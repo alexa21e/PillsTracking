@@ -8,9 +8,6 @@
 		public int Dosage { get; private set; }
 		public int Frequency { get; private set; }
 
-		private List<Prescription> _prescriptions = new List<Prescription>();
-		public IReadOnlyCollection<Prescription> Prescriptions => _prescriptions;
-
 		private Drug() { }
 
 		public static Drug Create(string name, int concentration, int dosage, int frequency)
