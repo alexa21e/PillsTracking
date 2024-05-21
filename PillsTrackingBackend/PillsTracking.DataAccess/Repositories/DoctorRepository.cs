@@ -17,10 +17,27 @@ namespace PillsTracking.DataAccess.Repositories
 			return await _dbContext.Doctors.FirstOrDefaultAsync(d => d.Email == email);
 		}
 
-        public async Task<Doctor> AddDoctor(Doctor doctor)
+        public async Task<Doctor> GetDoctorById(Guid id)
         {
-            await _dbContext.Doctors.AddAsync(doctor);
-            return doctor;
+            return await _dbContext.Doctors.FirstOrDefaultAsync(d => d.Id == id);
+        }
+ 
+		public async Task<Doctor> AddDoctor(Doctor doctor)
+		{
+			await _dbContext.Doctors.AddAsync(doctor);
+			return doctor;
+		}
+
+		public async Task AddPatientToDoctorList(Doctor doctor, Patient patient)
+		{
+			doctor.AddPatientToList(patient);
+			await _dbContext.SaveChangesAsync();
+		}
+
+        public async Task RemovePatientFromDoctorList(Doctor doctor, Patient patient)
+        {
+            doctor.RemovePatientFromList(patient);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task SaveAsync()

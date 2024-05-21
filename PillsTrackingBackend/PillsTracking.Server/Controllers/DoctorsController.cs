@@ -16,7 +16,7 @@ namespace PillsTracking.Server.Controllers
 			_doctorService = doctorService;
 		}
 
-		[HttpGet("getPatients")]
+		[HttpGet("getAllPatients")]
 		public async Task<ActionResult<ICollection<Patient>>> GetPatients()
 		{
 			try
@@ -30,7 +30,21 @@ namespace PillsTracking.Server.Controllers
 			}
 		}
 
-        [HttpGet("getPatientById")]
+        [HttpGet("getPatientsOfDoctor")]
+        public async Task<ActionResult<IReadOnlyCollection<Patient>>> GetPatientsByDoctorId([FromQuery] Guid doctorId)
+        {
+            try
+            {
+                var patients = await _doctorService.GetPatientsByDoctorIdAsync(doctorId);
+                return Ok(patients);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+		[HttpGet("getPatientById")]
         public async Task<ActionResult<Patient>> GetPatientById([FromQuery]Guid id)
         {
             try
@@ -72,7 +86,43 @@ namespace PillsTracking.Server.Controllers
 			}
 		}
 
-		[HttpPost("updatePrescription")]
+		[HttpPut("addPatientToADoctorList")]
+		public async Task<ActionResult> AddPatientToDoctorList([FromQuery] Guid doctorId, [FromQuery] Guid patientId)
+		{
+			try
+			{
+				await _doctorService.AddPatientToDoctorList(doctorId, patientId);
+				return Ok("Add patient to doctor list successfully");
+			}
+			catch (ArgumentException ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, "Internal server error");
+			}
+		}
+
+        [HttpDelete("deletePatientFromADoctorList")]
+        public async Task<ActionResult> DeletePatientFromDoctorList([FromQuery] Guid doctorId, [FromQuery] Guid patientId)
+        {
+            try
+            {
+                await _doctorService.RemovePatientFromDoctorList(doctorId, patientId);
+                return Ok("Deleted patient from doctor list successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost("updatePrescription")]
 		public async Task<ActionResult<Prescription>> UpdatePrescription([FromBody] PrescriptionToUpdateDTO prescriptionToUpdate)
 		{
 			try

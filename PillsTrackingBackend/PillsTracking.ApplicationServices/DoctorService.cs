@@ -12,14 +12,17 @@ namespace PillsTracking.ApplicationServices
         private readonly IPatientRepository _patientRepository;
         private readonly IPrescriptionRepository _prescriptionRepository;
         private readonly IDrugRepository _drugRepository;
+        private readonly IDoctorRepository _doctorRepository;
 
         public DoctorService(IPatientRepository patientRepository,
             IPrescriptionRepository prescriptionRepository,
-            IDrugRepository drugRepository)
+            IDrugRepository drugRepository,
+            IDoctorRepository doctorRepository)
         {
             _patientRepository = patientRepository;
             _prescriptionRepository = prescriptionRepository;
             _drugRepository = drugRepository;
+            _doctorRepository = doctorRepository;
         }
 
         public async Task<ICollection<Patient>> GetPatients()
@@ -28,20 +31,60 @@ namespace PillsTracking.ApplicationServices
             return patients;
         }
 
+        public async Task<IReadOnlyCollection<Patient>> GetPatientsByDoctorIdAsync(Guid doctorId)
+        {
+            return await _patientRepository.GetPatientsByDoctorId(doctorId);
+        }
+
         public async Task<Patient> GetPatientById(Guid id)
         {
             var patient = await _patientRepository.GetPatientById(id);
             return patient;
         }
 
-		public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
-		{
-			var patient = Patient.Create(Guid.NewGuid(), patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
-				patientToCreate.Gender, patientToCreate.DateOfBirth);
-			await _patientRepository.AddPatient(patient);
-			await _patientRepository.SaveAsync();
-			return patient;
-		}
+        public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
+        {
+            var patient = Patient.Create(Guid.NewGuid(), patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
+                patientToCreate.Gender, patientToCreate.DateOfBirth);
+            await _patientRepository.AddPatient(patient);
+            await _patientRepository.SaveAsync();
+            return patient;
+        }
+        public async Task AddPatientToDoctorList(Guid doctorId, Guid patientId)
+        {
+            var patient = await _patientRepository.GetPatientById(patientId);
+            var doctor = await _doctorRepository.GetDoctorById(doctorId);
+
+            if (patient == null)
+            {
+                throw new ArgumentException("Patient not found");
+            }
+
+            if (doctor == null)
+            {
+                throw new ArgumentException("Doctor not found");
+            }
+
+            await _doctorRepository.AddPatientToDoctorList(doctor, patient);
+        }
+
+        public async Task RemovePatientFromDoctorList(Guid doctorId, Guid patientId)
+        {
+            var patient = await _patientRepository.GetPatientById(patientId);
+            var doctor = await _doctorRepository.GetDoctorById(doctorId);
+
+            if (patient == null)
+            {
+                throw new ArgumentException("Patient not found");
+            }
+
+            if (doctor == null)
+            {
+                throw new ArgumentException("Doctor not found");
+            }
+
+            await _doctorRepository.RemovePatientFromDoctorList(doctor, patient);
+        }
 
         public async Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate)
         {
