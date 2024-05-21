@@ -114,6 +114,35 @@ namespace PillsTracking.Tests.Services
         }
 
         [TestMethod]
+        public async Task RemovePrescription_ShouldThrowKeyNotFoundException_WhenPrescriptionNotFound()
+        {
+            // Arrange
+            var prescriptionRepoMock = new Mock<IPrescriptionRepository>();
+            prescriptionRepoMock.Setup(repo => repo.GetPrescriptionById(It.IsAny<Guid>())).ReturnsAsync((Prescription)null);
+            var prescriptionService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object , doctorRepoMock.Object);
+            var prescriptionId = Guid.NewGuid();
+
+            // Act & Assert
+            var exception = await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => prescriptionService.RemovePrescription(prescriptionId));
+            Assert.AreEqual($"Prescription with ID {prescriptionId} not found.", exception.Message);
+        }
+
+        [TestMethod]
+        public async Task RemovePrescription_ShouldRemoveAndSavePrescription_WhenPrescriptionExists()
+        {
+            // Arrange
+            var prescriptionRepoMock = new Mock<IPrescriptionRepository>();
+            var prescription = Prescription.Create("Test",30,DateTime.Now);
+            prescriptionRepoMock.Setup(repo => repo.GetPrescriptionById(prescription.Id)).ReturnsAsync(prescription);
+            var prescriptionService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object,doctorRepoMock.Object);
+
+            // Act
+            await prescriptionService.RemovePrescription(prescription.Id);
+
+            // Assert
+            prescriptionRepoMock.Verify(repo => repo.GetPrescriptionById(prescription.Id), Times.Once);
+            prescriptionRepoMock.Verify(repo => repo.RemovePrescription(prescription), Times.Once);
+        }
         public async Task AddPatientToDoctorList_ShouldAddAndSavePatient_WhenCalled()
         {
             // Arrange

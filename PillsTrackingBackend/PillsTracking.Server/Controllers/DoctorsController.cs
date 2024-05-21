@@ -128,14 +128,31 @@ namespace PillsTracking.Server.Controllers
 			try
 			{
 				var prescription = await _doctorService.UpdatePrescription(prescriptionToUpdate.PrescriptionID, prescriptionToUpdate.Duration, prescriptionToUpdate.Drugs);
-                return Ok(prescription);
-            }
+				return Ok(prescription);
+			}
 
 			catch (Exception ex)
 			{
 				return BadRequest();
 			}
-			
+
+		}
+		[HttpDelete("removePrescription")]
+		public async Task<IActionResult> RemovePrescription(Guid id)
+		{
+			try
+			{
+				await _doctorService.RemovePrescription(id);
+				return NoContent();
+			}
+			catch (ArgumentException ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return NotFound(ex.Message);
+			}
 		}
 	}
 }

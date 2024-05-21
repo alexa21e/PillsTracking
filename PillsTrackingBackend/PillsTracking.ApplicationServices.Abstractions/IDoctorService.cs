@@ -13,6 +13,8 @@ namespace PillsTracking.ApplicationServices.Abstractions
         Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate);
 		Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs);
         Task<Patient> GetPatientById(Guid id);
+		Task RemovePrescription(Guid prescriptionId);
+		
 
     }
 }

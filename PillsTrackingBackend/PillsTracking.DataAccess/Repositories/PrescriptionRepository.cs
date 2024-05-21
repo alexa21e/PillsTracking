@@ -50,5 +50,13 @@ namespace PillsTracking.DataAccess.Repositories
             await _dbContext.SaveChangesAsync();
             return prescription;
         }
+
+        public async void RemovePrescription(Prescription prescription)
+        {
+            _dbContext.Prescriptions.Remove(prescription);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
     }
 }

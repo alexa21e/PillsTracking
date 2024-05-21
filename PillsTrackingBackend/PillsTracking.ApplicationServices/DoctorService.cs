@@ -122,5 +122,21 @@ namespace PillsTracking.ApplicationServices
             var updatedPrescription = await _prescriptionRepository.UpdatePrescription(prescriptionId, newDuration, newDrugs);
             return updatedPrescription;
         }
+        public async Task RemovePrescription(Guid prescriptionId)
+        {
+            if (prescriptionId == Guid.Empty)
+            {
+                throw new ArgumentException("Invalid prescription ID.", nameof(prescriptionId));
+            }
+
+            var prescription = await _prescriptionRepository.GetPrescriptionById(prescriptionId);
+            if (prescription == null)
+            {
+                throw new KeyNotFoundException($"Prescription with ID {prescriptionId} not found.");
+            }
+
+            _prescriptionRepository.RemovePrescription(prescription);
+            
+        }
     }
 }
