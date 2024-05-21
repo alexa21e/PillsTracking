@@ -30,19 +30,19 @@ namespace PillsTracking.Server.Controllers
 			}
 		}
 
-        [HttpGet("getPatientById")]
-        public async Task<ActionResult<Patient>> GetPatientById([FromQuery]Guid id)
-        {
-            try
-            {
-                var patient = await _doctorService.GetPatientById(id);
-                return Ok(patient);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
+		[HttpGet("getPatientById")]
+		public async Task<ActionResult<Patient>> GetPatientById([FromQuery] Guid id)
+		{
+			try
+			{
+				var patient = await _doctorService.GetPatientById(id);
+				return Ok(patient);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest();
+			}
+		}
 
 		[HttpPost("addPatient")]
 		public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
@@ -78,14 +78,31 @@ namespace PillsTracking.Server.Controllers
 			try
 			{
 				var prescription = await _doctorService.UpdatePrescription(prescriptionToUpdate.PrescriptionID, prescriptionToUpdate.Duration, prescriptionToUpdate.Drugs);
-                return Ok(prescription);
-            }
+				return Ok(prescription);
+			}
 
 			catch (Exception ex)
 			{
 				return BadRequest();
 			}
-			
+
+		}
+		[HttpDelete("removePrescription")]
+		public async Task<IActionResult> RemovePrescription(Guid id)
+		{
+			try
+			{
+				await _doctorService.RemovePrescription(id);
+				return NoContent();
+			}
+			catch (ArgumentException ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return NotFound(ex.Message);
+			}
 		}
 	}
 }

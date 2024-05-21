@@ -45,6 +45,11 @@ namespace PillsTracking.DataAccess.Repositories
                 .FirstOrDefaultAsync(p => p.Id == prescriptionId);
         }
 
+        public void RemovePrescription(Prescription prescription)
+        {
+            _dbContext.Prescriptions.Remove(prescription);
+        }
+
         public async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();
