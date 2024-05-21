@@ -16,10 +16,20 @@ namespace PillsTracking.DataAccess.Repositories
 
         public async Task<ICollection<Patient>> GetPatients()
         {
-	        return await _dbContext.Patients
-		        .Include(p => p.Prescriptions)
-		        .Include(p => p.Doctors)
-		        .ToListAsync();
+            return await _dbContext.Patients
+                .Include(p => p.Prescriptions)
+                .Include(p => p.Doctors)
+                .ToListAsync();
+        }
+
+        public async Task<IReadOnlyCollection<Patient>> GetPatientsByDoctorId(Guid doctorId)
+        {
+            var doctor = await _dbContext.Doctors.Include(d => d.Patient).FirstOrDefaultAsync(d => d.Id == doctorId);
+            if (doctor == null)
+            {
+                throw new ArgumentException("Doctor not found");
+            }
+            return doctor.Patient;
         }
 
         public async Task<Patient> GetPatientByPhone(string phoneNumber)

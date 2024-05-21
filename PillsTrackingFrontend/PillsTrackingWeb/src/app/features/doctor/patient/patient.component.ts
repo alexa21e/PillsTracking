@@ -19,7 +19,9 @@ export class PatientComponent implements OnInit {
   isAddPrescriptionDialogVisible: boolean = false;
 
   prescriptionForm = new FormGroup({
+    "name": new FormControl(),
     "duration": new FormControl(),
+    "creationDate": new FormControl(),
     "drug1": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
     "drug2": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
     "drug3": new FormGroup({ "name": new FormControl(), "concentration": new FormControl(), "dosage": new FormControl(), "frequency": new FormControl() }),
@@ -71,7 +73,9 @@ export class PatientComponent implements OnInit {
   onSubmitButtonClick() {
     let prescriptionData: { [key: string]: any } = {
       patientId: this.patientId,
+      name: this.prescriptionForm.value.name,
       duration: this.prescriptionForm.value.duration,
+      creationDate: new Date(this.prescriptionForm.value.creationDate).toISOString(),
       drugs: []
     };
 
