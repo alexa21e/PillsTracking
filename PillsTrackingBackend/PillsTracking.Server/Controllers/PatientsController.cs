@@ -26,6 +26,14 @@ namespace PillsTracking.Server.Controllers
             return Ok(prescriptions);
         }
 
+        [AllowAnonymous]
+        [HttpGet("prescriptionsByPhoneNumber")]
+        public async Task<ActionResult<List<PrescriptionForPatientDTO>>> GetPrescriptionsByPatientPhoneNumber(string phoneNumber)
+        {
+            var prescriptions = await _patientService.GetPrescriptionsByPatientPhoneNumber(phoneNumber);
+            return Ok(prescriptions);
+        }
+
         [HttpGet("{prescriptionId}")]
         public async Task<ActionResult<PrescriptionDetailsForPatientDTO>> GetPrescriptionById(Guid prescriptionId)
         {

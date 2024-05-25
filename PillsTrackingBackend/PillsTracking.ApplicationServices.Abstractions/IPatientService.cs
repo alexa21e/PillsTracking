@@ -6,6 +6,8 @@ namespace PillsTracking.ApplicationServices.Abstractions
     {
         Task<List<PrescriptionForPatientDTO>> GetPrescriptionsByPatientId(Guid patientId);
 
+        Task<List<PrescriptionForPatientDTO>> GetPrescriptionsByPatientPhoneNumber(string phoneNumber);
+
         Task<PrescriptionDetailsForPatientDTO> GetPrescriptionById(Guid prescriptionId);
     }
 }

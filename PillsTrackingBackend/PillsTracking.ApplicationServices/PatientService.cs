@@ -24,6 +24,12 @@ namespace PillsTracking.ApplicationServices
             return _mapper.Map<List<PrescriptionForPatientDTO>>(prescriptions);
         }
 
+        public async Task<List<PrescriptionForPatientDTO>> GetPrescriptionsByPatientPhoneNumber(string phoneNumber)
+        {
+            var prescriptions = await _prescriptionRepository.GetPrescriptionsByPatientPhoneNumber(phoneNumber);
+            return _mapper.Map<List<PrescriptionForPatientDTO>>(prescriptions);
+        }
+
         public async Task<PrescriptionDetailsForPatientDTO> GetPrescriptionById(Guid prescriptionId)
         {
             var prescription = await _prescriptionRepository.GetPrescriptionById(prescriptionId);
