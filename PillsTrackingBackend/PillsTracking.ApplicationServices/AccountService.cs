@@ -1,5 +1,7 @@
-﻿using PillsTracking.ApplicationServices.Abstractions;
+﻿using AutoMapper;
+using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataAccess.Abstractions;
+using PillsTracking.DataObjects;
 using PillsTracking.Domain;
 
 namespace PillsTracking.ApplicationServices
@@ -9,13 +11,16 @@ namespace PillsTracking.ApplicationServices
 		private readonly IDoctorRepository _doctorRepository;
 		private readonly IAdminRepository _adminRepository;
 		private readonly IPatientRepository _patientRepository;
+        private readonly IMapper _mapper;
 		public AccountService(IDoctorRepository doctorRepository,
 			IAdminRepository adminRepository,
-			IPatientRepository patientRepository)
+			IPatientRepository patientRepository,
+            IMapper mapper)
 		{
 			_doctorRepository = doctorRepository;
 			_adminRepository = adminRepository;
 			_patientRepository = patientRepository;
+			_mapper = mapper;
 		}
 
 		public async Task<Doctor> GetDoctorByEmail(string email)
@@ -28,9 +33,10 @@ namespace PillsTracking.ApplicationServices
 			return await _adminRepository.GetAdminByEmail(email);
 		}
 
-        public async Task<Patient> GetPatientByPhone(string phoneNumber)
+        public async Task<PatientForMobileDTO> GetPatientByPhone(string phoneNumber)
         {
-            return await _patientRepository.GetPatientByPhone(phoneNumber);
+            var patient = await _patientRepository.GetPatientByPhone(phoneNumber);
+			return _mapper.Map<PatientForMobileDTO>(patient);
         }
 	}
 }
