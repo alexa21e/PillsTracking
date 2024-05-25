@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStorageState } from '@/hooks/useStorageState';
+import { useLogin } from '@/hooks/useLogin';
 
 const AuthContext = React.createContext<{
   signIn: () => void;
@@ -26,6 +27,7 @@ export function useSession() {
 
 export function SessionProvider(props: React.PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
+  const {login} = useLogin();
 
   return (
     <AuthContext.Provider
