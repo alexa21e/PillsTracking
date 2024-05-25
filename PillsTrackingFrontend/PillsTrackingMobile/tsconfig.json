@@ -12,6 +12,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "app/rootLayout.jsx", "app/(app)/appLayout.jsx", "app/(app)/home.jsx"  ]
+    "expo-env.d.ts",
+  ]
 }
