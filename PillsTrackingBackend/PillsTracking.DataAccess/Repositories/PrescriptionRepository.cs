@@ -41,13 +41,22 @@ namespace PillsTracking.DataAccess.Repositories
             return prescription;
         }
 
+        public async Task<List<Prescription>> GetPrescriptionsByPatientId(Guid patientId)
+        {
+            var prescriptions = await _dbContext.Prescriptions
+                .Include(p => p.Drugs)
+                .Include(p => p.Patient)
+                .Where(p => p.PatientId == patientId)
+                .ToListAsync();
+            return prescriptions;
+        }
+
         public async Task<Prescription> GetPrescriptionById(Guid prescriptionId)
         {
            var prescription =  await _dbContext.Prescriptions
                 .Include(p => p.Drugs)
                 .Include(p => p.Patient)
                 .FirstOrDefaultAsync(p => p.Id == prescriptionId);
-            await _dbContext.SaveChangesAsync();
             return prescription;
         }
 

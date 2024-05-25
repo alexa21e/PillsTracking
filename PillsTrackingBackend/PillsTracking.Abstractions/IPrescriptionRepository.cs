@@ -8,6 +8,8 @@ namespace PillsTracking.DataAccess.Abstractions
 
         Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs);
 
+        Task<List<Prescription>> GetPrescriptionsByPatientId(Guid patientId);
+
         Task<Prescription> GetPrescriptionById(Guid prescriptionId);
 
         void RemovePrescription(Prescription prescription);
