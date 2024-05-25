@@ -1,21 +1,21 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Index from './index';
 import Login from './login';
 import Home from './home';
+import PrescriptionDetails from './prescriptionDetails';
 
 const Stack = createStackNavigator();
 
-const RootLayout = () => {
+export default function App() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="index" component={Index} options={{headerShown: false}}/>
-      <Stack.Screen name="login" component={Login} options={{headerShown: false}}/>
-      <Stack.Screen name="home" component={Home} options={{headerShown: false}}/>
-    </Stack.Navigator>
-  )
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Pp" component={PrescriptionDetails} options={{ name:'Pp'}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
-
-export default RootLayout
 
 

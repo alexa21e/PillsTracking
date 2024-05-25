@@ -12,7 +12,7 @@ const Login = () => {
       const data = await login(phoneNumber);
       if (data) {
         console.log('Patient Data:', data);
-        navigation.navigate('home');
+        navigation.navigate('home',  { patientId: data.id });
       } else {
         console.error('Error logging in');
       }

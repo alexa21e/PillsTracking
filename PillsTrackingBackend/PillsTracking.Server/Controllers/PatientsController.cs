@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataObjects;
@@ -6,6 +7,7 @@ using PillsTracking.Domain;
 
 namespace PillsTracking.Server.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
