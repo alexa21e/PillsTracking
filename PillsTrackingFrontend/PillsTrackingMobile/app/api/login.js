@@ -6,7 +6,7 @@ export const login = async (phoneNumber) => {
         const data = response.data; 
         return data;
     } catch (error) {
-        console.error(error);
+        console.error('Error:', error.message);
         return null;
     }
 };

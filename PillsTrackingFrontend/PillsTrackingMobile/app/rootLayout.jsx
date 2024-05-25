@@ -1,10 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './home';
 import Index from './index';
 import Login from './login';
+import Home from './home';
 
 const Stack = createStackNavigator();
+
 const RootLayout = () => {
   return (
     <Stack.Navigator>
@@ -14,7 +15,6 @@ const RootLayout = () => {
     </Stack.Navigator>
   )
 }
-
 
 export default RootLayout
 

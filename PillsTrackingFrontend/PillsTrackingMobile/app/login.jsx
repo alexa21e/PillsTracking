@@ -8,13 +8,17 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const handlePress = async () => {
+    try {
       const data = await login(phoneNumber);
-      if (data === true) {
+      if (data) {
+        console.log('Patient Data:', data);
         navigation.navigate('home');
-      }
-      else {
+      } else {
         console.error('Error logging in');
       }
+    } catch (error) {
+      console.error('Network Error:', error);
+    }
   };
 
   return (
