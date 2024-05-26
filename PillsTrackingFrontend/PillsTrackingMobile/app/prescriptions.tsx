@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useSession } from '@/context/ctx';
 
@@ -20,6 +20,10 @@ export default function PrescriptionsScreen() {
     router.replace('/log-in'); // Navigate to login screen after sign out
   };
 
+  const handlePress = (id: string) => {
+    router.push({ pathname: '/prescriptionDetails', params: { id } });
+  };
+
   const renderTableHeader = () => (
     <View style={[styles.row, styles.header]}>
       <Text style={[styles.cell, styles.headerText]}>Prescription Name</Text>
@@ -27,9 +31,9 @@ export default function PrescriptionsScreen() {
   );
 
   const renderTableRow = ({ item }: { item: Prescription }) => (
-    <View style={styles.row}>
+    <TouchableOpacity onPress={() => handlePress(item.id)} style={styles.row}>
       <Text style={styles.cell}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
