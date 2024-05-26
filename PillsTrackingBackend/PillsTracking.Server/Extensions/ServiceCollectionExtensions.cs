@@ -15,13 +15,14 @@ namespace PillsTracking.Server.Extensions
 			services.AddScoped<IDoctorService, DoctorService>();
 			services.AddScoped<IAccountService, AccountService>();
 			services.AddScoped<IAdminService, AdminService>();
+			services.AddScoped<IPatientService, PatientService>();
 			services.AddScoped<IAdminRepository, AdminRepository>();
 			services.AddScoped<IDoctorRepository, DoctorRepository>();
 			services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
             services.AddScoped<IDrugRepository, DrugRepository>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-			return services;
+            return services;
 		}
 	}
 }

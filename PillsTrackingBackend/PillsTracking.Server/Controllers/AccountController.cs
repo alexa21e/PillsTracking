@@ -180,7 +180,7 @@ namespace PillsTracking.Server.Controllers
 
         [AllowAnonymous]
         [HttpPost("login/patient")]
-        public async Task<ActionResult<bool>> LoginPatient(string phoneNumber)
+        public async Task<ActionResult<PatientForMobileDTO>> LoginPatient(string phoneNumber)
         {
             var patient = await _accountService.GetPatientByPhone(phoneNumber);
 
@@ -189,7 +189,7 @@ namespace PillsTracking.Server.Controllers
                 return NotFound("Phone number not found");
             }
 
-            return Ok(true);
+            return Ok(patient);
         }	
 	}
 }

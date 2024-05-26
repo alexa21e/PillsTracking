@@ -73,7 +73,7 @@ namespace PillsTracking.Server.Controllers
 		}
 
 		[HttpPost("addPrescription")]
-		public async Task<ActionResult<Prescription>> AddPrescription([FromBody] PrescriptionToCreateDTO prescriptionToCreate)
+		public async Task<ActionResult<Prescription>> AddPrescription([FromQuery] PrescriptionToCreateDTO prescriptionToCreate)
 		{
 			try
 			{

@@ -1,4 +1,5 @@
-﻿using PillsTracking.Domain;
+﻿using PillsTracking.DataObjects;
+using PillsTracking.Domain;
 
 namespace PillsTracking.ApplicationServices.Abstractions
 {
@@ -6,7 +7,7 @@ namespace PillsTracking.ApplicationServices.Abstractions
 	{
 		Task<Doctor> GetDoctorByEmail(string email);
 		Task<Admin> GetAdminByEmail(string email);
-        Task<Patient> GetPatientByPhone(string phoneNumber);
+        Task<PatientForMobileDTO> GetPatientByPhone(string phoneNumber);
 
     }
 }
