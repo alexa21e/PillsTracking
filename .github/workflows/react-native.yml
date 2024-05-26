@@ -2,8 +2,6 @@ name: React Native CI
 on:
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'PillsTrackingFrontend/PillsTrackingMobile/**'
 
 jobs:
   build-mobile:
