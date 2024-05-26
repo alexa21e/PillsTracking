@@ -170,6 +170,21 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    // Add Flipper dependencies for debugging
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
+        exclude group: 'com.facebook.fbjni'
+    }
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group: 'com.facebook.flipper'
+    }
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+        exclude group: 'com.facebook.flipper'
+    }
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:${FLIPPER_VERSION}") {
+        exclude group: 'com.squareup.leakcanary'
+    }
+    releaseImplementation("com.facebook.flipper:flipper-noop:${FLIPPER_VERSION}")
 }
 
 apply from: new File(["node", "--print", "require.resolve('@react-native-community/cli-platform-android/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim(), "../native_modules.gradle");
