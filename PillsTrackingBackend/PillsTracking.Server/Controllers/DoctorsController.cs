@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataObjects;
 using PillsTracking.Domain;
-using System.Collections.Generic;
 
 namespace PillsTracking.Server.Controllers
 {
@@ -16,16 +15,30 @@ namespace PillsTracking.Server.Controllers
 			_doctorService = doctorService;
 		}
 
+        [HttpGet]
+        public async Task<ActionResult<DoctorIdForWebDTO>> GetDoctorIdByEmail([FromQuery] string email)
+        {
+            try
+            {
+                var doctorId = await _doctorService.GetDoctorIdByEmail(email);
+                return Ok(doctorId);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
 		[HttpGet("getAllPatients")]
 		public async Task<ActionResult<ICollection<Patient>>> GetPatients()
 		{
-			try
-			{
+            try
+            {
 				var patients = await _doctorService.GetPatients();
 				return Ok(patients);
 			}
-			catch (Exception ex)
-			{
+			catch (Exception)
+            {
 				return BadRequest();
 			}
 		}
@@ -38,7 +51,7 @@ namespace PillsTracking.Server.Controllers
                 var patients = await _doctorService.GetPatientsByDoctorIdAsync(doctorId);
                 return Ok(patients);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -52,7 +65,7 @@ namespace PillsTracking.Server.Controllers
                 var patient = await _doctorService.GetPatientById(id);
                 return Ok(patient);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -66,7 +79,7 @@ namespace PillsTracking.Server.Controllers
 				var patient = await _doctorService.AddPatient(patientToCreate);
 				return Ok(patient);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return BadRequest();
 			}
@@ -80,7 +93,7 @@ namespace PillsTracking.Server.Controllers
 				var prescription = await _doctorService.AddPrescription(prescriptionToCreate);
 				return Ok(prescription);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return BadRequest();
 			}
@@ -98,7 +111,7 @@ namespace PillsTracking.Server.Controllers
 			{
 				return BadRequest(ex.Message);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return StatusCode(500, "Internal server error");
 			}
@@ -116,7 +129,7 @@ namespace PillsTracking.Server.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -131,7 +144,7 @@ namespace PillsTracking.Server.Controllers
 				return Ok(prescription);
 			}
 
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return BadRequest();
 			}

@@ -13,16 +13,28 @@ namespace PillsTracking.ApplicationServices
         private readonly IPrescriptionRepository _prescriptionRepository;
         private readonly IDrugRepository _drugRepository;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IMapper _mapper;
 
         public DoctorService(IPatientRepository patientRepository,
             IPrescriptionRepository prescriptionRepository,
             IDrugRepository drugRepository,
-            IDoctorRepository doctorRepository)
+            IDoctorRepository doctorRepository,
+            IMapper mapper)
         {
             _patientRepository = patientRepository;
             _prescriptionRepository = prescriptionRepository;
             _drugRepository = drugRepository;
             _doctorRepository = doctorRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<DoctorIdForWebDTO> GetDoctorIdByEmail(string email)
+        {
+            var doctor = await _doctorRepository.GetDoctorByEmail(email);
+            return new DoctorIdForWebDTO
+            {
+                Id = doctor.Id
+            };
         }
 
         public async Task<ICollection<Patient>> GetPatients()

@@ -4,7 +4,8 @@ using PillsTracking.Domain;
 namespace PillsTracking.ApplicationServices.Abstractions
 {
 	public interface IDoctorService
-	{
+    {
+        Task<DoctorIdForWebDTO> GetDoctorIdByEmail(string email);
 		Task<ICollection<Patient>> GetPatients();
         Task<IReadOnlyCollection<Patient>> GetPatientsByDoctorIdAsync(Guid doctorId);
         Task<Patient> AddPatient(PatientToCreateDTO patient);

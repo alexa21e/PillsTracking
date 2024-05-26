@@ -17,6 +17,9 @@ export class AccountService {
   private currentUserRoleSource = new BehaviorSubject<string | null>(null);
   currentUserRole$ = this.currentUserRoleSource.asObservable();
   
+  private currentUserEmailSource = new BehaviorSubject<string | null>(null);
+  currentUserEmail$ = this.currentUserEmailSource.asObservable();
+
   constructor(private http: HttpClient,
     private router: Router) { }
 
@@ -34,6 +37,7 @@ export class AccountService {
         if(user){
           this.currentUserSource.next(user);
           this.currentUserRoleSource.next(user.role);
+          this.currentUserEmailSource.next(user.email);
           return user;
         }
         else{
@@ -52,6 +56,7 @@ export class AccountService {
         localStorage.setItem('token', user.token);
         this.currentUserSource.next(user);
         this.currentUserRoleSource.next(user.role);
+        this.currentUserEmailSource.next(user.email);
         return user;
       })
     );
@@ -63,6 +68,7 @@ export class AccountService {
         localStorage.setItem('token', user.token);
         this.currentUserSource.next(user);
         this.currentUserRoleSource.next(user.role);
+        this.currentUserEmailSource.next(user.email);
         return user;
       })
     )
@@ -74,6 +80,7 @@ export class AccountService {
         localStorage.setItem('token', user.token);
         this.currentUserSource.next(user);
         this.currentUserRoleSource.next(user.role);
+        this.currentUserEmailSource.next(user.email);
         return user;
       })
     )
@@ -82,6 +89,8 @@ export class AccountService {
   logout(){
     localStorage.removeItem('token');
     this.currentUserSource.next(null);
+    this.currentUserRoleSource.next(null);
+    this.currentUserEmailSource.next(null);
     this.router.navigateByUrl('/');
   }
 

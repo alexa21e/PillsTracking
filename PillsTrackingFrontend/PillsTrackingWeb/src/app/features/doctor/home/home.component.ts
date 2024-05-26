@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DoctorsService } from '../../../shared/services/doctors.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { AccountService } from '../../../shared/services/account.service';
+import { Patient } from '../../../shared/models/patient';
 
 @Component({
   selector: 'app-home-doctor',
@@ -10,10 +12,12 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css'
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  doctorId?: string;
 
-  id: string = 'fe261dcc-18e5-4a79-971e-de70f922fe47';
-  //hard coded for development only
+  patients?: Patient[];
+
+  isAddDialogVisible = false;
 
   patientForm = new FormGroup({
     "name": new FormControl(),
@@ -21,15 +25,49 @@ export class HomeComponent {
     "address": new FormControl(),
     "gender": new FormControl(),
     "dateOfBirth": new FormControl()
-
   });
 
-  isAddDialogVisible = false;
-
   constructor(private doctorsService: DoctorsService,
-    private messageService: MessageService, 
-    private router: Router 
+    private accountService: AccountService,
+    private messageService: MessageService,
+    private router: Router
   ) { }
+
+  ngOnInit(): void {
+    this.getDoctorIdByEmail();
+  }
+
+  getDoctorIdByEmail() {
+    this.accountService.currentUserEmail$.subscribe(email => {
+      if (email) {
+        this.doctorsService.getDoctorIdByEmail(email).subscribe({
+          next: (response) => {
+            this.doctorId = response.id;
+            this.getPatients();
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        });
+      }
+    });
+  }
+
+  getPatients() {
+    if (this.doctorId) {
+      this.doctorsService.getPatientsByDoctorId(this.doctorId).subscribe({
+          next: (patients) => {
+              this.patients = patients;
+              console.log(patients);
+          },
+          error: (error) => {
+              console.error(error);
+          }
+      });
+  } else {
+      console.error('Doctor ID is not set.');
+  }
+  }
 
   onAddButtonClick() {
     const patientData = {
@@ -60,7 +98,7 @@ export class HomeComponent {
     this.patientForm.reset();
   }
 
-  onPatientClick(id: string){
+  onPatientClick(id: string) {
     this.router.navigate(['/doctor/patient', id]);
   }
 
