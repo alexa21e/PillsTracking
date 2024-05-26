@@ -3,6 +3,8 @@ name: Angular CI
 on:
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'PillsTrackingFrontend/PillsTrackingWeb/**'
 
 jobs:
   build-web:
