@@ -1,1 +1,14 @@
-<p>landing-page works!</p>
+<ng-container *ngIf="(accountService.currentUser$ | async) === null">
+    <div class="d-flex justify-content-between align-items-center landing-page">
+        <div class="landing-text">
+            <h1>Welcome to PillsTracking</h1>
+            <p>Help your patients stay on schedule and never miss their drugs intake</p>
+            <hr>
+            <a class="btn btn-outline-secondary m-2" routerLink="/account/login">Login</a>
+            <a class="btn btn-outline-secondary m-2" routerLink="/account/register">Sign up</a>
+        </div>
+        <div class="landing-image">
+            <img src="../../../../assets/images/pills.png" alt="landing">
+        </div>
+    </div>
+</ng-container>
