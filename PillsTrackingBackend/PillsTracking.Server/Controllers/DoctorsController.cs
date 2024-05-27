@@ -30,7 +30,7 @@ namespace PillsTracking.Server.Controllers
         }
 
 		[HttpGet("getAllPatients")]
-		public async Task<ActionResult<ICollection<Patient>>> GetPatients()
+		public async Task<ActionResult<IReadOnlyCollection<PatientForWebDTO>>> GetPatients()
 		{
             try
             {
