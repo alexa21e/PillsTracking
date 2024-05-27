@@ -1,36 +1,30 @@
-<div class="flex justify-content-end flex-wrap">
-    <div class="flex align-items-center justify-content-center border-round m-5">
-        <p-button label="Add patient" (click)="openAddDialog()"></p-button>
-        <p-dialog header="Add patient" [modal]="true" [(visible)]="isAddDialogVisible" [style]="{ width: '70rem' }">
-            <form [formGroup]="patientForm">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input pInputText [formControl]="patientForm.controls['name']" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input pInputText [formControl]="patientForm.controls['phoneNumber']" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input pInputText [formControl]="patientForm.controls['address']" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Gender</label>
-                    <select formControlName="gender" class="form-control">
-                        <option value="0">M</option>
-                        <option value="1">F</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Date of Birth</label>
-                    <input type="date" formControlName="dateOfBirth" class="form-control">
-                </div>
-                <div class="p-dialog-footer mt-2">
-                    <button pButton type="button" label="Add" class="p-button-success"
-                        (click)="onAddButtonClick()"></button>
-                </div>
-            </form>
-        </p-dialog>
-    </div>
+<div class="title">
+    <h3>My Patients</h3>
+</div>
+<div class="flex justify-content-center table" *ngIf="patients && patients.length > 0">
+    <p-table [value]="patients" [tableStyle]="{ 'min-width': '70rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Gender</th>
+                <th>Date of birth</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-patient>
+            <tr (click)="onPatientClick(patient.id)" style="cursor: pointer;">
+                <td class="info">{{ patient.name }}</td>
+                <td class="info">{{ patient.phoneNumber }}</td>
+                <td class="info">{{ mapGender(patient.gender) }}</td>
+                <td class="info">{{ patient.dateOfBirth | date:'dd-MM-yyyy' }}</td>
+                <td>
+                    <button pButton type="button" icon="pi pi-trash" label="Delete patient from my list" [text]="true" class="p-button-rounded p-button-danger" (click)="onDeletePatient(patient.id, $event)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="flex justify-content-center" *ngIf="patients && patients.length === 0">
+    <p>Currently no patient is added inside your list.</p>
 </div>

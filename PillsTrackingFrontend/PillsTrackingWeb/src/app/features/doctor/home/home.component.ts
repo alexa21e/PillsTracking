@@ -5,6 +5,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../shared/services/account.service';
 import { Patient } from '../../../shared/models/patient';
+import { PatientForweb } from '../../../shared/models/patientForWeb';
+import { Gender } from '../../../shared/models/gender';
 
 @Component({
   selector: 'app-home-doctor',
@@ -15,7 +17,7 @@ import { Patient } from '../../../shared/models/patient';
 export class HomeComponent implements OnInit {
   doctorId?: string;
 
-  patients?: Patient[];
+  patients?: PatientForweb[];
 
   isAddDialogVisible = false;
 
@@ -56,17 +58,24 @@ export class HomeComponent implements OnInit {
   getPatients() {
     if (this.doctorId) {
       this.doctorsService.getPatientsByDoctorId(this.doctorId).subscribe({
-          next: (patients) => {
-              this.patients = patients;
-              console.log(patients);
-          },
-          error: (error) => {
-              console.error(error);
-          }
+        next: (patients) => {
+          this.patients = patients;
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Could not fetch patients'
+          });
+        }
       });
-  } else {
+    } else {
       console.error('Doctor ID is not set.');
+    }
   }
+
+  mapGender(gender: number): string {
+    return gender === Gender.M ? 'M' : 'F';
   }
 
   onAddButtonClick() {
@@ -96,6 +105,29 @@ export class HomeComponent implements OnInit {
     }
     this.closeAddDialog();
     this.patientForm.reset();
+  }
+
+  onDeletePatient(patientId: string, event: Event) {
+    if(this.doctorId){
+      event.stopPropagation();
+      this.doctorsService.deletePatientFromDoctorList(patientId, this.doctorId).subscribe({
+        complete: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Patient deleted successfully'
+          });
+          this.getPatients();
+        },
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Could not delete patient'
+          });
+        }
+      })
+    }
   }
 
   onPatientClick(id: string) {

@@ -11,7 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -28,7 +28,8 @@ import { TableModule } from 'primeng/table';
     ReactiveFormsModule,
     CardModule,
     DividerModule,
-    TableModule
+    TableModule,
+    ProgressSpinnerModule
   ]
 })
 export class DoctorModule { }

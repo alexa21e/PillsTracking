@@ -12,6 +12,7 @@ import { AccountModule } from './features/account/account.module';
 import { MessageService} from "primeng/api";
 import { JwtInterceptor } from './core/interceptors/jwtinterceptor';
 import { ToastModule } from 'primeng/toast';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ToastModule } from 'primeng/toast';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    MessageService
+    MessageService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

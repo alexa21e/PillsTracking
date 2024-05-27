@@ -6,6 +6,7 @@ import { Patient } from "../models/patient";
 import { Prescription } from "../models/prescription";
 import { Observable } from "rxjs";
 import { DoctorId } from "../models/doctorId";
+import { PatientForweb } from "../models/patientForWeb";
 
 @Injectable({
     providedIn: 'root'
@@ -23,9 +24,9 @@ export class DoctorsService {
         return this.http.get<DoctorId>(this.baseUrl, {params});
     }
 
-    getPatientsByDoctorId(id: string): Observable<Patient[]> {
+    getPatientsByDoctorId(id: string): Observable<PatientForweb[]> {
         let params = new HttpParams().set('doctorId', id);
-        return this.http.get<Patient[]>(`${this.baseUrl}getPatientsOfDoctor`, { params });
+        return this.http.get<PatientForweb[]>(`${this.baseUrl}getPatientsOfDoctor`, { params });
     }
 
     getPatientById(id: string){
@@ -36,6 +37,13 @@ export class DoctorsService {
 
     addPatient(values: any){
         return this.http.post<PatientToCreate>(this.baseUrl + 'addPatient', values);
+    }
+
+    deletePatientFromDoctorList(patientId: string, doctorId: string){
+        let params = new HttpParams();
+        params = params.append('doctorId', doctorId);
+        params = params.append('patientId', patientId);
+        return this.http.delete(this.baseUrl + 'deletePatientFromADoctorList', {params});
     }
 
     addPrescription(values: any){
