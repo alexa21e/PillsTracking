@@ -4,7 +4,7 @@ import { DoctorsService } from '../../../shared/services/doctors.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../shared/services/account.service';
-import { PatientForweb } from '../../../shared/models/patientForWeb';
+import { PatientForWeb } from '../../../shared/models/patientForWeb';
 import { Gender } from '../../../shared/models/gender';
 
 @Component({
@@ -16,7 +16,7 @@ import { Gender } from '../../../shared/models/gender';
 export class HomeComponent implements OnInit {
   doctorId?: string;
 
-  patients?: PatientForweb[];
+  patients?: PatientForWeb[];
 
   isAddDialogVisible = false;
 

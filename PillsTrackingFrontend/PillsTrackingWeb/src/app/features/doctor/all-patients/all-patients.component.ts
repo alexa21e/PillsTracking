@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PatientForweb } from '../../../shared/models/patientForWeb';
+import { PatientForWeb } from '../../../shared/models/patientForWeb';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DoctorsService } from '../../../shared/services/doctors.service';
 import { MessageService } from 'primeng/api';
@@ -15,7 +15,7 @@ import { AccountService } from '../../../shared/services/account.service';
 export class AllPatientsComponent {
   doctorId?: string;
 
-  patients?: PatientForweb[];
+  patients?: PatientForWeb[];
 
   isAddDialogVisible = false;
 

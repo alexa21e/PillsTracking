@@ -19,7 +19,8 @@
                 <td class="info">{{ mapGender(patient.gender) }}</td>
                 <td class="info">{{ patient.dateOfBirth | date:'dd-MM-yyyy' }}</td>
                 <td>
-                    <button pButton type="button" icon="pi pi-trash" label="Delete patient from my list" [text]="true" class="p-button-rounded p-button-danger" (click)="onDeletePatient(patient.id, $event)"></button>
+                    <button pButton type="button" icon="pi pi-trash" label="Delete patient from my list"
+                     [text]="true" class="p-button-rounded p-button-danger" (click)="onDeletePatient(patient.id, $event)"></button>
                 </td>
             </tr>
         </ng-template>

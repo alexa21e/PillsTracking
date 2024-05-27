@@ -6,7 +6,8 @@ import { Patient } from "../models/patient";
 import { Prescription } from "../models/prescription";
 import { Observable } from "rxjs";
 import { DoctorId } from "../models/doctorId";
-import { PatientForweb } from "../models/patientForWeb";
+import { PatientDetailsForWeb } from "../models/patientDetailsForWeb";
+import { PatientForWeb } from "../models/patientForWeb";
 
 @Injectable({
     providedIn: 'root'
@@ -24,19 +25,19 @@ export class DoctorsService {
         return this.http.get<DoctorId>(this.baseUrl, {params});
     }
 
-    getPatientsByDoctorId(id: string): Observable<PatientForweb[]> {
+    getPatientsByDoctorId(id: string): Observable<PatientForWeb[]> {
         let params = new HttpParams().set('doctorId', id);
-        return this.http.get<PatientForweb[]>(`${this.baseUrl}getPatientsOfDoctor`, { params });
+        return this.http.get<PatientForWeb[]>(`${this.baseUrl}getPatientsOfDoctor`, { params });
     }
 
     getPatientById(id: string){
         let params = new HttpParams();
         params = params.append('id', id);
-        return this.http.get<Patient>(this.baseUrl + 'getPatientById', {params});
+        return this.http.get<PatientDetailsForWeb>(this.baseUrl + 'getPatientById', {params});
     }
 
     getPatients(){
-        return this.http.get<PatientForweb[]>(this.baseUrl + 'getAllPatients');
+        return this.http.get<PatientForWeb[]>(this.baseUrl + 'getAllPatients');
     }
 
     addPatient(values: any){
@@ -57,11 +58,23 @@ export class DoctorsService {
         return this.http.delete(this.baseUrl + 'deletePatientFromADoctorList', {params});
     }
 
-    addPrescription(values: any){
-        return this.http.post(this.baseUrl + 'addPrescription', values);
+    getPrescriptionById(id: string){
+        let params = new HttpParams();
+        params = params.append('prescriptionId', id);
+        return this.http.get<Prescription>(this.baseUrl + 'getPrescriptionById', {params});
+    }
+
+    addPrescription(prescriptionData: any){
+        return this.http.post(this.baseUrl + 'addPrescription', prescriptionData);
     }
 
     updatePrescription(values: any){
         return this.http.post<Prescription>(this.baseUrl + 'updatePrescription', values);
+    }
+
+    deletePrescription(id: string){
+        let params = new HttpParams();
+        params = params.append('id', id);
+        return this.http.delete(this.baseUrl + 'removePrescription', {params});
     }
 }

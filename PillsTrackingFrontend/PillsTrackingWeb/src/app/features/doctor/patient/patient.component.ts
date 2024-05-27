@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DoctorsService } from '../../../shared/services/doctors.service';
 import { ActivatedRoute } from '@angular/router';
-import { Patient } from '../../../shared/models/patient';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { Prescription } from '../../../shared/models/prescription';
+import { PrescriptionForWeb } from '../../../shared/models/prescriptionForWeb';
+import { PatientDetailsForWeb } from '../../../shared/models/patientDetailsForWeb';
 
 @Component({
   selector: 'app-patient',
@@ -12,11 +14,17 @@ import { MessageService } from 'primeng/api';
 })
 export class PatientComponent implements OnInit {
 
-  patient!: Patient;
+  patient!: PatientDetailsForWeb;
   patientId?: string | null;
+
+  selectedPrescription?: PrescriptionForWeb;
+
+  detailedPrescription?: Prescription;
 
   isPrescriptionDialogVisible: boolean = false;
   isAddPrescriptionDialogVisible: boolean = false;
+
+  frequencies: number[] = [1, 2, 3, 4, 6, 8, 12, 24, 36, 48];
 
   prescriptionForm = new FormGroup({
     "name": new FormControl(),
@@ -62,12 +70,25 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  onPrescriptionClick() {
+  onPrescriptionClick(prescription: PrescriptionForWeb) {
+    this.selectedPrescription = prescription;
     this.showPrescriptionDetails();
   }
 
   onAddPrescriptionClick() {
     this.showAddPrescriptionDialog();
+  }
+
+  onDeletePrescription(prescriptionId: string, event: Event) {
+      event.stopPropagation();
+      this.doctorsService.deletePrescription(prescriptionId).subscribe({
+        next: () => {
+          this.getPatient();
+        },
+        error: (error) => {
+          this.getPatient();
+        }
+      })
   }
 
   onSubmitButtonClick() {
@@ -88,7 +109,7 @@ export class PatientComponent implements OnInit {
       }
     }
 
-    if (this.prescriptionForm.valid) {
+    if (prescriptionData['drugs'].length > 0 && this.prescriptionForm.valid) {
       this.doctorsService.addPrescription(prescriptionData).subscribe({
         complete: () => {
           this.hideAddPrescriptionDialog();
@@ -97,6 +118,7 @@ export class PatientComponent implements OnInit {
             summary: 'Success',
             detail: 'Prescription added successfully',
           });
+          this.getPatient();
         },
         error: () => {
           this.messageService.add({
@@ -106,6 +128,12 @@ export class PatientComponent implements OnInit {
           });
         }
       });
+    }else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Prescription must contain at least one drug with all fields filled'
+      });
     }
 
     this.prescriptionForm.reset();
@@ -113,10 +141,17 @@ export class PatientComponent implements OnInit {
 
   private showPrescriptionDetails() {
     this.isPrescriptionDialogVisible = true;
-  }
-
-  private hidePrescriptionDetails() {
-    this.isPrescriptionDialogVisible = false;
+    if(this.selectedPrescription){
+      this.doctorsService.getPrescriptionById(this.selectedPrescription?.id).subscribe({
+        next: (prescription) => {
+          this.detailedPrescription = prescription;
+          console.log(this.detailedPrescription);
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      })  
+    }
   }
 
   private showAddPrescriptionDialog() {
