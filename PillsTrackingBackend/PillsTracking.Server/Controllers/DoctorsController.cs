@@ -159,13 +159,13 @@ namespace PillsTracking.Server.Controllers
 
 		}
 		[HttpDelete("removePrescription")]
-		public async Task<IActionResult> RemovePrescription(Guid id)
+		public async Task<ActionResult<string>> RemovePrescription([FromQuery]Guid id)
 		{
 			try
 			{
 				await _doctorService.RemovePrescription(id);
-				return NoContent();
-			}
+                return Ok("Prescription removed successfully");
+            }
 			catch (ArgumentException ex)
 			{
 				return BadRequest(ex.Message);

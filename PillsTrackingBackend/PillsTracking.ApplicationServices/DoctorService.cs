@@ -161,13 +161,13 @@ namespace PillsTracking.ApplicationServices
             }
 
             var prescription = await _prescriptionRepository.GetPrescriptionById(prescriptionId);
+
             if (prescription == null)
             {
                 throw new KeyNotFoundException($"Prescription with ID {prescriptionId} not found.");
             }
 
-            _prescriptionRepository.RemovePrescription(prescription);
-            
+            await _prescriptionRepository.RemovePrescription(prescription);
         }
     }
 }

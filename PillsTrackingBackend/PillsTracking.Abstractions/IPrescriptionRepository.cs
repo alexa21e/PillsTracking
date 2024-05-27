@@ -14,6 +14,6 @@ namespace PillsTracking.DataAccess.Abstractions
 
         Task<Prescription> GetPrescriptionById(Guid prescriptionId);
 
-        void RemovePrescription(Prescription prescription);
+        Task RemovePrescription(Prescription prescription);
     }
 }
