@@ -8,12 +8,12 @@ namespace PillsTracking.ApplicationServices.Abstractions
         Task<DoctorIdForWebDTO> GetDoctorIdByEmail(string email);
 		Task<IReadOnlyCollection<PatientForWebDTO>> GetPatients();
         Task<IReadOnlyCollection<PatientForWebDTO>> GetPatientsByDoctorIdAsync(Guid doctorId);
-        Task<Patient> AddPatient(PatientToCreateDTO patient);
+        Task<PatientToCreateDTO> AddPatient(PatientToCreateDTO patient);
 		Task AddPatientToDoctorList(Guid doctorId, Guid patientId);
         Task RemovePatientFromDoctorList(Guid doctorId, Guid patientId);
         Task<PrescriptionDetailsForWebDTO> GetPrescriptionById(Guid prescriptionId);
         Task<PrescriptionToCreateDTO> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate);
-		Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs);
+        Task<PrescriptionToUpdateDTO> UpdatePrescription(PrescriptionToUpdateDTO prescriptionToUpdate);
         Task<PatientDetailsForWebDTO> GetPatientById(Guid id);
 		Task RemovePrescription(Guid prescriptionId);
 		

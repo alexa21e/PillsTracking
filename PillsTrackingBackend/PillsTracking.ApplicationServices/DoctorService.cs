@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataAccess.Abstractions;
-using PillsTracking.DataAccess.Repositories;
 using PillsTracking.DataObjects;
 using PillsTracking.Domain;
 
@@ -55,13 +54,13 @@ namespace PillsTracking.ApplicationServices
             return _mapper.Map<PatientDetailsForWebDTO>(patient);
         }
 
-        public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
+        public async Task<PatientToCreateDTO> AddPatient(PatientToCreateDTO patientToCreate)
         {
             var patient = Patient.Create(Guid.NewGuid(), patientToCreate.Name, patientToCreate.PhoneNumber, patientToCreate.Address,
                 patientToCreate.Gender, patientToCreate.DateOfBirth);
             await _patientRepository.AddPatient(patient);
             await _patientRepository.SaveAsync();
-            return patient;
+            return _mapper.Map<PatientToCreateDTO>(patient);
         }
         public async Task AddPatientToDoctorList(Guid doctorId, Guid patientId)
         {
@@ -119,7 +118,7 @@ namespace PillsTracking.ApplicationServices
             {
                 if (string.IsNullOrWhiteSpace(drugDTO.Name) || drugDTO.Concentration <= 0 || drugDTO.Dosage <= 0 || drugDTO.Frequency <= 0)
                 {
-                    continue; // Skip invalid drugs
+                    continue; 
                 }
 
                 var drug = await _drugRepository.GetDrugByNameConcentrationDosageFrequency(drugDTO.Name,
@@ -147,12 +146,12 @@ namespace PillsTracking.ApplicationServices
 			return _mapper.Map<PrescriptionToCreateDTO>(prescription);
         }
 
-        public async Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs)
+        public async Task<PrescriptionToUpdateDTO> UpdatePrescription(PrescriptionToUpdateDTO prescriptionToUpdate)
         {
-
-            var updatedPrescription = await _prescriptionRepository.UpdatePrescription(prescriptionId, newDuration, newDrugs);
-            return updatedPrescription;
+            var updatedPrescription = await _prescriptionRepository.UpdatePrescription(prescriptionToUpdate.PrescriptionID, prescriptionToUpdate.Duration, prescriptionToUpdate.Drugs);
+            return _mapper.Map<PrescriptionToUpdateDTO>(updatedPrescription);
         }
+
         public async Task RemovePrescription(Guid prescriptionId)
         {
             if (prescriptionId == Guid.Empty)

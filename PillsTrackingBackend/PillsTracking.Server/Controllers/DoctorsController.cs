@@ -80,7 +80,7 @@ namespace PillsTracking.Server.Controllers
         }
 
         [HttpPost("addPatient")]
-		public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
+		public async Task<ActionResult<PatientToCreateDTO>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
 		{
 			try
 			{
@@ -144,11 +144,11 @@ namespace PillsTracking.Server.Controllers
         }
 
         [HttpPost("updatePrescription")]
-		public async Task<ActionResult<Prescription>> UpdatePrescription([FromBody] PrescriptionToUpdateDTO prescriptionToUpdate)
+		public async Task<ActionResult<PrescriptionToUpdateDTO>> UpdatePrescription([FromBody] PrescriptionToUpdateDTO prescriptionToUpdate)
 		{
 			try
 			{
-				var prescription = await _doctorService.UpdatePrescription(prescriptionToUpdate.PrescriptionID, prescriptionToUpdate.Duration, prescriptionToUpdate.Drugs);
+				var prescription = await _doctorService.UpdatePrescription(prescriptionToUpdate);
 				return Ok(prescription);
 			}
 

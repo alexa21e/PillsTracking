@@ -15,6 +15,7 @@ namespace PillsTracking.Server.Extensions
             CreateMap<Drug, DrugForPatientDTO>();
             CreateMap<Drug, DrugToCreateDTO>();
             CreateMap<Drug, DrugForWebDTO>();
+            CreateMap<Patient, PatientToCreateDTO>();
             CreateMap<Patient, PatientForMobileDTO>();
             CreateMap<Patient, PatientForWebDTO>();
             CreateMap<Patient, PatientDetailsForWebDTO>();
@@ -23,6 +24,7 @@ namespace PillsTracking.Server.Extensions
             CreateMap<Prescription, PrescriptionToCreateDTO>();
             CreateMap<Prescription, PrescriptionForWebDTO>();
             CreateMap<Prescription, PrescriptionDetailsForWebDTO>();
+            CreateMap<Prescription, PrescriptionToUpdateDTO>();
         }
     }
 }
