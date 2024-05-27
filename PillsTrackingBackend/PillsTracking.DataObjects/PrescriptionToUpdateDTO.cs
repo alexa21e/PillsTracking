@@ -12,6 +12,6 @@ namespace PillsTracking.DataObjects
         public Guid PatientId { get; set; }
         public Guid PrescriptionID { get; set; }
         public int Duration { get; set; }
-        public List<Drug> Drugs { get; set; }
+        public List<Drug>? Drugs { get; set; }
     }
 }
