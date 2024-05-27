@@ -30,6 +30,7 @@ namespace PillsTracking.DataAccess.Repositories
 		public async Task<Doctor> AddDoctor(Doctor doctor)
 		{
 			await _dbContext.Doctors.AddAsync(doctor);
+			await _dbContext.SaveChangesAsync();
 			return doctor;
 		}
 

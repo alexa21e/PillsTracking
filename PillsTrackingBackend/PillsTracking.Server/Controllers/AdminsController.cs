@@ -31,11 +31,46 @@ namespace PillsTracking.Server.Controllers
             }
         }
 
+        [HttpGet("getAdmins")]
+        public async Task<ActionResult<IReadOnlyCollection<AdminForWebDTO>>> GetAdmins()
+        {
+            try
+            {
+                var admins = await _adminService.GetAdmins();
+                return Ok(admins);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("addDoctor")]
         public async Task<ActionResult<DoctorToCreateDTO>> AddDoctor([FromQuery] DoctorToCreateDTO doctorDTO)
         {
-            var doctor = await _adminService.AddDoctor(doctorDTO);
-            return Ok(doctor);
+            try
+            {
+                var doctor = await _adminService.AddDoctor(doctorDTO);
+                return Ok(doctor);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("addAdmin")]
+        public async Task<ActionResult<AdminToCreateDTO>> AddAdmin([FromQuery] AdminToCreateDTO adminDTO)
+        {
+            try
+            {
+                var admin = await _adminService.AddAdmin(adminDTO);
+                return Ok(admin);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

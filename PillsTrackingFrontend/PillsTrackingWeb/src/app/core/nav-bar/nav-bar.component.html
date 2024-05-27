@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-brand m-2">
             <i class="pi pi-calendar-plus"></i>
-            <a class="navbar-brand" href="#">PillsTracking</a>
+            <a class="navbar-brand" routerLink="/">PillsTracking</a>
         </div>
         <ng-container *ngIf="accountService.currentUserRole$ | async as role">
             <div *ngIf="role === 'Doctor'" class="d-flex flex-wrap align-items-center justify-content-center">
@@ -17,7 +17,6 @@
                 Welcome {{user.username}}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><a class="dropdown-item" (click)="accountService.logout()">Logout</a></li>
             </ul>
         </ng-container>
