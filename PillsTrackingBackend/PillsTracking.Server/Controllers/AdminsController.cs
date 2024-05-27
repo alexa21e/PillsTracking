@@ -17,6 +17,20 @@ namespace PillsTracking.Server.Controllers
             _adminService = adminService;
         }
 
+        [HttpGet("getDoctors")]
+        public async Task<ActionResult<IReadOnlyCollection<DoctorForWebDTO>>> GetDoctors()
+        {
+            try
+            {
+                var doctors = await _adminService.GetDoctors();
+                return Ok(doctors);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("addDoctor")]
         public async Task<IActionResult> AddDoctor([FromQuery] DoctorToCreateDTO doctorDTO)
         {

@@ -12,6 +12,11 @@ namespace PillsTracking.DataAccess.Repositories
 			_dbContext = dbContext;
 		}
 
+        public async Task<IReadOnlyCollection<Doctor>> GetDoctors()
+        {
+			return await _dbContext.Doctors.ToListAsync();
+        }
+
 		public async Task<Doctor> GetDoctorByEmail(string email)
 		{
 			return await _dbContext.Doctors.FirstOrDefaultAsync(d => d.Email == email);
