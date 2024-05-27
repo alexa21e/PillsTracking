@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminsService } from '../../../shared/services/admins.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { Doctor } from '../../../shared/models/doctor';
 
 @Component({
   selector: 'app-home-admin',
@@ -10,7 +11,8 @@ import { MessageService } from 'primeng/api';
   styleUrl: './home.component.css'
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  doctors?: Doctor[];
 
   doctorForm = new FormGroup({
     name: new FormControl(),
@@ -23,7 +25,26 @@ export class HomeComponent {
   constructor(private adminsService: AdminsService,
     private messageService: MessageService
   ) { }
-  
+
+  ngOnInit(): void {
+    this.getDoctors();
+  }
+
+  getDoctors() {
+    this.adminsService.getDoctors().subscribe({
+      next: (doctors) => {
+        this.doctors = doctors;
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Could not fetch doctors'
+        });
+      }
+    });
+  }
+
   onAddButtonClick() {
     const doctorData = {
       ...this.doctorForm.value
@@ -57,7 +78,7 @@ export class HomeComponent {
   }
 
   closeAddDialog() {
-   this.isAddDialogVisible = false;
+    this.isAddDialogVisible = false;
   }
 
 }

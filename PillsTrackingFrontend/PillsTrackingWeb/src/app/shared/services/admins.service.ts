@@ -13,6 +13,10 @@ export class AdminsService {
     constructor(private http: HttpClient) {
     }
 
+    getDoctors(){
+        return this.http.get<Doctor[]>(this.baseUrl + 'getDoctors');
+    }
+
     addDoctor(values: any){
         return this.http.post<Doctor>(this.baseUrl + 'addDoctor', values);
     }

@@ -1,7 +1,14 @@
-::ng-deep .p-button {
+.add {
     border-radius: 5px;
 }
 
 .form-group{
     margin: 0.3rem;
+}
+
+.header{
+    margin-top: 3%;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-bottom: 1%;
 }
