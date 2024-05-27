@@ -17,7 +17,11 @@ export class AdminsService {
         return this.http.get<Doctor[]>(this.baseUrl + 'getDoctors');
     }
 
-    addDoctor(values: any){
-        return this.http.post<Doctor>(this.baseUrl + 'addDoctor', values);
+    addDoctor(doctor: Doctor){
+        let params = new HttpParams()
+        .set('Name', doctor.name)
+        .set('Email', doctor.email)
+        .set('Specialization', doctor.specialization);
+      return this.http.post<Doctor>(this.baseUrl + 'addDoctor', null, { params });
     }
 }

@@ -32,7 +32,7 @@ namespace PillsTracking.Server.Controllers
         }
 
         [HttpPost("addDoctor")]
-        public async Task<IActionResult> AddDoctor([FromQuery] DoctorToCreateDTO doctorDTO)
+        public async Task<ActionResult<DoctorToCreateDTO>> AddDoctor([FromQuery] DoctorToCreateDTO doctorDTO)
         {
             var doctor = await _adminService.AddDoctor(doctorDTO);
             return Ok(doctor);

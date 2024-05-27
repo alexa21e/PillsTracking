@@ -30,6 +30,14 @@ export class HomeComponent implements OnInit {
     this.getDoctors();
   }
 
+  createDoctorFromForm(): Doctor {
+    return {
+      name: this.doctorForm.value.name,
+      email: this.doctorForm.value.email,
+      specialization: this.doctorForm.value.specialization
+    };
+  }
+
   getDoctors() {
     this.adminsService.getDoctors().subscribe({
       next: (doctors) => {
@@ -46,19 +54,16 @@ export class HomeComponent implements OnInit {
   }
 
   onAddButtonClick() {
-    const doctorData = {
-      ...this.doctorForm.value
-    };
-
     if (this.doctorForm.valid) {
-      this.adminsService.addDoctor(doctorData).subscribe({
-        complete: () => {
+      const newDoctor: Doctor = this.createDoctorFromForm();
+      this.adminsService.addDoctor(newDoctor).subscribe({
+        next: () => {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
             detail: 'Doctor added successfully',
           });
-          console.log('done');
+          this.getDoctors();
         },
         error: () => {
           this.messageService.add({

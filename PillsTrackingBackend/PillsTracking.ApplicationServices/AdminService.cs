@@ -23,7 +23,7 @@ namespace PillsTracking.ApplicationServices
             return _mapper.Map<IReadOnlyCollection<DoctorForWebDTO>>(doctors);
         }
 
-        public async Task<Doctor> AddDoctor(DoctorToCreateDTO doctorToCreate)
+        public async Task<DoctorToCreateDTO> AddDoctor(DoctorToCreateDTO doctorToCreate)
         {
             if (doctorToCreate == null)
             {
@@ -35,7 +35,7 @@ namespace PillsTracking.ApplicationServices
             await _doctorRepository.AddDoctor(doctor);
             await _doctorRepository.SaveAsync();
 
-            return doctor;
+            return _mapper.Map<DoctorToCreateDTO>(doctor);
         }
     }
 }
