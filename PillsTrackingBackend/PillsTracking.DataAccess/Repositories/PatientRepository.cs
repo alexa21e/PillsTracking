@@ -14,7 +14,7 @@ namespace PillsTracking.DataAccess.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<ICollection<Patient>> GetPatients()
+        public async Task<IReadOnlyCollection<Patient>> GetPatients()
         {
             return await _dbContext.Patients
                 .Include(p => p.Prescriptions)

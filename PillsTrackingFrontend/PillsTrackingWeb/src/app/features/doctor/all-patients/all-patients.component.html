@@ -1,0 +1,62 @@
+<div class="flex justify-content-between flex-wrap header">
+    <div class="title align-items-center">
+        <h3>Patients available in our database</h3>
+    </div>
+    <div class="flex align-items-center justify-content-center border-round">
+        <p-button label="Add patient" (click)="openAddDialog()" class="add"></p-button>
+        <p-dialog header="Add patient" [modal]="true" [(visible)]="isAddDialogVisible" [style]="{ width: '80%' }">
+            <form [formGroup]="patientForm">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input pInputText [formControl]="patientForm.controls['name']" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input pInputText [formControl]="patientForm.controls['phoneNumber']" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input pInputText [formControl]="patientForm.controls['address']" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select formControlName="gender" class="form-control">
+                        <option value="0">M</option>
+                        <option value="1">F</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" formControlName="dateOfBirth" class="form-control">
+                </div>
+                <div class="p-dialog-footer mt-2">
+                    <button pButton type="button" label="Add" class="p-button-success"
+                        (click)="onAddButtonClick()"></button>
+                </div>
+            </form>
+        </p-dialog>
+    </div>
+</div>
+<div class="flex justify-content-center table" *ngIf="patients && patients.length > 0">
+    <p-table [value]="patients" [tableStyle]="{ 'min-width': '70rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-patient>
+            <tr>
+                <td class="info">{{ patient.name }}</td>
+                <td class="info">{{ patient.phoneNumber }}</td>
+                <td>
+                    <button pButton type="button" icon="pi pi-plus" label="Add patient to my list" [text]="true" class="p-button-rounded p-button-success" (click)="onAddPatientToMyList(patient.id, $event)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="flex justify-content-center" *ngIf="patients && patients.length === 0">
+    <p>Currently no patient is added in the app</p>
+</div>

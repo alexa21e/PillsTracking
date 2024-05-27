@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using PillsTracking.ApplicationServices;
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataObjects;
 using PillsTracking.Domain;
-using System.Collections.Generic;
 
 namespace PillsTracking.Server.Controllers
 {
@@ -16,71 +16,92 @@ namespace PillsTracking.Server.Controllers
 			_doctorService = doctorService;
 		}
 
+        [HttpGet]
+        public async Task<ActionResult<DoctorIdForWebDTO>> GetDoctorIdByEmail([FromQuery] string email)
+        {
+            try
+            {
+                var doctorId = await _doctorService.GetDoctorIdByEmail(email);
+                return Ok(doctorId);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
 		[HttpGet("getAllPatients")]
-		public async Task<ActionResult<ICollection<Patient>>> GetPatients()
+		public async Task<ActionResult<IReadOnlyCollection<PatientForWebDTO>>> GetPatients()
 		{
-			try
-			{
+            try
+            {
 				var patients = await _doctorService.GetPatients();
 				return Ok(patients);
 			}
-			catch (Exception ex)
-			{
+			catch (Exception)
+            {
 				return BadRequest();
 			}
 		}
 
         [HttpGet("getPatientsOfDoctor")]
-        public async Task<ActionResult<IReadOnlyCollection<Patient>>> GetPatientsByDoctorId([FromQuery] Guid doctorId)
+        public async Task<ActionResult<IReadOnlyCollection<PatientForWebDTO>>> GetPatientsByDoctorId([FromQuery] Guid doctorId)
         {
             try
             {
                 var patients = await _doctorService.GetPatientsByDoctorIdAsync(doctorId);
                 return Ok(patients);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
-            }
-        }
+			}
+		}
 
 		[HttpGet("getPatientById")]
-        public async Task<ActionResult<Patient>> GetPatientById([FromQuery]Guid id)
+		public async Task<ActionResult<PatientDetailsForWebDTO>> GetPatientById([FromQuery] Guid id)
+		{
+			try
+			{
+				var patient = await _doctorService.GetPatientById(id);
+				return Ok(patient);
+			}
+			catch (Exception)
+			{
+				return BadRequest();
+			}
+		}
+
+        [HttpGet("getPrescriptionById")]
+        public async Task<ActionResult<PrescriptionDetailsForWebDTO>> GetPrescriptionById([FromQuery]Guid prescriptionId)
         {
-            try
-            {
-                var patient = await _doctorService.GetPatientById(id);
-                return Ok(patient);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
+            var prescription = await _doctorService.GetPrescriptionById(prescriptionId);
+            return Ok(prescription);
         }
 
-		[HttpPost("addPatient")]
-		public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
+        [HttpPost("addPatient")]
+		public async Task<ActionResult<PatientToCreateDTO>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
 		{
 			try
 			{
 				var patient = await _doctorService.AddPatient(patientToCreate);
 				return Ok(patient);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return BadRequest();
 			}
 		}
 
 		[HttpPost("addPrescription")]
-		public async Task<ActionResult<Prescription>> AddPrescription([FromQuery] PrescriptionToCreateDTO prescriptionToCreate)
+		public async Task<ActionResult<PrescriptionToCreateDTO>> AddPrescription([FromBody] PrescriptionToCreateDTO prescriptionToCreate)
 		{
 			try
 			{
 				var prescription = await _doctorService.AddPrescription(prescriptionToCreate);
 				return Ok(prescription);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return BadRequest();
 			}
@@ -98,7 +119,7 @@ namespace PillsTracking.Server.Controllers
 			{
 				return BadRequest(ex.Message);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return StatusCode(500, "Internal server error");
 			}
@@ -116,35 +137,35 @@ namespace PillsTracking.Server.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPost("updatePrescription")]
-		public async Task<ActionResult<Prescription>> UpdatePrescription([FromBody] PrescriptionToUpdateDTO prescriptionToUpdate)
+		public async Task<ActionResult<PrescriptionToUpdateDTO>> UpdatePrescription([FromBody] PrescriptionToUpdateDTO prescriptionToUpdate)
 		{
 			try
 			{
-				var prescription = await _doctorService.UpdatePrescription(prescriptionToUpdate.PrescriptionID, prescriptionToUpdate.Duration, prescriptionToUpdate.Drugs);
+				var prescription = await _doctorService.UpdatePrescription(prescriptionToUpdate);
 				return Ok(prescription);
 			}
 
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return BadRequest();
 			}
 
 		}
 		[HttpDelete("removePrescription")]
-		public async Task<IActionResult> RemovePrescription(Guid id)
+		public async Task<ActionResult<string>> RemovePrescription([FromQuery]Guid id)
 		{
 			try
 			{
 				await _doctorService.RemovePrescription(id);
-				return NoContent();
-			}
+                return Ok("Prescription removed successfully");
+            }
 			catch (ArgumentException ex)
 			{
 				return BadRequest(ex.Message);

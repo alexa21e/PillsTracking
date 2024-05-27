@@ -2,7 +2,6 @@
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataAccess.Abstractions;
 using PillsTracking.DataObjects;
-using PillsTracking.Domain;
 
 namespace PillsTracking.ApplicationServices
 {

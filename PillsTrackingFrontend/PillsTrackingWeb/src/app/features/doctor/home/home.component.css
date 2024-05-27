@@ -1,7 +1,17 @@
-::ng-deep .p-button {
-    border-radius: 5px;
-}
-
 .form-group{
     margin: 0.3rem;
+}
+
+.table{
+    text-align: center;
+}
+
+.info{
+    text-align: center;
+}
+
+.title{
+    margin-left: 10rem;
+    margin-top: 1.7rem;
+    margin-bottom: 1rem;
 }

@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ButtonModule,
     DialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TableModule
   ]
 })
 export class AdminModule { }

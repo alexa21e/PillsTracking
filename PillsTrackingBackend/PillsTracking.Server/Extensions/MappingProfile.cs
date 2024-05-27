@@ -8,10 +8,23 @@ namespace PillsTracking.Server.Extensions
     {
         public MappingProfile()
         {
+            CreateMap<Admin, AdminToCreateDTO>();
+            CreateMap<Admin, AdminForWebDTO>();
+            CreateMap<Doctor, DoctorForWebDTO>();
+            CreateMap<Doctor, DoctorToCreateDTO>();
+            CreateMap<Drug, DrugForPatientDTO>();
+            CreateMap<Drug, DrugToCreateDTO>();
+            CreateMap<Drug, DrugForWebDTO>();
+            CreateMap<Patient, PatientToCreateDTO>();
             CreateMap<Patient, PatientForMobileDTO>();
+            CreateMap<Patient, PatientForWebDTO>();
+            CreateMap<Patient, PatientDetailsForWebDTO>();
             CreateMap<Prescription, PrescriptionForPatientDTO>();
             CreateMap<Prescription, PrescriptionDetailsForPatientDTO>();
-            CreateMap<Drug, DrugForPatientDTO>();
+            CreateMap<Prescription, PrescriptionToCreateDTO>();
+            CreateMap<Prescription, PrescriptionForWebDTO>();
+            CreateMap<Prescription, PrescriptionDetailsForWebDTO>();
+            CreateMap<Prescription, PrescriptionToUpdateDTO>();
         }
     }
 }

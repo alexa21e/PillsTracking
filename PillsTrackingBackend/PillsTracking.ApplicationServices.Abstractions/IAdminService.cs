@@ -5,6 +5,9 @@ namespace PillsTracking.ApplicationServices.Abstractions
 {
     public interface IAdminService
     {
-        Task<Doctor> AddDoctor(DoctorToCreateDTO doctorToCreate);
+        Task<IReadOnlyCollection<DoctorForWebDTO>> GetDoctors();
+        Task<IReadOnlyCollection<AdminForWebDTO>> GetAdmins();
+        Task<DoctorToCreateDTO> AddDoctor(DoctorToCreateDTO doctorToCreate);
+        Task<AdminToCreateDTO> AddAdmin(AdminToCreateDTO adminToCreate);
     }
 }

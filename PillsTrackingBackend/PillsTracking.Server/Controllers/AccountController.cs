@@ -117,7 +117,8 @@ namespace PillsTracking.Server.Controllers
 				return new UserDTO
 				{
 					Email = user.Email,
-					Username = user.UserName,
+                    Token = _tokenService.CreateToken(user),
+                    Username = user.UserName,
 					Role = "Admin"
 				};
 			}
@@ -165,7 +166,8 @@ namespace PillsTracking.Server.Controllers
 				return new UserDTO
 				{
 					Email = user.Email,
-					Username = user.UserName,
+                    Token = _tokenService.CreateToken(user),
+                    Username = user.UserName,
 					Role = "Doctor"
 				};
 			}

@@ -70,10 +70,9 @@ namespace PillsTracking.DataAccess.Repositories
             return prescription;
         }
 
-        public async void RemovePrescription(Prescription prescription)
+        public async Task RemovePrescription(Prescription prescription)
         {
             _dbContext.Prescriptions.Remove(prescription);
-
             await _dbContext.SaveChangesAsync();
         }
 

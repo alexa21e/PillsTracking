@@ -1,17 +1,21 @@
 <p-dialog header="Prescription's details" [modal]="true" [(visible)]="isPrescriptionDialogVisible"
     [style]="{ width: '25rem' }">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Username</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Email</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (click)="isPrescriptionDialogVisible = false" />
-        <p-button label="Save" (click)="isPrescriptionDialogVisible = false" />
-    </div>
+    <div *ngIf="detailedPrescription">
+        <h3>{{ detailedPrescription.name }}</h3>
+        <p><strong>Duration:</strong> {{ detailedPrescription.duration }} days</p>
+        <p><strong>Creation Date:</strong> {{ detailedPrescription.creationDate | date:'dd/MM/yyyy' }}</p>
+        <div *ngIf="detailedPrescription.drugs && detailedPrescription.drugs.length > 0">
+          <h4>Drugs</h4>
+          <ul>
+            <li *ngFor="let drug of detailedPrescription.drugs">
+              <p><strong>Name:</strong> {{ drug.name }}</p>
+              <p><strong>Concentration:</strong> {{ drug.concentration }} mg</p>
+              <p><strong>Dosage:</strong> {{ drug.dosage }} quantity</p>
+              <p><strong>Frequency:</strong> every {{ drug.frequency }} hours</p>
+            </li>
+          </ul>
+        </div>
+      </div>
 </p-dialog>
 <p-dialog header="Add prescription" [modal]="true" [(visible)]="isAddPrescriptionDialogVisible"
     [style]="{ width: '75rem' }">
@@ -22,7 +26,7 @@
             <input pInputText [formControl]="prescriptionForm.controls['name']" class="form-control">
         </div>
         <div class="form-group m">
-            <label>Duration</label>
+            <label>Duration(in days)</label>
             <input pInputNumber [formControl]="prescriptionForm.controls['duration']" class="form-control">
         </div>
         <div class="form-group m">
@@ -38,7 +42,7 @@
                         <input pInputText formControlName="name" class="form-control">
                     </div>
                     <div class="col-3">
-                        <label>Concentration</label>
+                        <label>Concentration(mg)</label>
                         <input pInputNumber formControlName="concentration" class="form-control">
                     </div>
                     <div class="col-3">
@@ -47,7 +51,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -70,7 +76,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -93,7 +101,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -116,7 +126,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -139,7 +151,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -162,7 +176,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -185,7 +201,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -208,7 +226,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -231,7 +251,9 @@
                     </div>
                     <div class="col-3">
                         <label>Frequency</label>
-                        <input pInputNumber formControlName="frequency" class="form-control">
+                        <select formControlName="frequency" class="form-control">
+                            <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }} hours</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -271,9 +293,11 @@
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-prescription>
-                        <tr class="clickable-row" (click)="onPrescriptionClick()">
+                        <tr class="clickable-row" (click)="onPrescriptionClick(prescription)">
                             <td> {{ prescription.name }} </td>
-                            <td class="clickable-row">
+                            <td>
+                                <button pButton type="button" icon="pi pi-trash" label="Delete prescription"
+                                 [text]="true" class="p-button-rounded p-button-danger" (click)="onDeletePrescription(prescription.id, $event)"></button>
                             </td>
                         </tr>
                     </ng-template>

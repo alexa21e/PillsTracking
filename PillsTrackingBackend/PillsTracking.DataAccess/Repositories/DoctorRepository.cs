@@ -12,6 +12,11 @@ namespace PillsTracking.DataAccess.Repositories
 			_dbContext = dbContext;
 		}
 
+        public async Task<IReadOnlyCollection<Doctor>> GetDoctors()
+        {
+			return await _dbContext.Doctors.ToListAsync();
+        }
+
 		public async Task<Doctor> GetDoctorByEmail(string email)
 		{
 			return await _dbContext.Doctors.FirstOrDefaultAsync(d => d.Email == email);
@@ -25,6 +30,7 @@ namespace PillsTracking.DataAccess.Repositories
 		public async Task<Doctor> AddDoctor(Doctor doctor)
 		{
 			await _dbContext.Doctors.AddAsync(doctor);
+			await _dbContext.SaveChangesAsync();
 			return doctor;
 		}
 

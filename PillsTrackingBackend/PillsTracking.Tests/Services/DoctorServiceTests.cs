@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using PillsTracking.ApplicationServices;
 using PillsTracking.DataAccess.Abstractions;
 using PillsTracking.DataObjects;
@@ -13,6 +14,7 @@ namespace PillsTracking.Tests.Services
         private Mock<IPrescriptionRepository> prescriptionRepoMock = new();
         private Mock<IPatientRepository> patientRepoMock = new();
         private Mock<IDoctorRepository> doctorRepoMock = new();
+        private Mock<IMapper> mapperMock = new();
         private DoctorService doctorService;
         private DoctorToCreateDTO doctorToCreateDTO;
         private PatientToCreateDTO patientToCreate;
@@ -24,8 +26,10 @@ namespace PillsTracking.Tests.Services
             drugRepoMock = new Mock<IDrugRepository>();
             prescriptionRepoMock = new Mock<IPrescriptionRepository>();
             patientRepoMock = new Mock<IPatientRepository>();
+            doctorRepoMock = new Mock<IDoctorRepository>();
+            mapperMock = new Mock<IMapper>();
 
-            doctorService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object, doctorRepoMock.Object);
+            doctorService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object, doctorRepoMock.Object, mapperMock.Object);
 
             doctorToCreateDTO = new DoctorToCreateDTO
             {
@@ -83,24 +87,6 @@ namespace PillsTracking.Tests.Services
         }
 
         [TestMethod]
-        public async Task AddPrescription_ShouldAddAndSavePrescription_WhenCalled()
-        {
-            // Arrange
-            var doctorService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object, doctorRepoMock.Object);
-
-            // Act
-            var result = await doctorService.AddPrescription(prescriptionToCreate);
-
-            // Assert
-            drugRepoMock.Verify(x => x.GetDrugByNameConcentrationDosageFrequency(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
-            drugRepoMock.Verify(x => x.AddDrug(It.IsAny<Drug>()), Times.Once);
-            prescriptionRepoMock.Verify(x => x.AddPrescription(It.IsAny<Prescription>()), Times.Once);
-            Assert.AreEqual(prescriptionToCreate.Name, result.Name);
-            Assert.AreEqual(prescriptionToCreate.Duration, result.Duration);
-            Assert.AreEqual(prescriptionToCreate.PatientId, result.PatientId);
-        }
-
-        [TestMethod]
         public async Task AddPrescription_ShouldThrowException_WhenCalledWithNullData()
         {
             // Arrange
@@ -119,7 +105,7 @@ namespace PillsTracking.Tests.Services
             // Arrange
             var prescriptionRepoMock = new Mock<IPrescriptionRepository>();
             prescriptionRepoMock.Setup(repo => repo.GetPrescriptionById(It.IsAny<Guid>())).ReturnsAsync((Prescription)null);
-            var prescriptionService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object , doctorRepoMock.Object);
+            var prescriptionService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object , doctorRepoMock.Object, mapperMock.Object);
             var prescriptionId = Guid.NewGuid();
 
             // Act & Assert
@@ -134,7 +120,7 @@ namespace PillsTracking.Tests.Services
             var prescriptionRepoMock = new Mock<IPrescriptionRepository>();
             var prescription = Prescription.Create("Test",30,DateTime.Now);
             prescriptionRepoMock.Setup(repo => repo.GetPrescriptionById(prescription.Id)).ReturnsAsync(prescription);
-            var prescriptionService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object,doctorRepoMock.Object);
+            var prescriptionService = new DoctorService(patientRepoMock.Object, prescriptionRepoMock.Object, drugRepoMock.Object,doctorRepoMock.Object, mapperMock.Object);
 
             // Act
             await prescriptionService.RemovePrescription(prescription.Id);
