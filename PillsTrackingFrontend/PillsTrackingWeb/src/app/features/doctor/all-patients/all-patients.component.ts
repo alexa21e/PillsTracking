@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { PatientForweb } from '../../../shared/models/patientForWeb';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DoctorsService } from '../../../shared/services/doctors.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { AccountService } from '../../../shared/services/account.service';
-import { PatientForweb } from '../../../shared/models/patientForWeb';
 import { Gender } from '../../../shared/models/gender';
+import { AccountService } from '../../../shared/services/account.service';
 
 @Component({
-  selector: 'app-home-doctor',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  selector: 'app-all-patients',
+  templateUrl: './all-patients.component.html',
+  styleUrl: './all-patients.component.css'
 })
-
-export class HomeComponent implements OnInit {
+export class AllPatientsComponent {
   doctorId?: string;
 
   patients?: PatientForweb[];
@@ -55,8 +54,7 @@ export class HomeComponent implements OnInit {
   }
 
   getPatients() {
-    if (this.doctorId) {
-      this.doctorsService.getPatientsByDoctorId(this.doctorId).subscribe({
+      this.doctorsService.getPatients().subscribe({
         next: (patients) => {
           this.patients = patients;
         },
@@ -68,9 +66,6 @@ export class HomeComponent implements OnInit {
           });
         }
       });
-    } else {
-      console.error('Doctor ID is not set.');
-    }
   }
 
   mapGender(gender: number): string {
@@ -90,14 +85,15 @@ export class HomeComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Patient added successfully',
+            detail: 'Patient added in the database successfully',
           });
+          this.getPatients();
         },
         error: () => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Could not add patient'
+            detail: 'Could not add patient in the database'
           });
         }
       });
@@ -106,23 +102,11 @@ export class HomeComponent implements OnInit {
     this.patientForm.reset();
   }
 
-  onDeletePatient(patientId: string, event: Event) {
-    if (this.doctorId) {
+  onAddPatientToMyList(patientId: string, event: Event) {
+    if(this.doctorId){
       event.stopPropagation();
-      this.doctorsService.deletePatientFromDoctorList(patientId, this.doctorId).subscribe({
-        next: () => {
-          this.getPatients();
-        },
-        error: (error) => {
-          this.getPatients();
-        }
-      })
+      this.doctorsService.addPatientToDoctorList(patientId, this.doctorId).subscribe({})
     }
-  }
-
-
-  onPatientClick(id: string) {
-    this.router.navigate(['/doctor/patient', id]);
   }
 
   openAddDialog() {

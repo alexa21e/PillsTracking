@@ -35,14 +35,25 @@ export class DoctorsService {
         return this.http.get<Patient>(this.baseUrl + 'getPatientById', {params});
     }
 
+    getPatients(){
+        return this.http.get<PatientForweb[]>(this.baseUrl + 'getAllPatients');
+    }
+
     addPatient(values: any){
         return this.http.post<PatientToCreate>(this.baseUrl + 'addPatient', values);
     }
 
+    addPatientToDoctorList(patientId: string, doctorId: string){
+        let params = new HttpParams()
+        .set('doctorId', doctorId)
+        .set('patientId', patientId);
+        return this.http.put(this.baseUrl + 'addPatientToADoctorList', null, {params});
+    }
+
     deletePatientFromDoctorList(patientId: string, doctorId: string){
-        let params = new HttpParams();
-        params = params.append('doctorId', doctorId);
-        params = params.append('patientId', patientId);
+        let params = new HttpParams()
+        .set('doctorId', doctorId)
+        .set('patientId', patientId);
         return this.http.delete(this.baseUrl + 'deletePatientFromADoctorList', {params});
     }
 

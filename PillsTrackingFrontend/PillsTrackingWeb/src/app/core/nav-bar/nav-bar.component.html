@@ -5,9 +5,10 @@
             <a class="navbar-brand" routerLink="/">PillsTracking</a>
         </div>
         <ng-container *ngIf="accountService.currentUserRole$ | async as role">
-            <div *ngIf="role === 'Doctor'" class="d-flex flex-wrap align-items-center justify-content-center">
-                <ul class="nav ">
-                    <li><a class="nav-link px-2" routerLink="/">Patients</a></li>
+            <div *ngIf="role === 'Doctor'" class="d-flex flex-wrap align-items-center justify-content-between">
+                <ul class="nav">
+                    <li><a class="nav-link px-3" routerLink="/doctor/patients">All Patients</a></li>
+                    <li><a class="nav-link px-3" routerLink="/doctor/">My Patients</a></li>
                 </ul>
             </div>
         </ng-container>

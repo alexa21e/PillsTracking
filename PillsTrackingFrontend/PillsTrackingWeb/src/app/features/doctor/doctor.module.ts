@@ -12,12 +12,14 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AllPatientsComponent } from './all-patients/all-patients.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    PatientComponent
+    PatientComponent,
+    AllPatientsComponent
   ],
   imports: [
     CommonModule,
