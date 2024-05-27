@@ -1,6 +1,6 @@
 ﻿namespace PillsTracking.DataObjects
 {
-    public class DrugToCreateDTO
+    public class DrugForWebDTO
     {
         public string Name { get; set; }
         public int Concentration { get; set; }

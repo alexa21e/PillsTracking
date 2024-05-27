@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PillsTracking.ApplicationServices;
 using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataObjects;
 using PillsTracking.Domain;
@@ -54,24 +55,31 @@ namespace PillsTracking.Server.Controllers
             catch (Exception)
             {
                 return BadRequest();
-            }
-        }
+			}
+		}
 
 		[HttpGet("getPatientById")]
-        public async Task<ActionResult<Patient>> GetPatientById([FromQuery]Guid id)
+		public async Task<ActionResult<PatientDetailsForWebDTO>> GetPatientById([FromQuery] Guid id)
+		{
+			try
+			{
+				var patient = await _doctorService.GetPatientById(id);
+				return Ok(patient);
+			}
+			catch (Exception)
+			{
+				return BadRequest();
+			}
+		}
+
+        [HttpGet("{prescriptionId}")]
+        public async Task<ActionResult<PrescriptionDetailsForWebDTO>> GetPrescriptionById(Guid prescriptionId)
         {
-            try
-            {
-                var patient = await _doctorService.GetPatientById(id);
-                return Ok(patient);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            var prescription = await _doctorService.GetPrescriptionById(prescriptionId);
+            return Ok(prescription);
         }
 
-		[HttpPost("addPatient")]
+        [HttpPost("addPatient")]
 		public async Task<ActionResult<Patient>> AddPatient([FromBody] PatientToCreateDTO patientToCreate)
 		{
 			try
@@ -86,7 +94,7 @@ namespace PillsTracking.Server.Controllers
 		}
 
 		[HttpPost("addPrescription")]
-		public async Task<ActionResult<Prescription>> AddPrescription([FromQuery] PrescriptionToCreateDTO prescriptionToCreate)
+		public async Task<ActionResult<PrescriptionToCreateDTO>> AddPrescription([FromBody] PrescriptionToCreateDTO prescriptionToCreate)
 		{
 			try
 			{

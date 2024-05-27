@@ -49,10 +49,10 @@ namespace PillsTracking.ApplicationServices
             return _mapper.Map<IReadOnlyCollection<PatientForWebDTO>>(patients);
         }
 
-        public async Task<Patient> GetPatientById(Guid id)
+        public async Task<PatientDetailsForWebDTO> GetPatientById(Guid id)
         {
             var patient = await _patientRepository.GetPatientById(id);
-            return patient;
+            return _mapper.Map<PatientDetailsForWebDTO>(patient);
         }
 
         public async Task<Patient> AddPatient(PatientToCreateDTO patientToCreate)
@@ -99,7 +99,13 @@ namespace PillsTracking.ApplicationServices
             await _doctorRepository.RemovePatientFromDoctorList(doctor, patient);
         }
 
-        public async Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate)
+        public async Task<PrescriptionDetailsForWebDTO> GetPrescriptionById(Guid prescriptionId)
+        {
+            var prescription = await _prescriptionRepository.GetPrescriptionById(prescriptionId);
+            return _mapper.Map<PrescriptionDetailsForWebDTO>(prescription);
+        }
+
+        public async Task<PrescriptionToCreateDTO> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate)
         {
             if (prescriptionToCreate == null)
             {
@@ -111,8 +117,14 @@ namespace PillsTracking.ApplicationServices
 
             foreach (var drugDTO in prescriptionToCreate.Drugs)
             {
+                if (string.IsNullOrWhiteSpace(drugDTO.Name) || drugDTO.Concentration <= 0 || drugDTO.Dosage <= 0 || drugDTO.Frequency <= 0)
+                {
+                    continue; // Skip invalid drugs
+                }
+
                 var drug = await _drugRepository.GetDrugByNameConcentrationDosageFrequency(drugDTO.Name,
                     drugDTO.Concentration, drugDTO.Dosage, drugDTO.Frequency);
+
                 if (drug != null)
                 {
                     prescription.AddDrug(drug);
@@ -122,11 +134,17 @@ namespace PillsTracking.ApplicationServices
                     var createdDrug = Drug.Create(drugDTO.Name, drugDTO.Concentration, drugDTO.Dosage,
                         drugDTO.Frequency);
                     await _drugRepository.AddDrug(createdDrug);
-					prescription.AddDrug(createdDrug);
+                    prescription.AddDrug(createdDrug);
                 }
             }
+
+            if (!prescription.Drugs.Any())
+            {
+                throw new ArgumentException("Prescription must contain at least one valid drug");
+            }
+
             await _prescriptionRepository.AddPrescription(prescription);
-			return prescription;
+			return _mapper.Map<PrescriptionToCreateDTO>(prescription);
         }
 
         public async Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs)

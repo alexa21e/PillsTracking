@@ -11,9 +11,10 @@ namespace PillsTracking.ApplicationServices.Abstractions
         Task<Patient> AddPatient(PatientToCreateDTO patient);
 		Task AddPatientToDoctorList(Guid doctorId, Guid patientId);
         Task RemovePatientFromDoctorList(Guid doctorId, Guid patientId);
-        Task<Prescription> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate);
+        Task<PrescriptionDetailsForWebDTO> GetPrescriptionById(Guid prescriptionId);
+        Task<PrescriptionToCreateDTO> AddPrescription(PrescriptionToCreateDTO prescriptionToCreate);
 		Task<Prescription> UpdatePrescription(Guid prescriptionId, int newDuration, List<Drug> newDrugs);
-        Task<Patient> GetPatientById(Guid id);
+        Task<PatientDetailsForWebDTO> GetPatientById(Guid id);
 		Task RemovePrescription(Guid prescriptionId);
 		
 
