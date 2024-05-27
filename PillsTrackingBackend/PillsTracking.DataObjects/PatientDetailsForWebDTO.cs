@@ -9,6 +9,7 @@ namespace PillsTracking.DataObjects
         public string PhoneNumber { get; set; }
         public Gender Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string Address { get; set; }
         public IReadOnlyCollection<PrescriptionForWebDTO> Prescriptions { get; set; }
     }
 }

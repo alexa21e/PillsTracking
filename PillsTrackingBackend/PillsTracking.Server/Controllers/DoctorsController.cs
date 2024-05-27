@@ -72,8 +72,8 @@ namespace PillsTracking.Server.Controllers
 			}
 		}
 
-        [HttpGet("{prescriptionId}")]
-        public async Task<ActionResult<PrescriptionDetailsForWebDTO>> GetPrescriptionById(Guid prescriptionId)
+        [HttpGet("getPrescriptionById")]
+        public async Task<ActionResult<PrescriptionDetailsForWebDTO>> GetPrescriptionById([FromQuery]Guid prescriptionId)
         {
             var prescription = await _doctorService.GetPrescriptionById(prescriptionId);
             return Ok(prescription);
