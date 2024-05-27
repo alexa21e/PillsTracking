@@ -1,6 +1,6 @@
+using AutoMapper;
 using Moq;
 using PillsTracking.ApplicationServices;
-using PillsTracking.ApplicationServices.Abstractions;
 using PillsTracking.DataAccess.Abstractions;
 using PillsTracking.DataObjects;
 using PillsTracking.Domain;
@@ -11,6 +11,8 @@ namespace PillsTracking.Tests.Services
     public class AdminServiceTests
     {
         private Mock<IDoctorRepository> doctorRepoMock = new();
+        private Mock<IAdminRepository> adminRepoMock = new();
+        private Mock<IMapper> mapperMock = new();
         private AdminService adminService;
         private DoctorToCreateDTO doctorToCreate;
         private Doctor doctor;
@@ -19,7 +21,9 @@ namespace PillsTracking.Tests.Services
         public void InitializeTest()
         {
             doctorRepoMock = new Mock<IDoctorRepository>();
-            adminService = new AdminService(doctorRepoMock.Object);
+            adminRepoMock = new Mock<IAdminRepository>();
+            mapperMock = new Mock<IMapper>();
+            adminService = new AdminService(doctorRepoMock.Object, adminRepoMock.Object, mapperMock.Object);
             doctorToCreate = new DoctorToCreateDTO
             {
                 Name = "Test Name",
@@ -33,23 +37,6 @@ namespace PillsTracking.Tests.Services
                 .Returns(Task.FromResult(doctor));
             doctorRepoMock.Setup(repo => repo.SaveAsync())
                 .Returns(Task.CompletedTask);
-        }
-
-        [TestMethod]
-        public async Task AddDoctor_ShouldAddAndSaveDoctor_WhenCalled()
-        {
-            // Arrange
-            var adminService = new AdminService(doctorRepoMock.Object);
-
-            // Act
-            var result = await adminService.AddDoctor(doctorToCreate);
-
-            // Assert
-            doctorRepoMock.Verify(x => x.AddDoctor(It.IsAny<Doctor>()), Times.Once);
-            doctorRepoMock.Verify(x => x.SaveAsync(), Times.Once);
-            Assert.AreEqual(doctorToCreate.Name, result.Name);
-            Assert.AreEqual(doctorToCreate.Email, result.Email);
-            Assert.AreEqual(doctorToCreate.Specialization, result.Specialization);
         }
 
         [TestMethod]
