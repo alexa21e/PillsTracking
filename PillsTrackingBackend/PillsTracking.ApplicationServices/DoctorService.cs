@@ -43,9 +43,10 @@ namespace PillsTracking.ApplicationServices
             return patients;
         }
 
-        public async Task<IReadOnlyCollection<Patient>> GetPatientsByDoctorIdAsync(Guid doctorId)
+        public async Task<IReadOnlyCollection<PatientForWebDTO>> GetPatientsByDoctorIdAsync(Guid doctorId)
         {
-            return await _patientRepository.GetPatientsByDoctorId(doctorId);
+            var patients = await _patientRepository.GetPatientsByDoctorId(doctorId);
+            return _mapper.Map<IReadOnlyCollection<PatientForWebDTO>>(patients);
         }
 
         public async Task<Patient> GetPatientById(Guid id)

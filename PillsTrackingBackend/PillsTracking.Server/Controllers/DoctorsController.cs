@@ -44,7 +44,7 @@ namespace PillsTracking.Server.Controllers
 		}
 
         [HttpGet("getPatientsOfDoctor")]
-        public async Task<ActionResult<IReadOnlyCollection<Patient>>> GetPatientsByDoctorId([FromQuery] Guid doctorId)
+        public async Task<ActionResult<IReadOnlyCollection<PatientForWebDTO>>> GetPatientsByDoctorId([FromQuery] Guid doctorId)
         {
             try
             {
