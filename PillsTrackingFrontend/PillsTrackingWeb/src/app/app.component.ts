@@ -6,6 +6,7 @@ import { AccountService } from './shared/services/account.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent implements OnInit {
   title = 'PillsTrackingWeb';
 
