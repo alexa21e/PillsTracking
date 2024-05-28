@@ -23,5 +23,4 @@ import { RouterModule } from '@angular/router';
     LandingPageComponent
   ]
 })
-
 export class SharedModule { }
