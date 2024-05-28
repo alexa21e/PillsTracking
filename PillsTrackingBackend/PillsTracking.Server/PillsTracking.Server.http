@@ -1,6 +1,0 @@
-@PillsTracking.Server_HostAddress = http://localhost:5272
-
-GET {{PillsTracking.Server_HostAddress}}/patients/
-Accept: application/json
-
-###
